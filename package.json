@@ -6,6 +6,22 @@
     "start": "npx sandbox"
   },
   "devDependencies": {
-    "@architect/sandbox": "^5.0"
+    "@architect/sandbox": "^5.0",
+    "buffer": "^6.0.3",
+    "docx": "^6.0.3",
+    "express": "^4.18.1",
+    "express-admin": "^1.4.3",
+    "file-saver": "^2.0.5",
+    "lvovich": "^2.0.0",
+    "mysql2": "^2.3.3",
+    "n": "^9.0.0",
+    "node-mysql-admin": "^0.1.8",
+    "npm-run-all": "^4.1.5",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "serve-favicon": "^2.5.0",
+    "sql.js": "^1.7.0",
+    "stable": "^0.1.8",
+    "xlsx": "^0.18.5"
   }
 }
