@@ -13,7 +13,7 @@ const PORT = process.env.PORT || 80
 
 //Загрузка css и js модулей
 app.use(express.static("public/client"))
-app.use(favicon(path.join(__dirname, 'client', 'img', 'favicon.ico')));
+app.use(favicon(path.join(__dirname, 'public/client', 'img', 'favicon.ico')));
 
 //Подключение к базе данных
 const connection = mysql.createConnection({

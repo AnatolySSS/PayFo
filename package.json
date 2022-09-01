@@ -2,6 +2,7 @@
   "name": "begin-app",
   "version": "0.0.0",
   "description": "A simple Begin app with the minimum necessary file structure",
+  "main": "public/index.js",
   "scripts": {
     "start": "npx sandbox"
   },
