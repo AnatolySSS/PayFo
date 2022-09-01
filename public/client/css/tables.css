@@ -1,0 +1,27 @@
+.table_1, .table_2, .table_3 {
+  font-family: "Lucida Sans Unicode", "Lucida Grande", Sans-Serif;
+  font-size: 14px;
+  /* width: 660px; */
+  background: white;
+  text-align: left;
+  border-collapse: collapse;
+  color: #595b5e;
+  table-layout: auto;
+}
+/* .table_1 th:first-child, .table_1 td:first-child {
+color: #F5F6F6;
+border-left: none;
+} */
+.table_1 thead, .table_3 thead {
+font-weight: normal;
+border-bottom: 2px solid #F5E1A6;
+/* border-right: 20px solid white;
+border-left: 20px solid white; */
+padding-bottom: 5;
+}
+.table_1 td, .table_2 td, .table_3 td {
+/* border-right: 20px solid white;
+border-left: 20px solid white; */
+padding: 5px 5px;
+/* color: #8b8e91; */
+}
