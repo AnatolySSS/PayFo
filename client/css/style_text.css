@@ -1,0 +1,19 @@
+* body {
+  margin: 10px;
+  position: relative;
+  background-color: #595B5E;
+}
+
+.container {
+  width: 90%;
+  margin: 0 auto;
+  padding: 10px;
+  background-color: #ffffff;
+}
+
+header {
+  height: 90px;
+  left: 0px;
+  top: 0px;
+  background: #595B5E;
+}
