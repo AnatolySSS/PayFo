@@ -22,12 +22,18 @@ app.use(express.static(path.join(__dirname, "client")))
 app.use(favicon(path.join(__dirname, 'client', 'img', 'favicon.ico')));
 
 //Подключение к базе данных timeweb
+// const connection = mysql.createConnection({
+//     host : process.env.DB_HOST,
+//     port : process.env.DB_PORT,
+//     user : process.env.DB_USER,
+//     database : process.env.DB_NAME,
+//     password : process.env.DB_PASSWORD,
+// })
 const connection = mysql.createConnection({
-    host : process.env.DB_HOST,
-    port : process.env.DB_PORT,
-    user : process.env.DB_USER,
-    database : process.env.DB_NAME,
-    password : process.env.DB_PASSWORD,
+    host : "localhost",
+    user : "root",
+    database : "payfo",
+    password : "svF3L3Zm",
 })
 
 //Подключение к  локальной базе данных 
