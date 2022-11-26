@@ -151,7 +151,13 @@ export function check_signs(totalData, signs) {
     }
 
     //Определение наличия у ФО договоров со СТОА
-        signs_filled['У Финансовой организации имеются договоры со СТОА'] = "НЕТ"
+    if (totalData.fuExpertiseData.fuExpertiseAll[0].date != "") {
+        if (totalData.appToFoData.appToFoAll[0].refusalObjects[0].stor_posibility == "Договоры имеются") {
+            signs_filled['У Финансовой организации имеются договоры со СТОА'] = "ДА"
+        } else if (totalData.appToFoData.appToFoAll[0].refusalObjects[0].stor_posibility == "Договоров не имеется") {
+            signs_filled['У Финансовой организации имеются договоры со СТОА'] = "НЕТ"
+        }
+    } 
 
     //Определение процента
     let percentage = 0
@@ -227,6 +233,7 @@ export function make_motivation_paragraph(claimsContract,
     
     let total_result = ""
     let motivation_part = ""
+    let motivation_part_max = ""
     //Алгоритм поиска подходящей мотивировки
     //Получение общего количества признаков, занесенных в таблицу Мотивировки
     let total_sign_count = Object.keys(data_from_db.fact_signs).length
@@ -235,6 +242,14 @@ export function make_motivation_paragraph(claimsContract,
     let right_sign_count
     //Индекс строки, подходящей под все признаки
     let right_motive_index
+    //Максимальное значение верных индексов
+    let right_sign_max = 0
+    //Массив с найденными признаками
+    let right_sign_array = []
+    //Массив с ненайденными признаками
+    let wrong_sign_array = []
+    //Индекс строки, подходящей под максимальное количество совпадающих признаков
+    let right_sign_max_index = 0
     //Перебор договоров
     for (let contract_number = 0; contract_number < claimsContract.length; contract_number++) {
         //Перебор требований к ФУ
@@ -267,15 +282,24 @@ export function make_motivation_paragraph(claimsContract,
                                     // console.log("Факт : " + Object.keys(data_from_db.fact_signs)[k] + " : " + Object.values(data_from_db.fact_signs)[k][l] + "\n\n");
                                 } else {
                                     //Проверка значения одинакого ключа
-                                    if (Object.values(data_from_db.total_data[i])[j] == Object.values(data_from_db.fact_signs)[k] ||
-                                        Object.values(data_from_db.total_data[i])[j] == "НЕ ПРИМЕНИМО") {
+                                    if (Object.values(data_from_db.total_data[i])[j] == Object.values(data_from_db.fact_signs)[k]) {
                                         right_sign_count++
                                         // console.log("Таблица : " + Object.values(data_from_db.total_data[0])[j] + " : " + Object.values(data_from_db.total_data[i])[j]);
                                         // console.log("Факт : " + Object.keys(data_from_db.fact_signs)[k] + " : " + Object.values(data_from_db.fact_signs)[k] + "\n\n");
+                                    } else if (Object.values(data_from_db.total_data[i])[j] == "НЕ ПРИМЕНИМО") {
+                                        right_sign_count++
                                     }
                                 }
                             }
                         }
+                    }
+                }
+                //Определение номера строки с максимальным количеством совпадений ключей
+                if (right_sign_count > right_sign_max) {
+                    //За исключением требования о взыскании неустойки
+                    if (data_from_db.total_data[i].sign_4 != "Неустойка") {
+                        right_sign_max = right_sign_count
+                        right_sign_max_index = i
                     }
                 }
                 //Определение номера строки совпадения в случае если количество верных ключей совпадает в общим количеством ключей
@@ -284,6 +308,108 @@ export function make_motivation_paragraph(claimsContract,
                     break
                 }
             }
+
+            //Заполнение массива найденных значений (ключей)
+            //Перебор всех ключей в таблице Мотивировки
+            for (let j = 0; j < Object.keys(data_from_db.total_data[right_sign_max_index]).length; j++) {
+                //Если в ключ является признаком
+                if (Object.keys(data_from_db.total_data[right_sign_max_index])[j].indexOf("sign") >= 0) {
+                    //Перебор всех данных, заполненных сотрудником
+                    for (let k = 0; k < Object.keys(data_from_db.fact_signs).length; k++) {
+                        //Нахождение соответствия между ключами из таблицы Мотивировки и ключами, заполненными сотрудниками
+                        if (Object.values(data_from_db.total_data[0])[j] == Object.keys(data_from_db.fact_signs)[k]) {
+                            //Если соответствуют ключи "Договор страхования" (тогда проверяется каждый договор)
+                            if (Object.keys(data_from_db.fact_signs)[k] == 'Договор страхования') {
+                                if (Object.values(data_from_db.total_data[right_sign_max_index])[j] == claimsContract[contract_number].type.value) {
+                                    right_sign_array.push({
+                                        sign : Object.values(data_from_db.total_data[0])[j],
+                                        value : claimsContract[contract_number].type.value
+                                    })
+                                } else {
+                                    wrong_sign_array.push({
+                                        sign : Object.values(data_from_db.total_data[0])[j],
+                                        value : Object.values(data_from_db.total_data[right_sign_max_index])[j]
+                                    })
+                                }
+                            //Если соответствуют ключи "Требование к ФУ" (тогда проверяется каждое требование)
+                            } else if (Object.keys(data_from_db.fact_signs)[k] == 'Требование к ФУ') {
+                                if (Object.values(data_from_db.total_data[right_sign_max_index])[j] == claimsContract[contract_number].claim[claim_number].type.value) {
+                                    right_sign_array.push({
+                                        sign : Object.values(data_from_db.total_data[0])[j],
+                                        value : claimsContract[contract_number].claim[claim_number].type.value
+                                    })
+                                } else {
+                                    wrong_sign_array.push({
+                                        sign : Object.values(data_from_db.total_data[0])[j],
+                                        value : Object.values(data_from_db.total_data[right_sign_max_index])[j]
+                                    })
+                                }
+                            } else {
+                                //Проверка значения одинакого ключа
+                                if (Object.values(data_from_db.total_data[right_sign_max_index])[j] == Object.values(data_from_db.fact_signs)[k]) {
+                                    right_sign_array.push({
+                                        sign : Object.values(data_from_db.total_data[0])[j],
+                                        value : Object.values(data_from_db.fact_signs)[k]
+                                    })
+                                } else if (Object.values(data_from_db.total_data[right_sign_max_index])[j] == "НЕ ПРИМЕНИМО") {
+                                    right_sign_array.push({
+                                        sign : Object.values(data_from_db.total_data[0])[j],
+                                        value : "НЕ ПРИМЕНИМО"
+                                    })
+                                } else {
+                                    wrong_sign_array.push({
+                                        sign : Object.values(data_from_db.total_data[0])[j],
+                                        value : Object.values(data_from_db.fact_signs)[k]
+                                    })
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            console.log(right_sign_array);
+            console.log(wrong_sign_array);
+
+            //Заполнение массива найденных требований (максимальное число совпадений)
+            for (let i = 0; i < Object.values(data_from_db.total_data[right_sign_max_index]).length; i++) {
+                if (Object.keys(data_from_db.total_data[right_sign_max_index])[i].indexOf("motiv") >= 0) {
+                    if (Object.values(data_from_db.total_data[right_sign_max_index])[i] != null) {
+                        let paragraphs = Object.values(data_from_db.total_data[right_sign_max_index])[i]
+                        paragraphs = fillMotiveParagraph(claimsContract,
+                                                            dtpParticipant,
+                                                            appToFo,
+                                                            paymentVoluntary,
+                                                            paymentFu,
+                                                            paymentCourt,
+                                                            fuExpertise,
+                                                            total_penalty_summ_accrued,
+                                                            total_penalty_summ_paid,
+                                                            max_summ,
+                                                            data_from_db,
+                                                            Object.values(data_from_db.total_data[0])[i],
+                                                            paragraphs)
+
+                            paragraphs = paragraphs.split(String.fromCharCode(10))
+                            for (const iterator of paragraphs) {
+                                motivation_part_max = `${motivation_part_max}<p>${iterator}</p>`
+                        }
+                    }
+                }
+            }
+
+            //Редактирование изменяемых частей мотивировочной части
+            motivation_part_max = motivation_part_max.replaceAll("<p></p>", "")
+            motivation_part_max = motivation_part_max.replaceAll("</p></p>", "")
+
+            motivation_part_max = motivation_part_max.replaceAll("\r\n", "")
+            motivation_part_max = motivation_part_max.replaceAll("\r", "")
+            motivation_part_max = motivation_part_max.replaceAll("\n", "")
+            motivation_part_max = motivation_part_max.replaceAll("  ", " ")
+
+            console.log("Всего совпадений найдено: " + right_sign_max + " из " + total_sign_count);
+            console.log("Строка с наибольшим количеством совпадений: " + right_sign_max_index);
+            console.log("Строка с полным совпадением: " + right_motive_index);
 
             //Формирование вспомогальных логов
             if (right_motive_index == 0) {
@@ -420,6 +546,7 @@ export function make_motivation_paragraph(claimsContract,
 
     out_data = {
         motivation_part : motivation_part,
+        motivation_part_max : motivation_part_max,
         result : total_result,
         all_found_claims : all_found_claims,
         all_not_found_claims : all_not_found_claims,

@@ -495,7 +495,7 @@ function addAppToFo() {
             <div class="apps-to-fo-answer-fo">
                 <div class="form-row ">
                     <div class="form-group col-md-8">
-                        <h6>Сведения об ответе ФО на первоначальное обращение</h6>
+                        <h6>Сведения об ответе ФО на обращение</h6>
                     </div>
                 </div>
                 <div class="form-row">
@@ -667,16 +667,25 @@ function addAppToFo() {
                                 <input id = "apps_to_fo_refusal_number_${appsToFoId}" class="apps_to_fo_refusal_number_${appsToFoId} apps_to_fo_refusal_numbers" placeholder="№" type="text" size="8" required>
                             </div>
                         </div>
-                        <div id="apps_to_fo_refusal_type_trasa_${appsToFoId}" class="apps_to_fo_refusal_type_trasa_${appsToFoId} apps_to_fo_refusal_type_trasas">
+                        <div id="apps_to_fo_refusal_type_trasa_${appsToFoId}" class="apps_to_fo_refusal_type_trasa_${appsToFoId} apps_to_fo_refusal_type_trasas" style="display:none">
                             <div class="form-row">
                                 <div class="form-group col-md-12">
                                     <textarea id = "apps_to_fo_refusal_type_trasa_text_${appsToFoId}" class="apps_to_fo_refusal_type_trasa_text_${appsToFoId} apps_to_fo_refusal_type_trasa_texts deactivation" aria-describedby="apps_to_fo_refusal_type_trasa_text_help_block_${appsToFoId}" placeholder="Дословный текст мотивированного отказа (продолжить фразу: ФО направила Заявителю письмо, в котором сообщалось, что ...)" type="text" size="8" required></textarea>
                                     <small id="apps_to_fo_refusal_type_trasa_text_help_block_${appsToFoId}" class="form-text">
                                         <div class="form-inline">
                                             <input id="apps_to_fo_refusal_type_trasa_text_deactivate_${appsToFoId}" class="deactivator" type="checkbox">
-                                            <label for="apps_to_fo_refusal_type_trasa_text_deactivate_${appsToFoId}" class="ml-2 form-check-label">Сведений не имеется</label>
+                                            <label for="apps_to_fo_refusal_type_trasa_text_deactivate_${appsToFoId}" class="ml-2 form-check-label">Стандартная мотивировка</label>
                                         </div>
                                     </small>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <select id="apps_to_fo_refusal_type_trasa_stor_posibility_${appsToFoId}" class="apps_to_fo_refusal_type_trasa_stor_posibility_${appsToFoId} apps_to_fo_refusal_type_trasa_stor_posibilities custom-select col-md-12" required>
+                                        <option value="">Наличие у ФО договоров со СТОА</option>
+                                        <option>Договоры имеются</option>
+                                        <option>Договоров не имеется</option>
+                                    </select>
                                 </div>
                             </div>
                         </div>
@@ -1137,8 +1146,21 @@ $(document).on("change", ".apps_to_fo_claims_contract_infos", function (event) {
             $(this).parent().parent().next().find('select').removeClass('form-control')
         }, 200)
 	}
-    // validationCheckUpdate('apps-to-fo')
-    // validationCheck('apps-to-fo')
+});
+
+//Добавляет текстовое описание для отказа по трасе
+$(document).on("change", ".apps_to_fo_refusal_types", function (event) {
+	if ($(this).find(':selected').text() == "Трасология") {
+        $(this).parent().parent().next().show('fast')
+        $(this).parent().parent().next().find('textarea').addClass('form-control')
+        $(this).parent().parent().next().find('select').addClass('form-control')
+	} else {
+        $(this).parent().parent().next().hide('fast')
+        setTimeout(() => {
+            $(this).parent().parent().next().find('textarea').removeClass('form-control')
+            $(this).parent().parent().next().find('select').removeClass('form-control')
+        }, 200)
+	}
 });
 
 //Добавляет информацию о способе уведомления о ходе рассмотрения заявления (если заявитель обращается с заявлением, а не с претензией)
@@ -2248,7 +2270,7 @@ $(document).on("change", ".apps_to_fo_answer_fo_infos", function (event) {
     // validationCheck('apps-to-fo')
 });
 
-//Добавляет информацию об осуществленных выплатах
+//Добавляет информацию об ответе ФО на заявление или претензию
 $(document).on("change", ".apps_to_fo_answer_fos", function (event) {
 	if ($(this).find(':selected').text() == "Осуществление выплаты") {
         $(this).parent().parent().next().show('fast')
@@ -2286,18 +2308,16 @@ $(document).on("change", ".apps_to_fo_answer_fos", function (event) {
 
         $(this).parent().parent().parent().find('.apps_to_fo_refusals').find('input[type=text]').addClass('form-control')
         $(this).parent().parent().parent().find('.apps_to_fo_refusals').find('select').addClass('form-control')
-        $(this).parent().parent().parent().find('.apps_to_fo_refusals').find('textarea').addClass('form-control')
+        // $(this).parent().parent().parent().find('.apps_to_fo_refusals').find('textarea').addClass('form-control')
         
 	} else {
         $(this).parent().parent().parent().find('.apps_to_fo_refusals').hide('fast')
         setTimeout(() => {
             $(this).parent().parent().parent().find('.apps_to_fo_refusals').find('input[type=text]').removeClass('form-control')
             $(this).parent().parent().parent().find('.apps_to_fo_refusals').find('select').removeClass('form-control')
-            $(this).parent().parent().parent().find('.apps_to_fo_refusals').find('textarea').removeClass('form-control')
+            // $(this).parent().parent().parent().find('.apps_to_fo_refusals').find('textarea').removeClass('form-control')
         }, 200)
 	}
-    // validationCheckUpdate('apps-to-fo')
-    // validationCheck('apps-to-fo')
 });
 
 function addPayment(appsToFoId) {

@@ -1699,9 +1699,7 @@
                             <select id="apps_to_fo_refusal_type_1" class="apps_to_fo_refusal_type_1 apps_to_fo_refusal_types custom-select col-md-12" required>
                               <option value="">Основание для отказа</option>
                               <option>Трасология</option>
-                              <option>Выплата в полном объеме</option>
                               <option>Немотивированный отказ</option>
-                              <option>Позиция не изменилась</option>
                               <option>Иное</option>
                             </select>
                           </div>
@@ -1712,19 +1710,29 @@
                             <input id = "apps_to_fo_refusal_number_1" class="apps_to_fo_refusal_number_1 apps_to_fo_refusal_numbers" placeholder="№" type="text" size="8" required>
                           </div>
                         </div>
-                        <div id="apps_to_fo_refusal_type_trasa_1" class="apps_to_fo_refusal_type_trasa_1 apps_to_fo_refusal_type_trasas">
+                        <div id="apps_to_fo_refusal_type_trasa_1" class="apps_to_fo_refusal_type_trasa_1 apps_to_fo_refusal_type_trasas" style="display:none">
                           <div class="form-row">
                             <div class="form-group col-md-12">
                               <textarea id = "apps_to_fo_refusal_type_trasa_text_1" class="apps_to_fo_refusal_type_trasa_text_1 apps_to_fo_refusal_type_trasa_texts deactivation" aria-describedby="apps_to_fo_refusal_type_trasa_text_help_block_1" placeholder="Дословный текст мотивированного отказа (продолжить фразу: ФО направила Заявителю письмо, в котором сообщалось, что ...)" type="text" size="8" required></textarea>
                               <small id="apps_to_fo_refusal_type_trasa_text_help_block_1" class="form-text">
                                 <div class="form-inline">
                                   <input id="apps_to_fo_refusal_type_trasa_text_deactivate_1" class="deactivator" type="checkbox">
-                                  <label for="apps_to_fo_refusal_type_trasa_text_deactivate_1" class="ml-2 form-check-label">Сведений не имеется</label>
+                                  <label for="apps_to_fo_refusal_type_trasa_text_deactivate_1" class="ml-2 form-check-label">Стандартная мотивировка</label>
                                 </div>
                               </small>
                             </div>
                           </div>
+                          <div class="form-row">
+                            <div class="form-group col-md-6">
+                              <select id="apps_to_fo_refusal_type_trasa_stor_posibility_1" class="apps_to_fo_refusal_type_trasa_stor_posibility_1 apps_to_fo_refusal_type_trasa_stor_posibilities custom-select col-md-12" required>
+                                <option value="">Наличие у ФО договоров со СТОА</option>
+                                <option>Договоры имеются</option>
+                                <option>Договоров не имеется</option>
+                              </select>
+                            </div>
+                          </div>
                         </div>
+
                         <div class="form-row">
                           <div class="form-group col-md-9">
                             <h6>Направление письма подтверждает</h6>
@@ -2941,6 +2949,48 @@
               <button id="btn_fu_decision_analyze" class ="btn btn-warning btn-lg btn-block mt-4" anim="ripple" type="button" name="button" data-toggle="modal">
                 Проанализировать
               </button>
+              <div id="show_decisions" class="modal fade" tabindex="-1">
+                <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-full">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title">Решения ФУ</h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <div class="modal-body">
+                      <div class="my-auto text-center">
+                        <div class="row">
+                          <div class="col">
+                            <div id="show_decisions_div" style="height: 400px; width: 100%;" class="ag-theme-alpine"></div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div id="paragraph_of_the_decision" class="modal fade" tabindex="-1">
+                <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title"></h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <div class="modal-body">
+                      <p></p>
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
               <div class="row">
                 <div class="col">
                   <span id="decision_text"></span>

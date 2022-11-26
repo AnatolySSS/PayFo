@@ -329,17 +329,19 @@ class Refusal {
     date
     number
     text
+    stor_posibility
     confirmation_type
     confirmation_date
     confirmation_number
     confirmation_post_number
 
-    constructor (app_id, type, date, number, text, confirmation_type, confirmation_date, confirmation_number, confirmation_post_number) {
+    constructor (app_id, type, date, number, text, stor_posibility, confirmation_type, confirmation_date, confirmation_number, confirmation_post_number) {
         this.app_id = app_id
         this.type = type
         this.date = date
         this.number = number
         this.text = text
+        this.stor_posibility = stor_posibility
         this.confirmation_type = confirmation_type
         this.confirmation_date = confirmation_date
         this.confirmation_number = confirmation_number
@@ -357,6 +359,7 @@ class Refusal {
             date : this.date.value,
             number : this.number.value,
             text : this.text.value,
+            stor_posibility : this.stor_posibility.value,
             confirmation_type : this.confirmation_type.value,
             confirmation_date : this.confirmation_date.value,
             confirmation_number : this.confirmation_number.value,
@@ -597,6 +600,7 @@ export class AppToFo {
         var apps_to_fo_refusal_date = $(`.apps_to_fo_refusal_date_${id}`)
         var apps_to_fo_refusal_number = $(`.apps_to_fo_refusal_number_${id}`)
         var apps_to_fo_refusal_type_trasa_text = $(`.apps_to_fo_refusal_type_trasa_text_${id}`)
+        var apps_to_fo_refusal_type_trasa_stor_posibility = $(`.apps_to_fo_refusal_type_trasa_stor_posibility_${id}`)
         var apps_to_fo_refusal_confirmation = $(`.apps_to_fo_refusal_confirmation_${id}`)
         var apps_to_fo_refusal_confirmation_date = $(`.apps_to_fo_refusal_confirmation_date_${id}`)
         var apps_to_fo_refusal_confirmation_number = $(`.apps_to_fo_refusal_confirmation_number_${id}`)
@@ -608,6 +612,7 @@ export class AppToFo {
                                     apps_to_fo_refusal_date[i],
                                     apps_to_fo_refusal_number[i],
                                     apps_to_fo_refusal_type_trasa_text[i],
+                                    apps_to_fo_refusal_type_trasa_stor_posibility[i],
                                     apps_to_fo_refusal_confirmation[i],
                                     apps_to_fo_refusal_confirmation_date[i],
                                     apps_to_fo_refusal_confirmation_number[i],

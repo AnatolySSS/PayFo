@@ -1,5 +1,5 @@
 require('dotenv').config()
-const word = require('./word.js')
+// const word = require('./word.js')
 const express  = require('express')
 const app  = express()
 app.use(express.json({limit: '50mb'}));
@@ -12,12 +12,13 @@ const fs = require('fs');
 const mysql = require('mysql');
 const XLSX = require('xlsx')
 const path = require('path');
-const favicon = require('serve-favicon');      
+const favicon = require('serve-favicon');   
  
 const PORT = process.env.PORT || 80
 
 //Загрузка css и js модулей
-app.use(express.static("client"))
+// app.use(express.static("client"))
+app.use(express.static(path.join(__dirname, "client")))
 app.use(favicon(path.join(__dirname, 'client', 'img', 'favicon.ico')));
 
 //Подключение к  локальной базе данных 
@@ -277,6 +278,6 @@ app.get("/", function(request, response){
 });
 
 app.listen(PORT, "0.0.0.0", () => {
-    console.log("Server is runnung");
+    console.log("Server is running");
     console.log(PORT);
 })

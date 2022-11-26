@@ -17,14 +17,13 @@ import { changeDateType } from './moduls/changeDateType.js';
 import { declinationDays } from './moduls/declinationDays.js';
 import { fillPenaltyGraph } from './moduls/graph.js';
 import { makeTextDecision } from './moduls/makeTextDecision.js';
-import { decision_analize } from './moduls/analyze_fu_decision.js';
+import { decision_check } from './moduls/analyze_fu_decision.js';
 import { autocomplete } from './moduls/autocomplete.js';
 import { fo_data } from './moduls/objects/foData.js';
 import { allCars } from './moduls/objects/allCars.js';
 import { allPopovers } from "./moduls/objects/allPopovers.js";
 // import { renderDOM } from "./moduls/react/react.js";
 import { makeDecisionFile } from './moduls/docx.js';
-import { all_paragraphs } from "./moduls/makeTextDecision.js";
 import { AppToFo } from "./moduls/appToFos.js";
 import { changeQuotes } from "./moduls/changeQuotes.js";
 import { dragAndDrop } from "./moduls/drag&Drop.js";
@@ -712,7 +711,27 @@ $('#btn_desicion').click(function() {
         $('#check_app_owner').find('i').addClass('fa-check-square-o')
         $('#check_app_owner').find('i').css("color", "#28a745")
 
-      } else if ($('#app_name').val() != "" && !$('#owner_name_deactivate_1').is(':checked')) {
+      } else if ($('#app_name').val() == "" && $('#owner_name_1').val() != "") {
+        $('#check_app_owner .card').html(`Необходимо заполнить данные:<br>
+        * ФИО Заявителя<br>
+        * Собственник ТС - ${$('#owner_name_1').val()}`)
+
+        $('#check_app_owner').find('i').removeClass('fa-exclamation-circle')
+        $('#check_app_owner').find('i').removeClass('fa-check-square-o')
+        $('#check_app_owner').find('i').addClass('fa-question-circle-o')
+        $('#check_app_owner').find('i').css("color", "#ffc107")
+
+      } else if ($('#app_name').val() != "" && $('#owner_name_1').val() == "" && !$('#owner_name_deactivate_1').is(':checked')) {
+        $('#check_app_owner .card').html(`Необходимо заполнить данные:<br>
+        * Заявитель - ${$('#app_name').val()}<br>
+        * ФИО Собственника ТС`)
+
+        $('#check_app_owner').find('i').removeClass('fa-exclamation-circle')
+        $('#check_app_owner').find('i').removeClass('fa-check-square-o')
+        $('#check_app_owner').find('i').addClass('fa-question-circle-o')
+        $('#check_app_owner').find('i').css("color", "#ffc107")
+
+      } else if ($('#app_name').val() != "" && $('#owner_name_1').val() != "" && !$('#owner_name_deactivate_1').is(':checked')) {
         $('#check_app_owner .card').html(`Заявитель не является собственником ТС<br>
         * Заявитель - ${$('#app_name').val()}<br>
         * Собственник ТС - ${$('#owner_name_1').val()}`)
@@ -827,7 +846,21 @@ $('#btn_desicion').click(function() {
   promise2.then(result => {
     data_from_db.data = result
     console.log(data_from_db)
+
+    decision = makeTextDecision(claimsContract,
+      dtpParticipant,
+      appToFo,
+      paymentVoluntary,
+      paymentFu,
+      paymentCourt,
+      fuExpertise,
+      total_penalty_summ_accrued,
+      total_penalty_summ_paid,
+      max_summ,
+      totalData,
+      data_from_db);
   })
+
 })
 
 function fillHeader(length){
@@ -901,18 +934,18 @@ document.getElementById('show_decision').onclick = function show_decision(){
     $('#decision').show();
     $('#show_decision').html("Скрыть текст решения");
     // try {
-      decision = makeTextDecision(claimsContract,
-                                  dtpParticipant,
-                                  appToFo,
-                                  paymentVoluntary,
-                                  paymentFu,
-                                  paymentCourt,
-                                  fuExpertise,
-                                  total_penalty_summ_accrued,
-                                  total_penalty_summ_paid,
-                                  max_summ,
-                                  totalData,
-                                  data_from_db);
+      // decision = makeTextDecision(claimsContract,
+      //                             dtpParticipant,
+      //                             appToFo,
+      //                             paymentVoluntary,
+      //                             paymentFu,
+      //                             paymentCourt,
+      //                             fuExpertise,
+      //                             total_penalty_summ_accrued,
+      //                             total_penalty_summ_paid,
+      //                             max_summ,
+      //                             totalData,
+      //                             data_from_db);
     // } catch (error) {
     //   alert("Ошибка в коде, позвоните Анатолию!")
     // }
@@ -952,18 +985,18 @@ document.getElementById('make_decision_file').onclick = function (){
   if (document.querySelector('#decision').innerHTML == "") {
 
     // try {
-      decision = makeTextDecision(claimsContract,
-                                  dtpParticipant,
-                                  appToFo,
-                                  paymentVoluntary,
-                                  paymentFu,
-                                  paymentCourt,
-                                  fuExpertise,
-                                  total_penalty_summ_accrued,
-                                  total_penalty_summ_paid,
-                                  max_summ,
-                                  totalData,
-                                  data_from_db);
+      // decision = makeTextDecision(claimsContract,
+      //                             dtpParticipant,
+      //                             appToFo,
+      //                             paymentVoluntary,
+      //                             paymentFu,
+      //                             paymentCourt,
+      //                             fuExpertise,
+      //                             total_penalty_summ_accrued,
+      //                             total_penalty_summ_paid,
+      //                             max_summ,
+      //                             totalData,
+      //                             data_from_db);
     // } catch (error) {
     //   alert("Ошибка в коде, позвоните Анатолию!")
     // }
@@ -1058,7 +1091,7 @@ $('#exampleModal').on('hidden.bs.modal', function (event) {
 //Анализ решения ФУ (в работе)
 document.getElementById('btn_fu_decision_analyze').onclick = function (){
     let files = document.getElementById("fu_decision_file").files;
-    decision_analize(files);
+    decision_check(files);
 }
 
 //Написание имени файла
