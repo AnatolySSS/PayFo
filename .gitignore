@@ -7,3 +7,5 @@ word.js
 babel.config.js
 webpack.config.js
 .DS_Store
+js/script_old.js
+js/moduls/react
