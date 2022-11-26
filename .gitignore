@@ -6,3 +6,4 @@ root.crt
 word.js
 babel.config.js
 webpack.config.js
+.DS_Store
