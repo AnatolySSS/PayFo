@@ -21,13 +21,22 @@ const PORT = process.env.PORT || 80
 app.use(express.static(path.join(__dirname, "client")))
 app.use(favicon(path.join(__dirname, 'client', 'img', 'favicon.ico')));
 
-//Подключение к  локальной базе данных 
+//Подключение к базе данных timeweb
 const connection = mysql.createConnection({
-    host : "localhost",
-    user : "root",
-    database : "payFo",
-    password : "",
+    host : process.env.DB_HOST,
+    port : process.env.DB_PORT,
+    user : process.env.DB_USER,
+    database : process.env.DB_NAME,
+    password : process.env.DB_PASSWORD,
 })
+
+//Подключение к  локальной базе данных 
+// const connection = mysql.createConnection({
+//     host : "localhost",
+//     user : "root",
+//     database : "payFo",
+//     password : "",
+// })
 
 // Подключение к базе данных Яндекс Облако
 // const connection = mysql.createConnection({
