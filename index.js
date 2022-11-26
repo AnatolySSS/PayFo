@@ -33,7 +33,7 @@ const connection = mysql.createConnection({
     host : "localhost",
     user : "root",
     database : "payfo",
-    password : "svF3L3Zm",
+    password : "",
 })
 
 //Подключение к  локальной базе данных 
