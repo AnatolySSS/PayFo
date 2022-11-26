@@ -31,9 +31,10 @@ app.use(favicon(path.join(__dirname, 'client', 'img', 'favicon.ico')));
 // })
 const connection = mysql.createConnection({
     host : "localhost",
+    // port : 80,
     user : "root",
     database : "payfo",
-    password : "",
+    password : "Haimdall",
 })
 
 //Подключение к  локальной базе данных 
