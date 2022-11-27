@@ -14,7 +14,7 @@ const XLSX = require('xlsx')
 const path = require('path');
 const favicon = require('serve-favicon');   
  
-const PORT = process.env.PORT || 3306
+const PORT = process.env.PORT || 80
 
 //Загрузка css и js модулей
 // app.use(express.static("client"))
@@ -31,7 +31,7 @@ app.use(favicon(path.join(__dirname, 'client', 'img', 'favicon.ico')));
 // })
 const connection = mysql.createConnection({
     host : "91.220.109.180",
-    port : 3306,
+    // port : 3306,
     user : "Anatoly",
     database : "payfo",
     password : "Haimdall",
