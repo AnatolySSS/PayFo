@@ -7,4 +7,4 @@ word.js
 babel.config.js
 webpack.config.js
 .DS_Store
-# dist/webpack
+client/dist/webpack
