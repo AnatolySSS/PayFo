@@ -21,14 +21,7 @@ const PORT = process.env.PORT || 80
 app.use(express.static(path.join(__dirname, "client")))
 app.use(favicon(path.join(__dirname, 'client', 'img', 'favicon.ico')));
 
-//Подключение к базе данных timeweb
-// const connection = mysql.createConnection({
-//     host : process.env.DB_HOST,
-//     port : process.env.DB_PORT,
-//     user : process.env.DB_USER,
-//     database : process.env.DB_NAME,
-//     password : process.env.DB_PASSWORD,
-// })
+//Подключение к базе данных timeweb 
 const connection = mysql.createConnection({
     host : process.env.DB_HOST,
     // port : process.env.DB_PORT,
