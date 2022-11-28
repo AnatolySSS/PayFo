@@ -30,14 +30,6 @@ const connection = mysql.createConnection({
     password : process.env.DB_PASSWORD,
 })
 
-//Подключение к  локальной базе данных 
-// const connection = mysql.createConnection({
-//     host : "localhost",
-//     user : "root",
-//     database : "payFo",
-//     password : "",
-// })
-
 // Подключение к базе данных Яндекс Облако
 // const connection = mysql.createConnection({
 //     host     : process.env.DB_HOST,
