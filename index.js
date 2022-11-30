@@ -1,4 +1,3 @@
-require('dotenv').config()
 // const word = require('./word.js')
 const express  = require('express')
 const app  = express()
@@ -12,7 +11,9 @@ const fs = require('fs');
 const mysql = require('mysql');
 const XLSX = require('xlsx')
 const path = require('path');
-const favicon = require('serve-favicon');   
+const favicon = require('serve-favicon');
+
+require('dotenv').config()
  
 const PORT = process.env.PORT || 80
 
