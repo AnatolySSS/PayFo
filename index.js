@@ -24,11 +24,11 @@ app.use(favicon(path.join(__dirname, 'client', 'img', 'favicon.ico')));
 
 //Подключение к базе данных timeweb 
 const connection = mysql.createConnection({
-    host : process.env.DB_HOST,
+    host : '91.220.109.180',
     // port : process.env.DB_PORT,
-    user : process.env.DB_USER,
-    database : process.env.DB_NAME,
-    password : process.env.DB_PASSWORD,
+    user : 'Anatoly',
+    database : 'payfo',
+    password : 'Haimdall',
 })
 
 // Подключение к базе данных Яндекс Облако
