@@ -14,8 +14,52 @@ const path = require('path');
 const favicon = require('serve-favicon');
 
 require('dotenv').config()
- 
-const PORT = process.env.PORT || 80
+
+let PORT
+
+//Получение текущего IP
+const { networkInterfaces } = require('os');
+const nets = networkInterfaces();
+const results = Object.create(null); // Or just '{}', an empty object
+
+for (const name of Object.keys(nets)) {
+    for (const net of nets[name]) {
+        // Skip over non-IPv4 and internal (i.e. 127.0.0.1) addresses
+        // 'IPv4' is in Node <= 17, from 18 it's a number 4 or 6
+        const familyV4Value = typeof net.family === 'string' ? 'IPv4' : 4
+        if (net.family === familyV4Value && !net.internal) {
+            if (!results[name]) {
+                results[name] = [];
+            }
+            results[name].push(net.address);
+        }
+    }
+}
+
+let currentIP = results["en0"][0]
+
+console.log("Текущий ip: " + results["en0"][0]);
+
+switch (currentIP) {
+  case "192.168.0.19":
+    console.log("Это localhost");
+    PORT = 80;
+    break;
+
+  case "91.220.109.180":
+    console.log("Это timeweb");
+    PORT = 80;
+    break;
+
+  case "10.204.109.180": // поправить
+    console.log("Это timeweb");
+    PORT = 3000;
+    break;
+
+  default:
+    PORT = 80;
+    break;
+}
 
 //Загрузка css и js модулей
 // app.use(express.static("client"))
