@@ -68,7 +68,7 @@ switch (currentIP) {
     })
     break;
 
-  case "10.204.109.180": // поправить
+  case "10.205.24.14": // поправить
     console.log("Это sodfu");
     PORT = 3000;
     //Подключение к базе данных timeweb 
@@ -279,33 +279,20 @@ app.post("/motive_delete", function (request, response) {
 })
 
 //Получает данные из таблицы с мотивировками и формирует объект, с полями (все признаки)
+app.get("/check_ip", function (request, response) {
+    if(!request.body) return response.sendStatus(400)
+    response.json(currentIP)
+});
+
+//Получает данные из таблицы с мотивировками и формирует объект, с полями (все признаки)
 app.post("/total_data", jsonParser, function (request, response) {
     if(!request.body) return response.sendStatus(400)
-
-    // let data = [request.body.preambulaData.appeal_number, 
-    //             request.body.preambulaData.date_appeal, 
-    //             request.body.preambulaData.fu_name, 
-    //             request.body.preambulaData.fo_name, 
-    //             request.body.preambulaData.app_type, 
-    //             request.body.preambulaData.app_status]
-
-    // const queryInsert = "INSERT INTO preambulaData(appeal_number, date_appeal, fu_name, fo_name, app_type, app_status) VALUES(?, ?, ?, ?, ?, ?)";
-    // connection.query(queryInsert, data, (error, result) => {
-        
-    // })
-
-    // const querySelect = "SELECT * from preambulaData"
-    // connection.query(querySelect, (error, result) => {
-    //     if (error) throw error;
-    // })
 
     const querySelectFromMotivation = "SELECT * from motivations"
     connection.query(querySelectFromMotivation, (error, result) => {
         if (error) throw error;
         response.json(result)
     })
- 
-    // response.json(request.body); // отправляем пришедший ответ обратно
 });
 
 app.post("/download_data", jsonParser, function (request, response) {
