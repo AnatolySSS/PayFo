@@ -279,7 +279,7 @@ app.post("/motive_delete", function (request, response) {
 })
 
 //Получает данные из таблицы с мотивировками и формирует объект, с полями (все признаки)
-app.get("/check_ip", function (request, response) {
+app.post("/check_ip", function (request, response) {
     if(!request.body) return response.sendStatus(400)
     response.json(currentIP)
 });
