@@ -39,25 +39,58 @@ for (const name of Object.keys(nets)) {
 let currentIP = results["en0"] || results["eth0"]
 currentIP = currentIP.toString()
 
+let connection
 //В зависимости от IP адреса необходимо подключаться к различным портам и с разными настройками базы данных
 switch (currentIP) {
   case "192.168.0.19":
     console.log("Это localhost");
     PORT = 80;
+    //Подключение к базе данных timeweb 
+    connection = mysql.createConnection({
+        host : process.env.DB_TIMEWEB_HOST,
+        port : process.env.DB_TIMEWEB_PORT,
+        user : process.env.DB_TIMEWEB_USER,
+        database : process.env.DB_TIMEWEB_NAME,
+        password : process.env.DB_TIMEWEB_PASSWORD,
+    })
     break;
 
   case "91.220.109.180":
     console.log("Это timeweb");
     PORT = 80;
+    //Подключение к базе данных timeweb 
+    connection = mysql.createConnection({
+        host : process.env.DB_TIMEWEB_HOST,
+        port : process.env.DB_TIMEWEB_PORT,
+        user : process.env.DB_TIMEWEB_USER,
+        database : process.env.DB_TIMEWEB_NAME,
+        password : process.env.DB_TIMEWEB_PASSWORD,
+    })
     break;
 
   case "10.204.109.180": // поправить
     console.log("Это sodfu");
     PORT = 3000;
+    //Подключение к базе данных timeweb 
+    connection = mysql.createConnection({
+        host : process.env.DB_SODFU_HOST,
+        port : process.env.DB_SODFU_PORT,
+        user : process.env.DB_SODFU_USER,
+        database : process.env.DB_SODFU_NAME,
+        password : process.env.DB_SODFU_PASSWORD,
+    })
     break;
 
   default:
     PORT = 80;
+    //Подключение к базе данных timeweb 
+    connection = mysql.createConnection({
+        host : process.env.DB_TIMEWEB_HOST,
+        port : process.env.DB_TIMEWEB_PORT,
+        user : process.env.DB_TIMEWEB_USER,
+        database : process.env.DB_TIMEWEB_NAME,
+        password : process.env.DB_TIMEWEB_PASSWORD,
+    })
     break;
 }
 
@@ -65,27 +98,6 @@ switch (currentIP) {
 // app.use(express.static("client"))
 app.use(express.static(path.join(__dirname, "client")))
 app.use(favicon(path.join(__dirname, 'client', 'img', 'favicon.ico')));
-
-//Подключение к базе данных timeweb 
-const connection = mysql.createConnection({
-    host : process.env.DB_HOST,
-    port : process.env.DB_PORT,
-    user : process.env.DB_USER,
-    database : process.env.DB_NAME,
-    password : process.env.DB_PASSWORD,
-})
-
-// Подключение к базе данных Яндекс Облако
-// const connection = mysql.createConnection({
-//     host     : process.env.DB_HOST,
-//     port     : process.env.DB_PORT,
-//     user     : process.env.DB_USER,
-//     password : process.env.DB_PASSWORD,
-//     database : process.env.DB_NAME,
-//     ssl  : {
-//       ca : fs.readFileSync('root.crt'),
-//     }
-// });
 
 connection.connect(function(error) {
     if (error) {
