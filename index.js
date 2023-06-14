@@ -95,7 +95,6 @@ switch (currentIP) {
 }
 
 //Загрузка css и js модулей
-// app.use(express.static("client"))
 app.use(express.static(path.join(__dirname, "client")))
 app.use(favicon(path.join(__dirname, 'client', 'img', 'favicon.ico')));
 

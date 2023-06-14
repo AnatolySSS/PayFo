@@ -1,5 +1,5 @@
 node_modules
-# .env
+.env
 addFiles
 data
 root.crt
@@ -7,4 +7,4 @@ word.js
 babel.config.js
 webpack.config.js
 .DS_Store
-client/dist/webpack
+# client/dist/webpack
