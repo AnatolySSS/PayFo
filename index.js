@@ -82,6 +82,7 @@ switch (currentIP) {
     break;
 
   default:
+    console.log("Это localhost");
     PORT = 80;
     //Подключение к базе данных timeweb 
     connection = mysql.createConnection({
