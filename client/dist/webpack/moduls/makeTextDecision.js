@@ -16,7 +16,8 @@ import { fu_data } from './objects/fuData'
 export var all_paragraphs =[]
 
 // Формирование текста решения ФУ
-export function makeTextDecision(claimsContract,
+export function makeTextDecision(dtpData,
+                                 claimsContract,
                                  dtpParticipant,
                                  appToFo,
                                  paymentVoluntary,
@@ -479,7 +480,8 @@ export function makeTextDecision(claimsContract,
   // }
 
   //Вызов функции формирования мотивировочной части решения ФУ
-  motivation_part = make_motivation_paragraph(claimsContract,
+  motivation_part = make_motivation_paragraph(dtpData,
+                                              claimsContract,
                                               dtpParticipant,
                                               appToFo,
                                               paymentVoluntary,

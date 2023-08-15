@@ -94,12 +94,78 @@ function addClaimsContract() {
                       <label for="main_claim_pdf_${ContractId}_1" class="ml-2 form-check-label">По день факта</label>
                     </div>
                   </div>
+                  <div id="add_main_claim_info_ev_${ContractId}_1" class="add_main_claim_info_ev_${ContractId} add_main_claim_info_evs" style="display:none">
+                    <div class="form-row">
+                      <div class="form-group col-md-3">
+                        <h6>Дата платежа</h6>
+                      </div>
+                      <div class="form-group col-md-3">
+                        <h6>Маршрут эвакуации</h6>
+                      </div>
+                      <div class="form-group col-md-3">
+                        <h6>Чем подтверждается</h6>
+                      </div>
+                      <div class="form-group col-md-3">
+                        <h6>№ документа</h6>
+                      </div>
+                    </div>
+                    <div class="form-row">
+                      <div class="form-group col-md-3">
+                        <input id = "add_main_claim_info_ev_date_${ContractId}_1" class="add_main_claim_info_ev_date_${ContractId} add_main_claim_info_ev_dates form-control datepicker-here deactivation" aria-describedby="add_main_claim_info_ev_date_help_block_${ContractId}_1" placeholder="Дата" type="text" size="10" required>
+                        <small id="add_main_claim_info_ev_date_help_block_${ContractId}_1" class="form-text">
+                          <div class="form-inline">
+                            <input id="add_main_claim_info_ev_date_deactivate_${ContractId}_1" class="deactivator" type="checkbox">
+                            <label for="add_main_claim_info_ev_date_deactivate_${ContractId}_1" class="ml-2 form-check-label">Сведений не имеется</label>
+                          </div>
+                        </small>
+                      </div>
+                      <div class="form-group col-md-3">
+                          <select id="add_main_claim_info_ev_route_${ContractId}_1" class="add_main_claim_info_ev_route_${ContractId} add_main_claim_info_ev_routes custom-select form-control deactivation col-md-12" aria-describedby="add_main_claim_info_ev_route_help_block_${ContractId}_1" required>
+                            <option value="">Выберите вариант</option>
+                            <option>ДТП - СТОА</option>
+                            <option>ДТП - Хранение</option>
+                            <option>Хранение - СТОА</option>
+                          </select>
+                          <small id="add_main_claim_info_ev_route_help_block_${ContractId}_1" class="form-text">
+                            <div class="form-inline">
+                              <input id="add_main_claim_info_ev_route_deactivate_${ContractId}_1" class="deactivator" type="checkbox">
+                              <label for="add_main_claim_info_ev_route_deactivate_${ContractId}_1" class="ml-2 form-check-label">Сведений не имеется</label>
+                            </div>
+                          </small>
+                        </div>
+                      <div class="form-group col-md-3">
+                        <select id="add_main_claim_info_ev_ground_${ContractId}_1" class="add_main_claim_info_ev_ground_${ContractId} add_main_claim_info_ev_grounds custom-select form-control deactivation col-md-12" aria-describedby="add_main_claim_info_ev_ground_help_block_${ContractId}_1" required>
+                          <option value="">Выберите вариант</option>
+                          <option>Чек</option>
+                          <option>Квитанция</option>
+                          <option>Договор</option>
+                          <option>Квитанция-договор</option>
+                        </select>
+                        <small id="add_main_claim_info_ev_ground_help_block_${ContractId}_1" class="form-text">
+                          <div class="form-inline">
+                            <input id="add_main_claim_info_ev_ground_deactivate_${ContractId}_1" class="deactivator" type="checkbox">
+                            <label for="add_main_claim_info_ev_ground_deactivate_${ContractId}_1" class="ml-2 form-check-label">Сведений не имеется</label>
+                          </div>
+                        </small>
+                      </div>
+                      <div class="form-group col-md-3">
+                        <input id = "add_main_claim_info_ev_number_${ContractId}_1" class="add_main_claim_info_ev_number_${ContractId} add_main_claim_info_ev_numbers form-control deactivation" aria-describedby="add_main_claim_info_ev_number_help_block_${ContractId}_1" placeholder="№" type="text" size="10" required>
+                        <small id="add_main_claim_info_ev_number_help_block_${ContractId}_1" class="form-text">
+                          <div class="form-inline">
+                            <input id="add_main_claim_info_ev_number_deactivate_${ContractId}_1" class="deactivator" type="checkbox">
+                            <label for="add_main_claim_info_ev_number_deactivate_${ContractId}_1" class="ml-2 form-check-label">Сведений не имеется</label>
+                          </div>
+                        </small>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>`
 
   $('#main_claims_contracts').append(str);
   $(`#date_main_claim_from_${ContractId}_1`).datepicker();
   $(`#date_main_claim_to_${ContractId}_1`).datepicker();
+  $(`#add_main_claim_info_ev_date_${ContractId}_1`).datepicker();
 
   $('.datepicker-here').toArray().forEach(function(field){
     new Cleave(field, {
@@ -233,6 +299,71 @@ function addFuMainClaim(id) {
                 <input id="main_claim_pdf_${id}_${claimContractId}" class="main_claim_pdf_${id} main_claim_pdfs ml-2" type="checkbox">
                 <label for="main_claim_pdf_${id}_${claimContractId}" class="ml-2 form-check-label">По день факта</label>
               </div>
+            </div>
+            <div id="add_main_claim_info_ev_${id}_${claimContractId}" class="add_main_claim_info_ev_${id} add_main_claim_info_evs" style="display:none">
+              <div class="form-row">
+                <div class="form-group col-md-3">
+                  <h6>Дата платежа</h6>
+                </div>
+                <div class="form-group col-md-3">
+                  <h6>Маршрут эвакуации</h6>
+                </div>
+                <div class="form-group col-md-3">
+                  <h6>Чем подтверждается</h6>
+                </div>
+                <div class="form-group col-md-3">
+                  <h6>№ документа</h6>
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="form-group col-md-3">
+                  <input id = "add_main_claim_info_ev_date_${id}_${claimContractId}" class="add_main_claim_info_ev_date_${id} add_main_claim_info_ev_dates form-control datepicker-here deactivation" aria-describedby="add_main_claim_info_ev_date_help_block_${id}_${claimContractId}" placeholder="Дата" type="text" size="10" required>
+                  <small id="add_main_claim_info_ev_date_help_block_${id}_${claimContractId}" class="form-text">
+                    <div class="form-inline">
+                      <input id="add_main_claim_info_ev_date_deactivate_${id}_${claimContractId}" class="deactivator" type="checkbox">
+                      <label for="add_main_claim_info_ev_date_deactivate_${id}_${claimContractId}" class="ml-2 form-check-label">Сведений не имеется</label>
+                    </div>
+                  </small>
+                </div>
+                <div class="form-group col-md-3">
+                  <select id="add_main_claim_info_ev_route_${id}_${claimContractId}" class="add_main_claim_info_ev_route_${id} add_main_claim_info_ev_routes custom-select form-control deactivation col-md-12" aria-describedby="add_main_claim_info_ev_route_help_block_${id}_${claimContractId}" required>
+                    <option value="">Выберите вариант</option>
+                    <option>ДТП - СТОА</option>
+                    <option>ДТП - Хранение</option>
+                    <option>Хранение - СТОА</option>
+                  </select>
+                  <small id="add_main_claim_info_ev_route_help_block_${id}_${claimContractId}" class="form-text">
+                    <div class="form-inline">
+                      <input id="add_main_claim_info_ev_route_deactivate_${id}_${claimContractId}" class="deactivator" type="checkbox">
+                      <label for="add_main_claim_info_ev_route_deactivate_${id}_${claimContractId}" class="ml-2 form-check-label">Сведений не имеется</label>
+                    </div>
+                  </small>
+                </div>
+                <div class="form-group col-md-3">
+                  <select id="add_main_claim_info_ev_ground_${id}_${claimContractId}" class="add_main_claim_info_ev_ground_${id} add_main_claim_info_ev_grounds custom-select form-control deactivation col-md-12" aria-describedby="add_main_claim_info_ev_ground_help_block_${id}_${claimContractId}" required>
+                    <option value="">Выберите вариант</option>
+                    <option>Чек</option>
+                    <option>Квитанция</option>
+                    <option>Договор</option>
+                    <option>Квитанция-договор</option>
+                  </select>
+                  <small id="add_main_claim_info_ev_ground_help_block_${id}_${claimContractId}" class="form-text">
+                    <div class="form-inline">
+                      <input id="add_main_claim_info_ev_ground_deactivate_${id}_${claimContractId}" class="deactivator" type="checkbox">
+                      <label for="add_main_claim_info_ev_ground_deactivate_${id}_${claimContractId}" class="ml-2 form-check-label">Сведений не имеется</label>
+                    </div>
+                  </small>
+                </div>
+                <div class="form-group col-md-3">
+                  <input id = "add_main_claim_info_ev_number_${id}_${claimContractId}" class="add_main_claim_info_ev_number_${id} add_main_claim_info_ev_numbers form-control deactivation" aria-describedby="add_main_claim_info_ev_number_help_block_${id}_${claimContractId}" placeholder="№" type="text" size="10" required>
+                  <small id="add_main_claim_info_ev_number_help_block_${id}_${claimContractId}" class="form-text">
+                    <div class="form-inline">
+                      <input id="add_main_claim_info_ev_number_deactivate_${id}_${claimContractId}" class="deactivator" type="checkbox">
+                      <label for="add_main_claim_info_ev_number_deactivate_${id}_${claimContractId}" class="ml-2 form-check-label">Сведений не имеется</label>
+                    </div>
+                  </small>
+                </div>
+              </div>
             </div>`
 
 
@@ -240,6 +371,7 @@ function addFuMainClaim(id) {
 	$(`#main_claims_${id}`).append(str);
 	$(`#date_main_claim_from_${id}_${claimContractId}`).datepicker();
 	$(`#date_main_claim_to_${id}_${claimContractId}`).datepicker();
+  $(`#add_main_claim_info_ev_date_${id}_${claimContractId}`).datepicker();
 
   $('.datepicker-here').toArray().forEach(function(field){
     new Cleave(field, {
@@ -268,6 +400,7 @@ function addFuMainClaim(id) {
 function removeFuMainClaim(id, claimContractId) {
     $(`#main_claim_${id}_${claimContractId}`).remove();
     $(`#add_main_claim_info_${id}_${claimContractId}`).remove();
+    $(`#add_main_claim_info_ev_${id}_${claimContractId}`).remove();
     // validationCheckUpdate('main-claims-all')
 }
 
@@ -282,8 +415,23 @@ $(document).on("change", ".main_claim_types", function (event) {
     $(this).parent().parent().next().find('.date_main_claim_froms').removeClass('form-control')
     $(this).parent().parent().next().find('.date_main_claim_tos').removeClass('form-control')
 	}
-  // validationCheck('main-claims-all')
-  // validationCheckUpdate('main-claims-all')
+});
+
+//Добавляет дополнительные сведения по требованию о взыскании расходов на эвакуацию ТС
+$(document).on("change", ".main_claim_types", function (event) {
+	if ($(this).find(':selected').text() == "Эвакуатор") {
+		$(this).parent().parent().next().next().show('fast');
+    $(this).parent().parent().next().next().find('.add_main_claim_info_ev_dates').addClass('form-control')
+    $(this).parent().parent().next().next().find('.add_main_claim_info_ev_routes').addClass('form-control')
+    $(this).parent().parent().next().next().find('.add_main_claim_info_ev_grounds').addClass('form-control')
+    $(this).parent().parent().next().next().find('.add_main_claim_info_ev_numbers').addClass('form-control')
+	} else {
+    $(this).parent().parent().next().next().hide('fast');
+    $(this).parent().parent().next().next().find('.add_main_claim_info_ev_dates').removeClass('form-control')
+    $(this).parent().parent().next().next().find('.add_main_claim_info_ev_routes').removeClass('form-control')
+    $(this).parent().parent().next().next().find('.add_main_claim_info_ev_grounds').removeClass('form-control')
+    $(this).parent().parent().next().next().find('.add_main_claim_info_ev_numbers').removeClass('form-control')
+	}
 });
 
 //Блокировать даты судебной неустойки при проставленной галочке "Период не указан"

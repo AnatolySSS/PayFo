@@ -22,3 +22,38 @@ export const confirmation_type_helper = {
         },
     ]
 }
+
+export const evacuation_pay_order_ground_helper = {
+    evacuation_pay_order_ground_helper: [
+        {
+            "evacuation_pay_order_ground": "Чек",
+            "evacuation_pay_order_ground_genitive": "чеком",
+        },
+        {
+            "evacuation_pay_order_ground": "Квитанция",
+            "evacuation_pay_order_ground_genitive": "квитанцией",
+        },{
+            "evacuation_pay_order_ground": "Договор",
+            "evacuation_pay_order_ground_genitive": "договором",
+        },{
+            "evacuation_pay_order_ground": "Квитанция-договор",
+            "evacuation_pay_order_ground_genitive": "квитанцией-договором",
+        },
+    ]
+}
+
+export const evacuation_route_helper = {
+    evacuation_route_helper: [
+        {
+            "evacuation_route": "ДТП - СТОА",
+            "evacuation_route_genitive": "от места ДТП до СТОА",
+        },
+        {
+            "evacuation_route": "ДТП - Хранение",
+            "evacuation_route_genitive": "от места ДТП до места хранения",
+        },{
+            "evacuation_route": "Хранение - СТОА",
+            "evacuation_route_genitive": "от места хранения до СТОА",
+        },
+    ]
+}

@@ -400,6 +400,7 @@ $('#btn_desicion').click(function() {
     name : "dtpData",
     europrotocol : document.querySelector('#europrotocol').checked,
     date_dtp : document.querySelector('#date_dtp').value,
+    place_dtp : document.querySelector('#place_dtp').value,
     dtpParticipants : dtpParticipantAll
   }
 
@@ -452,6 +453,7 @@ $('#btn_desicion').click(function() {
   var penalty_ndfls = $('.penalty_ndfls'); //Получение массива выплат неустойки с НДФЛ
   var penalty_ndfl_summs = $('.penalty_ndfl_summs'); //Получение массива сумм удержанного НДФЛ
   var penalty_ndfl_persents = $('.penalty_ndfl_persents'); //Получение массива процентов НДФЛ
+  var payment_ev_routes = $(`.payment_ev_routes`); //Получение массива маршрутов эвакуации ТС
   let paymentVoluntaryAll = []
   //Создание экземпляров добровольных выплат
   for (var i = 0; i < number_of_payments; i++) {
@@ -462,7 +464,8 @@ $('#btn_desicion').click(function() {
                                                payments_orders[i],
                                                payments_summs[i],
                                                penalty_ndfls[i],
-                                               penalty_ndfl_summs[i]);
+                                               penalty_ndfl_summs[i],
+                                               payment_ev_routes[i]);
     paymentVoluntaryAll[i] = paymentVoluntary[i].setObject()
 
     count_vol_days[i] = paymentVoluntary[i].count_days;
@@ -845,8 +848,10 @@ $('#btn_desicion').click(function() {
     dataPromise.then(result => {
       data_from_db.data = result
       console.log("data_from_db2")
-  
-      decision = makeTextDecision(claimsContract,
+      console.log(claimsContract);
+      decision = makeTextDecision(
+        dtpData,
+        claimsContract,
         dtpParticipant,
         appToFo,
         paymentVoluntary,

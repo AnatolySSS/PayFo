@@ -42,16 +42,16 @@ currentIP = currentIP.toString()
 let connection
 //В зависимости от IP адреса необходимо подключаться к различным портам и с разными настройками базы данных
 switch (currentIP) {
-  case "192.168.0.19":
+  case "192.168.0.16":
     console.log("Это localhost");
     PORT = 80;
     //Подключение к базе данных timeweb 
     connection = mysql.createConnection({
-        host : process.env.DB_TIMEWEB_HOST,
-        port : process.env.DB_TIMEWEB_PORT,
-        user : process.env.DB_TIMEWEB_USER,
-        database : process.env.DB_TIMEWEB_NAME,
-        password : process.env.DB_TIMEWEB_PASSWORD,
+        host : process.env.DB_HOST,
+        port : process.env.DB_PORT,
+        user : process.env.DB_USER,
+        database : process.env.DB_NAME,
+        password : process.env.DB_PASSWORD,
     })
     break;
 
@@ -82,7 +82,7 @@ switch (currentIP) {
     break;
 
   default:
-    console.log("Это localhost");
+    console.log("Не известный IP адрес");
     PORT = 80;
     //Подключение к базе данных timeweb 
     connection = mysql.createConnection({

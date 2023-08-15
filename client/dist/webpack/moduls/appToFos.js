@@ -8,6 +8,7 @@ import { ClaimsContract } from "./mainClaim";
 import { DATE_FZ_123_START } from "./variables";
 import { findLastClaimFoDay } from "./findLastClaimFoDay";
 import { confirmation_type_helper } from "./objects/helpers";
+import { evacuation_route_helper } from './objects/helpers';
 
 class ClaimToFo {
 
@@ -23,7 +24,10 @@ class ClaimToFo {
     without
     pdf
 
-    constructor (id, type, summ, from, to, without, pdf){
+    ev_route
+    ev_route_text
+
+    constructor (id, type, summ, from, to, without, pdf, ev_route){
         this.id = id
         this.type = type
         this.summ = Number(summ.value.replace(/\s+/g, ''))
@@ -32,6 +36,7 @@ class ClaimToFo {
         this.to = to
         this.without = without
         this.pdf = pdf
+        this.ev_route = ev_route
 
         allClaims.claims.forEach(element => {
             
@@ -39,6 +44,18 @@ class ClaimToFo {
                 this.type_text = element.short
             }
         })
+
+         //Добавление маршрута эвакуации ТС
+        this.ev_route_text = "";
+        if (this.type.value == "Эвакуатор") {
+        evacuation_route_helper.evacuation_route_helper.forEach((element) => {
+            if (this.ev_route.value == element.evacuation_route) {
+            this.ev_route_text = " " + element.evacuation_route_genitive;
+            }
+        });
+        }
+        
+        this.type_text = this.type_text + this.ev_route_text
     }
 
     getFromDate() {return Date.parse(changeDateType(this.from.value) + 'T00:00:00');}
@@ -54,6 +71,7 @@ class ClaimToFo {
             to : this.to.value,
             without : this.without.checked,
             pdf : this.pdf.checked,
+            ev_route : this.ev_route.value,
         }
     }
 }
@@ -82,6 +100,7 @@ class ClaimsContractToFo {
         var tos = $(`.date_apps_to_fo_claim_to_${app_id}_${contract_id}`)
         var without_periods = $(`.apps_to_fo_claim_without_period_${app_id}_${contract_id}`)
         var pdfs = $(`.apps_to_fo_claim_pdf_${app_id}_${contract_id}`)
+        var ev_routes = $(`.apps_to_fo_claim_ev_route_${app_id}_${contract_id}`)
         for (let i = 0; i < number_of_claims; i++) {
             this.claim[i] = new ClaimToFo(i + 1,
                                           types[i],
@@ -89,7 +108,8 @@ class ClaimsContractToFo {
                                           froms[i],
                                           tos[i],
                                           without_periods[i],
-                                          pdfs[i])
+                                          pdfs[i],
+                                          ev_routes[i])
             this.claimObjects[i] = this.claim[i].setObject()
             
             var current_claim_summ = ""
@@ -582,6 +602,7 @@ export class AppToFo {
         var penalty_ndfls = $(`.penalty_ndfl_${id}`); //Получение массива выплат неустойки с НДФЛ
         var penalty_ndfl_summs = $(`.penalty_ndfl_summ_${id}`); //Получение массива сумм удержанного НДФЛ
         var penalty_ndfl_persents = $(`.penalty_ndfl_persent_${id}`); //Получение массива процентов НДФЛ
+        var payment_ev_routes = $(`.payment_ev_route_${id}`); //Получение массива маршрутов эвакуации ТС
         //Создание экземпляров добровольных выплат
         for (var i = 0; i < number_of_payments; i++) {
             this.paymentVoluntary[i] = new PaymentVoluntary(id,
@@ -591,7 +612,8 @@ export class AppToFo {
                                                             payments_orders[i],
                                                             payments_summs[i],
                                                             penalty_ndfls[i],
-                                                            penalty_ndfl_summs[i])
+                                                            penalty_ndfl_summs[i],
+                                                            payment_ev_routes[i])
         }
 
         //Создание экземпляра класса Согласия на уведомление по СМС
@@ -658,11 +680,21 @@ export class AppToFo {
                         procedure_helper = "о страховом возмещении по Договору ОСАГО"
                     }
 
+                    //Формирование абзаца с доп требованиями
+                    var app_claims_paragraph_helper = ""
+                    if (this.claimsContractToFoInfo.options.selectedIndex == 1) {
+                        for (let i = 0; i < this.claimsContractToFo.length; i++) {
+                            app_claims_paragraph_helper = app_claims_paragraph_helper + this.claimsContractToFo[i].claims_all
+                        }
+                        app_claims_paragraph_helper = app_claims_paragraph_helper.slice(0, -1)
+                        app_claims_paragraph_helper = `<p>Заявление содержало требование о выплате ${app_claims_paragraph_helper}.</p>`
+                    }
+
                     //Формирование первого параграфа заявления в ФО
                     this.app_paragraph = `<p>${this.getAppDateFormatted()} Заявитель обратился в ${fo_name_accusative} с заявлением 
                     ${procedure_helper}, предоставив все документы, предусмотренные Правилами обязательного 
                     страхования гражданской ответственности владельцев транспортных средств, утвержденными 
-                    Положением Банка России от 19.09.2014 № 431-П (далее – Правила ОСАГО).</p>`
+                    Положением Банка России от 19.09.2014 № 431-П (далее – Правила ОСАГО).</p>${app_claims_paragraph_helper}`
 
                     //Формирование абзаца с формой страхового возмещения
                     if (this.form.options.selectedIndex == 1) {
@@ -813,8 +845,10 @@ export class AppToFo {
 
                     //Формирование абзаца ответом ФО на заявление
                     if (this.answerFoInfo.options.selectedIndex == 1) {
+                        //Возврат документов
                         if (this.answerFo.options.selectedIndex == 1) {
                             
+                        //Осуществление выплаты
                         } else if (this.answerFo.options.selectedIndex == 2) {
                             var answerFo_paragraph_one = ""
                             if (this.paymentVoluntary.length == 1) {

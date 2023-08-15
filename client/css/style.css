@@ -35,6 +35,7 @@ select, input, button, .form_label {
 
 input {
   text-align-last: center;
+  color: #6c757d !important;
 }
 
 .table {

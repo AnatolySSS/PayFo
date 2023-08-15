@@ -495,6 +495,71 @@
                         <label for="main_claim_pdf_1_1" class="ml-2 form-check-label">По день факта</label>
                       </div>
                     </div>
+                    <div id="add_main_claim_info_ev_1_1" class="add_main_claim_info_ev_1 add_main_claim_info_evs" style="display:none">
+                      <div class="form-row">
+                        <div class="form-group col-md-3">
+                          <h6>Дата платежа</h6>
+                        </div>
+                        <div class="form-group col-md-3">
+                          <h6>Маршрут эвакуации</h6>
+                        </div>
+                        <div class="form-group col-md-3">
+                          <h6>Чем подтверждается</h6>
+                        </div>
+                        <div class="form-group col-md-3">
+                          <h6>№ документа</h6>
+                        </div>
+                      </div>
+                      <div class="form-row">
+                        <div class="form-group col-md-3">
+                          <input id = "add_main_claim_info_ev_date_1_1" class="add_main_claim_info_ev_date_1 add_main_claim_info_ev_dates datepicker-here deactivation" aria-describedby="add_main_claim_info_ev_date_help_block_1_1" placeholder="Дата" type="text" size="10" required>
+                          <small id="add_main_claim_info_ev_date_help_block_1_1" class="form-text">
+                            <div class="form-inline">
+                              <input id="add_main_claim_info_ev_date_deactivate_1_1" class="deactivator" type="checkbox">
+                              <label for="add_main_claim_info_ev_date_deactivate_1_1" class="ml-2 form-check-label">Сведений не имеется</label>
+                            </div>
+                          </small>
+                        </div>
+                        <div class="form-group col-md-3">
+                          <select id="add_main_claim_info_ev_route_1_1" class="add_main_claim_info_ev_route_1 add_main_claim_info_ev_routes custom-select deactivation col-md-12" aria-describedby="add_main_claim_info_ev_route_help_block_1_1" required>
+                            <option value="">Выберите вариант</option>
+                            <option>ДТП - СТОА</option>
+                            <option>ДТП - Хранение</option>
+                            <option>Хранение - СТОА</option>
+                          </select>
+                          <small id="add_main_claim_info_ev_route_help_block_1_1" class="form-text">
+                            <div class="form-inline">
+                              <input id="add_main_claim_info_ev_route_deactivate_1_1" class="deactivator" type="checkbox">
+                              <label for="add_main_claim_info_ev_route_deactivate_1_1" class="ml-2 form-check-label">Сведений не имеется</label>
+                            </div>
+                          </small>
+                        </div>
+                        <div class="form-group col-md-3">
+                          <select id="add_main_claim_info_ev_ground_1_1" class="add_main_claim_info_ev_ground_1 add_main_claim_info_ev_grounds custom-select deactivation col-md-12" aria-describedby="add_main_claim_info_ev_ground_help_block_1_1" required>
+                            <option value="">Выберите вариант</option>
+                            <option>Чек</option>
+                            <option>Квитанция</option>
+                            <option>Договор</option>
+                            <option>Квитанция-договор</option>
+                          </select>
+                          <small id="add_main_claim_info_ev_ground_help_block_1_1" class="form-text">
+                            <div class="form-inline">
+                              <input id="add_main_claim_info_ev_ground_deactivate_1_1" class="deactivator" type="checkbox">
+                              <label for="add_main_claim_info_ev_ground_deactivate_1_1" class="ml-2 form-check-label">Сведений не имеется</label>
+                            </div>
+                          </small>
+                        </div>
+                        <div class="form-group col-md-3">
+                          <input id = "add_main_claim_info_ev_number_1_1" class="add_main_claim_info_ev_number_1 add_main_claim_info_ev_numbers deactivation" aria-describedby="add_main_claim_info_ev_number_help_block_1_1" placeholder="№" type="text" size="10" required>
+                          <small id="add_main_claim_info_ev_number_help_block_1_1" class="form-text">
+                            <div class="form-inline">
+                              <input id="add_main_claim_info_ev_number_deactivate_1_1" class="deactivator" type="checkbox">
+                              <label for="add_main_claim_info_ev_number_deactivate_1_1" class="ml-2 form-check-label">Сведений не имеется</label>
+                            </div>
+                          </small>
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -585,8 +650,14 @@
               <!-- BEGIN dtp-description-general -->
               <div class="dtp-description-general">
                 <div class="form-row ml-2">
-                  <div class="form-group">
+                  <div class="form-group col-md-3">
                     <h6>Дата ДТП</h6>
+                  </div>
+                  <div class="form-group col-md-3">
+                    <h6>Место ДТП</h6>
+                  </div>
+                  <div class="form-group col-md-6">
+                    <span id="max_summ"></span>
                   </div>
                 </div>
                 <div class="form-row">
@@ -597,8 +668,14 @@
                       <label for="europrotocol" class="ml-2 form-check-label">европротокол</label>
                     </small>
                   </div>
-                  <div class="form-group col-md-6">
-                    <span id="max_summ"></span>
+                  <div class="form-group col-md-9">
+                    <input id = "place_dtp" class="form-control deactivation" aria-describedby="place_dtp_help_block" placeholder="Место ДТП" type="text" size="10" required>
+                    <small id="place_dtp_help_block" class="form-text">
+                      <div class="form-inline">
+                        <input id="place_dtp_deactivate" class="deactivator" type="checkbox">
+                        <label for="place_dtp_deactivate" class="ml-2 form-check-label">Сведений не имеется</label>
+                      </div>
+                    </small>
                   </div>
                 </div>
               </div>
@@ -1239,6 +1316,29 @@
                             <label for="apps_to_fo_claim_pdf_1_1_1" class="ml-2 form-check-label">По день факта</label>
                           </div>
                         </div>
+                        <div id="apps_to_fo_claim_ev_1_1_1" class="apps_to_fo_claim_ev_1_1 apps_to_fo_claim_ev_1 apps_to_fo_claim_evs" style="display:none">
+                          <div class="form-row">
+                            <div class="form-group col-md-3">
+                              <h6>Маршрут эвакуации</h6>
+                            </div>
+                          </div>
+                          <div class="form-row">
+                            <div class="form-group col-md-3">
+                              <select id="apps_to_fo_claim_ev_route_1_1_1" class="apps_to_fo_claim_ev_route_1_1 apps_to_fo_claim_ev_route_1 apps_to_fo_claim_ev_routes custom-select deactivation col-md-12" aria-describedby="apps_to_fo_claim_ev_route_help_block_1_1_1" required>
+                                <option value="">Выберите вариант</option>
+                                <option>ДТП - СТОА</option>
+                                <option>ДТП - Хранение</option>
+                                <option>Хранение - СТОА</option>
+                              </select>
+                              <small id="apps_to_fo_claim_ev_route_help_block_1_1_1" class="form-text">
+                                <div class="form-inline">
+                                  <input id="apps_to_fo_claim_ev_route_deactivate_1_1_1" class="deactivator" type="checkbox">
+                                  <label for="apps_to_fo_claim_ev_route_deactivate_1_1_1" class="ml-2 form-check-label">Сведений не имеется</label>
+                                </div>
+                              </small>
+                            </div>
+                          </div>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -1646,6 +1746,29 @@
                             </div>
                             <div class="form-group col-md-3 form-inline">
                               <span id="penalty_ndfl_persent_1_1" class="penalty_ndfl_persent_1 penalty_ndfl_persents"></span>
+                            </div>
+                          </div>
+                          <div id="payment_ev_1_1" class="payment_ev_1 payment_evs" style="display:none">
+                            <div class="form-row">
+                              <div class="form-group col-md-3">
+                                <h6>Маршрут эвакуации</h6>
+                              </div>
+                            </div>
+                            <div class="form-row">
+                              <div class="form-group col-md-3">
+                                <select id="payment_ev_route_1_1" class="payment_ev_route_1 payment_ev_routes custom-select deactivation col-md-12" aria-describedby="payment_ev_route_help_block_1_1" required>
+                                  <option value="">Выберите вариант</option>
+                                  <option>ДТП - СТОА</option>
+                                  <option>ДТП - Хранение</option>
+                                  <option>Хранение - СТОА</option>
+                                </select>
+                                <small id="payment_ev_route_help_block_1_1" class="form-text">
+                                  <div class="form-inline">
+                                    <input id="payment_ev_route_deactivate_1_1" class="deactivator" type="checkbox">
+                                    <label for="payment_ev_route_deactivate_1_1" class="ml-2 form-check-label">Сведений не имеется</label>
+                                  </div>
+                                </small>
+                              </div>
                             </div>
                           </div>
                         </div>

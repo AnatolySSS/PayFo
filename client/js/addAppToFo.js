@@ -176,6 +176,29 @@ function addAppToFo() {
                                 <label for="apps_to_fo_claim_pdf_${appsToFoId}_1_1" class="ml-2 form-check-label">По день факта</label>
                             </div>
                         </div>
+                        <div id="apps_to_fo_claim_ev_${appsToFoId}_1_1" class="apps_to_fo_claim_ev_${appsToFoId}_1 apps_to_fo_claim_ev_${appsToFoId} apps_to_fo_claim_evs" style="display:none">
+                            <div class="form-row">
+                                <div class="form-group col-md-3">
+                                    <h6>Маршрут эвакуации</h6>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md-3">
+                                    <select id="apps_to_fo_claim_ev_route_${appsToFoId}_1_1" class="apps_to_fo_claim_ev_route_${appsToFoId}_1 apps_to_fo_claim_ev_route_${appsToFoId} apps_to_fo_claim_ev_routes custom-select deactivation col-md-12" aria-describedby="apps_to_fo_claim_ev_route_help_block_${appsToFoId}_1_1" required>
+                                        <option value="">Выберите вариант</option>
+                                        <option>ДТП - СТОА</option>
+                                        <option>ДТП - Хранение</option>
+                                        <option>Хранение - СТОА</option>
+                                    </select>
+                                    <small id="apps_to_fo_claim_ev_route_help_block_${appsToFoId}_1_1" class="form-text">
+                                        <div class="form-inline">
+                                            <input id="apps_to_fo_claim_ev_route_deactivate_${appsToFoId}_1_1" class="deactivator" type="checkbox">
+                                            <label for="apps_to_fo_claim_ev_route_deactivate_${appsToFoId}_1_1" class="ml-2 form-check-label">Сведений не имеется</label>
+                                        </div>
+                                    </small>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -585,9 +608,32 @@ function addAppToFo() {
                               <span id="penalty_ndfl_persent_${appsToFoId}_1" class="penalty_ndfl_persent_${appsToFoId} penalty_ndfl_persents"></span>
                             </div>
                           </div>
+                          <div id="payment_ev_${appsToFoId}_1" class="payment_ev_${appsToFoId} payment_evs" style="display:none">
+                            <div class="form-row">
+                              <div class="form-group col-md-3">
+                                <h6>Маршрут эвакуации</h6>
+                              </div>
+                            </div>
+                            <div class="form-row">
+                              <div class="form-group col-md-3">
+                                <select id="payment_ev_route_${appsToFoId}_1" class="payment_ev_route_${appsToFoId} payment_ev_routes custom-select deactivation col-md-12" aria-describedby="payment_ev_route_help_block_${appsToFoId}_1" required>
+                                  <option value="">Выберите вариант</option>
+                                  <option>ДТП - СТОА</option>
+                                  <option>ДТП - Хранение</option>
+                                  <option>Хранение - СТОА</option>
+                                </select>
+                                <small id="payment_ev_route_help_block_${appsToFoId}_1" class="form-text">
+                                  <div class="form-inline">
+                                    <input id="payment_ev_route_deactivate_${appsToFoId}_1" class="deactivator" type="checkbox">
+                                    <label for="payment_ev_route_deactivate_${appsToFoId}_1" class="ml-2 form-check-label">Сведений не имеется</label>
+                                  </div>
+                                </small>
+                              </div>
+                            </div>
+                          </div>
                         </div>
                     </div>
-                      <!-- END payments -->
+                    <!-- END payments -->
 
                     <!-- BEGIN stor -->
                     <div id="apps_to_fo_stor_${appsToFoId}" class="apps_to_fo_stors" style="display:none">
@@ -1053,9 +1099,6 @@ function addAppToFo() {
     })
     });
     
-    //Вызывает функцию, изменяющую общую картинку валидации
-    // validationCheck('apps-to-fo')
-    // validationCheckUpdate('apps-to-fo')
     addPopover('apps_to_fo_inspection_notice_telegram_dates')
 
 }
@@ -1136,12 +1179,11 @@ $(document).on("change", ".apps_to_fo_types", function (event) {
 $(document).on("change", ".apps_to_fo_claims_contract_infos", function (event) {
 	if ($(this).find(':selected').text() == "Дополнительные требования заявлены") {
         $(this).parent().parent().next().show('fast')
-
-        $(this).parent().parent().next().find('input[type=text]').addClass('form-control')
-        $(this).parent().parent().next().find('select').addClass('form-control')
+        $(this).parent().parent().next().find('.apps_to_fo_contract_types').addClass('form-control')
 	} else {
         $(this).parent().parent().next().hide('fast')
         setTimeout(() => {
+            $(this).parent().parent().next().find('.apps_to_fo_contract_types').removeClass('form-control')
             $(this).parent().parent().next().find('input[type=text]').removeClass('form-control')
             $(this).parent().parent().next().find('select').removeClass('form-control')
         }, 200)
@@ -1281,6 +1323,29 @@ function addAppsToFoContract(id) {
                             <label for="apps_to_fo_claim_pdf_${id}_${appsToFoContractId}_1" class=" form-check-label">По день факта</label>
                         </div>
                     </div>
+                    <div id="apps_to_fo_claim_ev_${id}_${appsToFoContractId}_1" class="apps_to_fo_claim_ev_${id}_${appsToFoContractId} apps_to_fo_claim_ev_1 apps_to_fo_claim_evs" style="display:none">
+                        <div class="form-row">
+                            <div class="form-group col-md-3">
+                                <h6>Маршрут эвакуации</h6>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-3">
+                                <select id="apps_to_fo_claim_ev_route_${id}_${appsToFoContractId}_1" class="apps_to_fo_claim_ev_route_${id}_${appsToFoContractId} apps_to_fo_claim_ev_route_1 apps_to_fo_claim_ev_routes custom-select deactivation col-md-12" aria-describedby="apps_to_fo_claim_ev_route_help_block_${id}_${appsToFoContractId}_1" required>
+                                    <option value="">Выберите вариант</option>
+                                    <option>ДТП - СТОА</option>
+                                    <option>ДТП - Хранение</option>
+                                    <option>Хранение - СТОА</option>
+                                </select>
+                                <small id="apps_to_fo_claim_ev_route_help_block_${id}_${appsToFoContractId}_1" class="form-text">
+                                    <div class="form-inline">
+                                        <input id="apps_to_fo_claim_ev_route_deactivate_${id}_${appsToFoContractId}_1" class="deactivator" type="checkbox">
+                                        <label for="apps_to_fo_claim_ev_route_deactivate_${id}_${appsToFoContractId}_1" class="ml-2 form-check-label">Сведений не имеется</label>
+                                    </div>
+                                </small>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>`
   
@@ -1348,13 +1413,19 @@ $(document).on("change", ".apps_to_fo_contract_types", function (event) {
     if ($(this).find(':selected').text() != "Выберите тип договора") {
         $(this).parent().parent().next().show('fast'); //Показывает .add_main_claims_info
         $(this).parent().next().find(".toggle").addClass("rotate");
+        $(this).parent().parent().next().find('.apps_to_fo_claim_types').addClass('form-control')
+        $(this).parent().parent().next().find('.apps_to_fo_claim_summs').addClass('form-control')
 
 		if ($(this).parent().parent().next().children().first().find(':selected').text() == "Неустойка"){
 			$(this).parent().parent().next().children().first().next().show('fast'); //Показывает .add_main_claims_info
-		}
+		} else if ($(this).parent().parent().next().children().first().find(':selected').text() == "Эвакуатор") {
+            $(this).parent().parent().next().children().first().next().next().show('fast'); //Показывает .add_main_claims_info
+        }
     } else {
         $(this).parent().parent().next().hide('fast'); //Скрывает .add_main_claims_info
         $(this).parent().next().find(".toggle").removeClass("rotate");
+        $(this).parent().parent().next().find('.apps_to_fo_claim_types').removeClass('form-control')
+        $(this).parent().parent().next().find('.apps_to_fo_claim_summs').removeClass('form-control')
     }
 });
 
@@ -1423,6 +1494,29 @@ function addAppsToFoClaim(id, conrtactId) {
         <input id="apps_to_fo_claim_pdf_${id}_${conrtactId}_${appsToFoClaimsContractId}" class="apps_to_fo_claim_pdf_${id}_${conrtactId} apps_to_fo_claim_pdf_${id} apps_to_fo_claim_pdfs ml-2" type="checkbox">
         <label for="apps_to_fo_claim_pdf_${id}_${conrtactId}_${appsToFoClaimsContractId}" class=" form-check-label">По день факта</label>
     </div>
+</div>
+<div id="apps_to_fo_claim_ev_${id}_${conrtactId}_${appsToFoClaimsContractId}" class="apps_to_fo_claim_ev_${id}_${conrtactId} apps_to_fo_claim_ev_${id} apps_to_fo_claim_evs" style="display:none">
+    <div class="form-row">
+        <div class="form-group col-md-3">
+            <h6>Маршрут эвакуации</h6>
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="form-group col-md-3">
+            <select id="apps_to_fo_claim_ev_route_${id}_${conrtactId}_${appsToFoClaimsContractId}" class="apps_to_fo_claim_ev_route_${id}_${conrtactId} apps_to_fo_claim_ev_route_${id} apps_to_fo_claim_ev_routes custom-select deactivation col-md-12" aria-describedby="apps_to_fo_claim_ev_route_help_block_${id}_${conrtactId}_${appsToFoClaimsContractId}" required>
+                <option value="">Выберите вариант</option>
+                <option>ДТП - СТОА</option>
+                <option>ДТП - Хранение</option>
+                <option>Хранение - СТОА</option>
+            </select>
+            <small id="apps_to_fo_claim_ev_route_help_block_${id}_${conrtactId}_${appsToFoClaimsContractId}" class="form-text">
+                <div class="form-inline">
+                    <input id="apps_to_fo_claim_ev_route_deactivate_${id}_${conrtactId}_${appsToFoClaimsContractId}" class="deactivator" type="checkbox">
+                    <label for="apps_to_fo_claim_ev_route_deactivate_${id}_${conrtactId}_${appsToFoClaimsContractId}" class="ml-2 form-check-label">Сведений не имеется</label>
+                </div>
+            </small>
+        </div>
+    </div>
 </div>`
 
 	$(`#apps_to_fo_claims_${id}_${conrtactId}`).append(str);
@@ -1458,10 +1552,11 @@ function addAppsToFoClaim(id, conrtactId) {
 function removeAppsToFoClaim(id, claimContractId, appsToFoClaimsContractId) {
     $(`#apps_to_fo_claim_${id}_${claimContractId}_${appsToFoClaimsContractId}`).remove();
     $(`#add_apps_to_fo_claim_info_${id}_${claimContractId}_${appsToFoClaimsContractId}`).remove();
+    $(`#apps_to_fo_claim_ev_${id}_${claimContractId}_${appsToFoClaimsContractId}`).remove();
     // validationCheckUpdate('apps-to-fo')
 }
 
-//Добавляет период взыскания неустойки судом
+//Добавляет период неустойки
 $(document).on("change", ".apps_to_fo_claim_types", function (event) {
 	if ($(this).find(':selected').text() == "Неустойка") {
 		$(this).parent().parent().next().show('fast');
@@ -1472,8 +1567,28 @@ $(document).on("change", ".apps_to_fo_claim_types", function (event) {
         $(this).parent().parent().next().find('.date_apps_to_fo_claim_froms').removeClass('form-control')
         $(this).parent().parent().next().find('.date_apps_to_fo_claim_tos').removeClass('form-control')
 	}
-//   validationCheck('apps-to-fo')
-//   validationCheckUpdate('apps-to-fo')
+});
+
+//Добавляет маршрут эвакуации
+$(document).on("change", ".apps_to_fo_claim_types", function (event) {
+	if ($(this).find(':selected').text() == "Эвакуатор") {
+		$(this).parent().parent().next().next().show('fast');
+        $(this).parent().parent().next().next().find('.apps_to_fo_claim_ev_routes').addClass('form-control')
+	} else {
+        $(this).parent().parent().next().next().hide('fast');
+        $(this).parent().parent().next().next().find('.apps_to_fo_claim_ev_routes').removeClass('form-control')
+	}
+});
+
+//Добавляет маршрут эвакуации ТС
+$(document).on("change", ".apps_to_fo_claim_types", function (event) {
+	if ($(this).find(':selected').text() == "Эвакуатор") {
+		$(this).parent().parent().next().next().show('fast');
+        $(this).parent().parent().next().next().find('.apps_to_fo_claim_ev_routes').addClass('form-control')
+	} else {
+        $(this).parent().parent().next().next().hide('fast');
+        $(this).parent().parent().next().next().find('.apps_to_fo_claim_ev_routes').removeClass('form-control')
+	}
 });
 
 //Блокировать даты судебной неустойки при проставленной галочке "Период не указан"
@@ -2372,6 +2487,29 @@ function addPayment(appsToFoId) {
                 <span id="penalty_ndfl_persent_${appsToFoId}_${paymentId}" class="penalty_ndfl_persent_${appsToFoId} penalty_ndfl_persents"></span>
             </div>
         </div>
+        <div id="payment_ev_${appsToFoId}_${paymentId}" class="payment_ev_1 payment_evs" style="display:none">
+            <div class="form-row">
+                <div class="form-group col-md-3">
+                    <h6>Маршрут эвакуации</h6>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-3">
+                    <select id="payment_ev_route_${appsToFoId}_${paymentId}" class="payment_ev_route_${appsToFoId} payment_ev_routes custom-select deactivation col-md-12" aria-describedby="payment_ev_route_help_block_${appsToFoId}_${paymentId}" required>
+                        <option value="">Выберите вариант</option>
+                        <option>ДТП - СТОА</option>
+                        <option>ДТП - Хранение</option>
+                        <option>Хранение - СТОА</option>
+                    </select>
+                    <small id="payment_ev_route_help_block_${appsToFoId}_${paymentId}" class="form-text">
+                        <div class="form-inline">
+                            <input id="payment_ev_route_deactivate_${appsToFoId}_${paymentId}" class="deactivator" type="checkbox">
+                            <label for="payment_ev_route_deactivate_${appsToFoId}_${paymentId}" class="ml-2 form-check-label">Сведений не имеется</label>
+                        </div>
+                    </small>
+                </div>
+            </div>
+        </div>
   </div>
   `
 
@@ -2408,7 +2546,7 @@ function removePayment(appsToFoId, paymentId) {
     // validationCheckUpdate('apps-to-fo')
 }
 
-//Добавляет период взыскания неустойки ФУ
+//Добавляет галочку НДФЛ
 $(document).on("change", ".payments_names", function (event) {
 	if ($(this).find(':selected').text() == "Неустойка") {
 		$(this).parent().parent().next().show('fast');
@@ -2417,7 +2555,7 @@ $(document).on("change", ".payments_names", function (event) {
 	}
 });
 
-//Добавляет период взыскания неустойки ФУ
+//Добавляет поле ввода величины НДФЛ
 $(document).on("change", ".penalty_ndfls", function (event) {
 	if ($(this).is(':checked')) {
 		$(this).parent().parent().next().show('fast')
@@ -2427,6 +2565,17 @@ $(document).on("change", ".penalty_ndfls", function (event) {
         setTimeout(() => {
             $(this).parent().parent().next().find('input[type=text]').removeClass('form-control')
         }, 200)
+	}
+});
+
+//Добавляет маршрут эвакуации ТС
+$(document).on("change", ".payments_names", function (event) {
+	if ($(this).find(':selected').text() == "Эвакуатор") {
+		$(this).parent().parent().next().next().show('fast');
+        $(this).parent().parent().next().next().find('.payment_ev_routes').addClass('form-control')
+	} else {
+        $(this).parent().parent().next().next().hide('fast');
+        $(this).parent().parent().next().next().find('.payment_ev_routes').removeClass('form-control')
 	}
 });
 

@@ -11,6 +11,7 @@ import { COLUMN_NAME_5, COLUMN_NAME_6, COLUMN_NAME_7, COLUMN_NAME_8 } from './va
 import { DAY } from './variables.js';
 import { AppToFo } from "./appToFos";
 import { allClaims } from './objects/allClaims';
+import { evacuation_route_helper } from './objects/helpers.js';
 
 /* Объект для добровольной выплаты
 
@@ -73,6 +74,9 @@ export class PaymentVoluntary {
   ndfl_summ
   ndfl_percent
 
+  ev_route
+  ev_route_text
+
   app_day
   app_day_form
   last_day
@@ -88,7 +92,7 @@ export class PaymentVoluntary {
 
   count_days
 
-  constructor(app_id, payment_id, type, date, order, summ, ndfl, ndfl_summ){
+  constructor(app_id, payment_id, type, date, order, summ, ndfl, ndfl_summ, ev_route){
 
     this.date_sv = new AppDate("date_sv")
     this.date_uts = new AppDate("date_uts")
@@ -113,9 +117,10 @@ export class PaymentVoluntary {
      }
     }
 
+    this.type = type;
     this.app_id = app_id;
     this.payment_id = payment_id;
-    this.type = type;
+    this.ev_route = ev_route;
 
     allClaims.claims.forEach(element => {
       if (this.type.value == element.claim) {
@@ -125,6 +130,19 @@ export class PaymentVoluntary {
           }
       }
     })
+
+    //Добавление маршрута эвакуации ТС
+    this.ev_route_text = "";
+    if (this.type.value == "Эвакуатор") {
+      evacuation_route_helper.evacuation_route_helper.forEach((element) => {
+        if (this.ev_route.value == element.evacuation_route) {
+          this.ev_route_text = " " + element.evacuation_route_genitive;
+        }
+      });
+    }
+    
+    this.type_text = this.type_text + this.ev_route_text
+
     //обработка значения даты выплаты (преобразование в количество миллисекунд)
     this.date = date
     this.order = order;
@@ -268,6 +286,7 @@ export class PaymentVoluntary {
 
         ndfl : this.ndfl.checked,
         ndfl_summ : this.ndfl_summ,
+        ev_route : this.ev_route,
     }
 }
 

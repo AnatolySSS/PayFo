@@ -6,6 +6,7 @@ import { expertiseQuestions } from "../objects/allExpertiseQuestions"
 import { makePercentageText_genitive } from "../makePercentageText_genitive"
 import { makeRubText_genitive } from '../makeRubText_genitive.js';
 import { osagoPenaltyParagraph } from "./osago/osagoPenalty";
+import { evacuation_pay_order_ground_helper } from '../objects/helpers';
 
 export function check_signs(totalData, signs) {
     let signs_filled = signs
@@ -213,7 +214,8 @@ export function check_signs(totalData, signs) {
     return signs_filled
 }
 
-export function make_motivation_paragraph(claimsContract,
+export function make_motivation_paragraph(dtpData,
+                                          claimsContract,
                                           dtpParticipant,
                                           appToFo,
                                           paymentVoluntary,
@@ -230,7 +232,6 @@ export function make_motivation_paragraph(claimsContract,
     let all_found_claims_result_helper = []
     let all_found_claims_helper = {}
     let osago_penalty_paragraph = {}
-    console.log(claimsContract);
     
     let total_result = ""
     let motivation_part = ""
@@ -377,7 +378,8 @@ export function make_motivation_paragraph(claimsContract,
                 if (Object.keys(data_from_db.total_data[right_sign_max_index])[i].indexOf("motiv") >= 0) {
                     if (Object.values(data_from_db.total_data[right_sign_max_index])[i] != null) {
                         let paragraphs = Object.values(data_from_db.total_data[right_sign_max_index])[i]
-                        paragraphs = fillMotiveParagraph(claimsContract,
+                        paragraphs = fillMotiveParagraph(dtpData,
+                                                            claimsContract,
                                                             dtpParticipant,
                                                             appToFo,
                                                             paymentVoluntary,
@@ -425,7 +427,8 @@ export function make_motivation_paragraph(claimsContract,
                     if (Object.keys(data_from_db.total_data[right_motive_index])[i].indexOf("motiv") >= 0) {
                         if (Object.values(data_from_db.total_data[right_motive_index])[i] != null) {
                             let paragraphs = Object.values(data_from_db.total_data[right_motive_index])[i]
-                            paragraphs = fillMotiveParagraph(claimsContract,
+                            paragraphs = fillMotiveParagraph(dtpData,
+                                                             claimsContract,
                                                              dtpParticipant,
                                                              appToFo,
                                                              paymentVoluntary,
@@ -522,11 +525,29 @@ export function make_motivation_paragraph(claimsContract,
         satisfaction_summ = max_summ
     }
 
+    //Определение суммы расходов на эвакуацию ТС
+    let satisfaction_ev_summ
+    for (let i = 0; i < claimsContract.length; i++) {
+        if (claimsContract[i].type.value == "ОСАГО") {
+            for (let j = 0; j < claimsContract[i].claimObjects.length; j++) {
+                if (claimsContract[i].claimObjects[j].type == "Эвакуатор") {
+                    satisfaction_ev_summ = claimsContract[i].claimObjects[j].summ
+                }
+            }
+        }
+    }
+
      //Формирование объекта найденных требований и удовлетворенных сумм для резолютивной части
      for (let i = 0; i < all_found_claims.length; i++) {
         if (all_found_claims[i].name == "Страховое возмещение") {
             if (all_found_claims[i].result == "УДОВЛЕТВОРИТЬ") {
                 all_found_claims[i].summ = (satisfaction_summ - total_summ_payment)
+            } else {
+                all_found_claims[i].summ = 0
+            }
+        } else if (all_found_claims[i].name == "Эвакуатор") {
+            if (all_found_claims[i].result == "УДОВЛЕТВОРИТЬ") {
+                all_found_claims[i].summ = satisfaction_ev_summ
             } else {
                 all_found_claims[i].summ = 0
             }
@@ -558,7 +579,8 @@ export function make_motivation_paragraph(claimsContract,
 }
 
 //Редактирование изменяемых частей мотивировочной части
-function fillMotiveParagraph(claimsContract,
+function fillMotiveParagraph(dtpData,
+                             claimsContract,
                              dtpParticipant,
                              appToFo,
                              paymentVoluntary,
@@ -573,7 +595,6 @@ function fillMotiveParagraph(claimsContract,
                              paragraph) {
 
     let result_paragraph = ""
-
     
     //Определение суммы страхового возмещения на основании НТЭ ФУ
     let satisfaction_summ = 0
@@ -970,6 +991,35 @@ function fillMotiveParagraph(claimsContract,
     } else if (total_data_keys == "Таким образом, Закон № 40-ФЗ и Правила ОСАГО не содержат требований, обязывающих участников ДТП привлекать аварийных комиссаров") {
 
         result_paragraph = paragraph.replaceAll("avarkom_summ", makeRubText_genitive(claim_to_fu_summ))
+
+    } else if (total_data_keys == "Заявителем понесены расходы на оплату услуг по эвакуации ТС") {
+        let evacuation_pay_date, evacuation_pay_summ, evacuation_pay_order_name, evacuation_pay_order_number
+        for (let i = 0; i < claimsContract[0].claimObjects.length; i++) {
+            if (claimsContract[0].claimObjects[i].type == "Эвакуатор") {
+                evacuation_pay_date = claimsContract[0].claimObjects[i].ev_date
+                evacuation_pay_summ = makeRubText_genitive(claimsContract[0].claimObjects[i].summ)
+                evacuation_pay_order_ground_helper.evacuation_pay_order_ground_helper.forEach(element => {
+                    if (claimsContract[0].claimObjects[i].ev_ground == element.evacuation_pay_order_ground) {
+                        evacuation_pay_order_name = element.evacuation_pay_order_ground_genitive
+                    }
+                })
+                evacuation_pay_order_number = claimsContract[0].claimObjects[i].ev_number
+            }
+        }
+        result_paragraph = paragraph.replaceAll("place_dtp", dtpData.place_dtp)
+        result_paragraph = result_paragraph.replaceAll("evacuation_pay_date", evacuation_pay_date)
+        result_paragraph = result_paragraph.replaceAll("evacuation_pay_summ", evacuation_pay_summ)
+        result_paragraph = result_paragraph.replaceAll("evacuation_pay_order_name", evacuation_pay_order_name)
+        result_paragraph = result_paragraph.replaceAll("evacuation_pay_order_number", evacuation_pay_order_number)
+
+    } else if (total_data_keys == "Учитывая вышеизложенное, требование Заявителя о взыскании расходов на оплату услуг по эвакуации ТС") {
+        let evacuation_pay_summ
+        for (let i = 0; i < claimsContract[0].claimObjects.length; i++) {
+            if (claimsContract[0].claimObjects[i].type == "Эвакуатор") {
+                evacuation_pay_summ = makeRubText_genitive(claimsContract[0].claimObjects[i].summ)
+            }
+        }
+        result_paragraph = paragraph.replaceAll("evacuation_pay_summ", evacuation_pay_summ)
 
     } else {
         result_paragraph = paragraph
