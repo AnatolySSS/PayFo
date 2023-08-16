@@ -45,7 +45,7 @@ class ClaimToFo {
             }
         })
 
-         //Добавление маршрута эвакуации ТС
+        //Добавление маршрута эвакуации ТС
         this.ev_route_text = "";
         if (this.type.value == "Эвакуатор") {
         evacuation_route_helper.evacuation_route_helper.forEach((element) => {

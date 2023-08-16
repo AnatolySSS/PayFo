@@ -3,7 +3,7 @@ import { allPopovers } from "./objects/allPopovers";
 //Добавляет popover
 $(document).on("click", '[data-toggle="popover"]', function (event) {
     allPopovers.popovers.forEach(element => {
-        if ($(this).parent().prev().hasClass(`.${element.type}`)) {
+        if ($(this).parent().parent().prev().hasClass(`.${element.type}`)) {
             $(function () {
                 $(`.${className} + small [data-toggle="popover"]`).popover({
                 html: true,

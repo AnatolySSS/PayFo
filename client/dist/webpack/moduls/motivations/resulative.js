@@ -2,6 +2,7 @@ import { makeRubText_genitive } from '../makeRubText_genitive.js';
 import { allClaims } from "../objects/allClaims.js";
 import { DATE_FZ_123_START } from "../variables";
 import { changeDateType } from '../changeDateType.js';
+import { evacuation_route_helper } from '../objects/helpers.js';
 
 export function make_resulative_paragraph(total_penalty_summ_accrued,
                                           total_penalty_summ_paid,
@@ -134,7 +135,11 @@ export function make_resulative_paragraph(total_penalty_summ_accrued,
         if (claims_refuse_boolean || partly_boolean || claims_order_boolean) {
             partly = " частично"
         }
-        resulative_part = resulative_part + `<p>требование ${app_name} о взыскании с Финансовой организации 
+        let claim_count = "требование"
+        if (all_found_claims > 1) {
+            claim_count = "требования"
+        }
+        resulative_part = resulative_part + `<p>${claim_count} ${app_name} о взыскании с Финансовой организации 
         ${main_claims_all_paragraph} удовлетворить${partly}.</p>`
 
         let claims_satisfied_helper = ""
@@ -150,6 +155,9 @@ export function make_resulative_paragraph(total_penalty_summ_accrued,
             claims_satisfied_helper = claims_satisfied_helper + `неустойку за несоблюдение срока выплаты страхового возмещения 
             по Договору ОСАГО в размере ${makeRubText_genitive(total_penalty_summ)}, `
         }
+        
+        let ev_route_text = "";
+        let ev_route
          //Добавление фразы про взыскание остальных удовлетворенных требований
         for (let i = 0; i < all_found_claims.length; i++) {
             if (all_found_claims[i].name != "Страховое возмещение" && 
@@ -157,7 +165,24 @@ export function make_resulative_paragraph(total_penalty_summ_accrued,
                 all_found_claims[i].result == "УДОВЛЕТВОРИТЬ") {
                 allClaims.claims.forEach(element => {
                     if (all_found_claims[i].name == element.claim) {
-                        claims_satisfied_helper = claims_satisfied_helper + `${element.res} в размере 
+                        //Добавление маршрута эвакуации ТС
+                        if (all_found_claims[i].name == "Эвакуатор") {
+                            for (let j = 0; j < totalData.claimsToFuData.claimsContractAll.length; j++) {
+                                if (totalData.claimsToFuData.claimsContractAll[j].type == "ОСАГО") {
+                                    for (let k = 0; k < totalData.claimsToFuData.claimsContractAll[j].claim.length; k++) {
+                                        if (totalData.claimsToFuData.claimsContractAll[j].claim[k].type == "Эвакуатор") {
+                                            ev_route = totalData.claimsToFuData.claimsContractAll[j].claim[k].ev_route
+                                        }
+                                    }
+                                }
+                            }
+                            evacuation_route_helper.evacuation_route_helper.forEach((element) => {
+                                if (ev_route == element.evacuation_route) {
+                                ev_route_text = " " + element.evacuation_route_genitive;
+                                }
+                            });
+                        }
+                        claims_satisfied_helper = claims_satisfied_helper + `${element.res}${ev_route_text} в размере 
                         ${makeRubText_genitive(all_found_claims[i].summ)}, `
                     }
                 })

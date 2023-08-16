@@ -1356,13 +1356,13 @@ function validationCheckUpdate(className) {
 $(document).on( "mouseenter", '[data-toggle="popover"]', function( event ) {
   $(this).css("cursor", "pointer")
   allPopovers.popovers.forEach(element => {
-    if ($(this).parent().prev().hasClass(`${element.type}`)) {
+    if ($(this).parent().parent().prev().hasClass(`${element.type}`)) {
       $(function () {
           $(`.${element.type} + small [data-toggle="popover"]`).popover({
           html: true,
           title: element.title,
           content: function () {
-              return element.content
+              return element.content()
           }
         })
       })
