@@ -6,7 +6,7 @@ import { expertiseQuestions } from "../objects/allExpertiseQuestions"
 import { makePercentageText_genitive } from "../makePercentageText_genitive"
 import { makeRubText_genitive } from '../makeRubText_genitive.js';
 import { osagoPenaltyParagraph } from "./osago/osagoPenalty";
-import { evacuation_pay_order_ground_helper } from '../objects/helpers';
+import { evacuation_pay_order_ground_helper, evacuation_route_helper } from '../objects/helpers';
 
 export function check_signs(totalData, signs) {
     let signs_filled = signs
@@ -993,10 +993,12 @@ function fillMotiveParagraph(dtpData,
         result_paragraph = paragraph.replaceAll("avarkom_summ", makeRubText_genitive(claim_to_fu_summ))
 
     } else if (total_data_keys == "Заявителем понесены расходы на оплату услуг по эвакуации ТС") {
-        let evacuation_pay_date, evacuation_pay_summ, evacuation_pay_order_name, evacuation_pay_order_number
+        let ev_route_text = ""
+        let evacuation_pay_date, evacuation_pay_summ, evacuation_pay_order_name, evacuation_pay_order_number, evacuation_route
         for (let i = 0; i < claimsContract[0].claimObjects.length; i++) {
             if (claimsContract[0].claimObjects[i].type == "Эвакуатор") {
                 evacuation_pay_date = claimsContract[0].claimObjects[i].ev_date
+                evacuation_route = claimsContract[0].claimObjects[i].ev_route
                 evacuation_pay_summ = makeRubText_genitive(claimsContract[0].claimObjects[i].summ)
                 evacuation_pay_order_ground_helper.evacuation_pay_order_ground_helper.forEach(element => {
                     if (claimsContract[0].claimObjects[i].ev_ground == element.evacuation_pay_order_ground) {
@@ -1006,20 +1008,39 @@ function fillMotiveParagraph(dtpData,
                 evacuation_pay_order_number = claimsContract[0].claimObjects[i].ev_number
             }
         }
-        result_paragraph = paragraph.replaceAll("place_dtp", dtpData.place_dtp)
+
+        evacuation_route_helper.evacuation_route_helper.forEach((element) => {
+            if (evacuation_route == element.evacuation_route) {
+                result_paragraph = paragraph.replaceAll("с места ДТП (place_dtp)", element.evacuation_route_motivation)
+            }
+        })
+
+        result_paragraph = result_paragraph.replaceAll("place_dtp", dtpData.place_dtp)
         result_paragraph = result_paragraph.replaceAll("evacuation_pay_date", evacuation_pay_date)
         result_paragraph = result_paragraph.replaceAll("evacuation_pay_summ", evacuation_pay_summ)
         result_paragraph = result_paragraph.replaceAll("evacuation_pay_order_name", evacuation_pay_order_name)
         result_paragraph = result_paragraph.replaceAll("evacuation_pay_order_number", evacuation_pay_order_number)
 
     } else if (total_data_keys == "Учитывая вышеизложенное, требование Заявителя о взыскании расходов на оплату услуг по эвакуации ТС") {
-        let evacuation_pay_summ
+        let evacuation_pay_summ, evacuation_route
         for (let i = 0; i < claimsContract[0].claimObjects.length; i++) {
             if (claimsContract[0].claimObjects[i].type == "Эвакуатор") {
                 evacuation_pay_summ = makeRubText_genitive(claimsContract[0].claimObjects[i].summ)
             }
         }
         result_paragraph = paragraph.replaceAll("evacuation_pay_summ", evacuation_pay_summ)
+
+        for (let i = 0; i < claimsContract[0].claimObjects.length; i++) {
+            if (claimsContract[0].claimObjects[i].type == "Эвакуатор") {
+                evacuation_route = claimsContract[0].claimObjects[i].ev_route
+            }
+        }
+
+        evacuation_route_helper.evacuation_route_helper.forEach((element) => {
+            if (evacuation_route == element.evacuation_route) {
+                result_paragraph = result_paragraph.replaceAll("Транспортного средства", "Транспортного средства " + element.evacuation_route_genitive)
+            }
+        })
 
     } else {
         result_paragraph = paragraph

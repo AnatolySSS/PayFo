@@ -47,13 +47,16 @@ export const evacuation_route_helper = {
         {
             "evacuation_route": "ДТП - СТОА",
             "evacuation_route_genitive": "от места ДТП до СТОА",
+            "evacuation_route_motivation": "от места ДТП (place_dtp) до СТОА",
         },
         {
             "evacuation_route": "ДТП - Хранение",
             "evacuation_route_genitive": "от места ДТП до места хранения",
+            "evacuation_route_motivation": "от места ДТП (place_dtp) до места хранения",
         },{
             "evacuation_route": "Хранение - СТОА",
             "evacuation_route_genitive": "от места хранения до СТОА",
+            "evacuation_route_motivation": "от места хранения до СТОА",
         },
     ]
 }

@@ -921,56 +921,74 @@ function addAppToFo() {
                                 <div id="apps_to_fo_inspection_notice_telegram_${appsToFoId}_1" class="apps_to_fo_inspection_notice_telegram_${appsToFoId} apps_to_fo_inspection_notice_telegrams" style="display:none">
                                     <div class="form-row">
                                         <div class="form-group col-md-3">
-                                            <input id = "apps_to_fo_inspection_notice_telegram_date_${appsToFoId}_1" class = "apps_to_fo_inspection_notice_telegram_date_${appsToFoId} apps_to_fo_inspection_notice_telegram_dates datepicker-here" aria-describedby="apps_to_fo_inspection_notice_telegram_date_help_block_${appsToFoId}_1" placeholder="Дата" type="text" size="10" required>
+                                            <input id = "apps_to_fo_inspection_notice_telegram_date_${appsToFoId}_1" class = "apps_to_fo_inspection_notice_telegram_date_${appsToFoId} apps_to_fo_inspection_notice_telegram_dates datepicker-here deactivation" aria-describedby="apps_to_fo_inspection_notice_telegram_date_help_block_${appsToFoId}_1" placeholder="Дата" type="text" size="10" required>
                                             <small id="apps_to_fo_inspection_notice_telegram_date_help_block_${appsToFoId}_1" class="form-text">
-                                                Дата телеграммы
-                                                <i class="fa fa-question-circle" aria-hidden="true" tabindex="0" data-trigger="focus" data-toggle="popover"></i>
+                                                <div class="form-inline">
+                                                    <input id="apps_to_fo_inspection_notice_telegram_date_deactivate_${appsToFoId}_1" class="deactivator" type="checkbox">
+                                                    <label for="apps_to_fo_inspection_notice_telegram_date_deactivate_${appsToFoId}_1" class="ml-2 form-check-label">Дата телеграммы</label>
+                                                    <i class="fa fa-question-circle ml-2" aria-hidden="true" tabindex="0" data-trigger="focus" data-toggle="popover"></i>
+                                                </div>    
                                             </small>
                                         </div>
                                         <div class="form-group col-md-3">
-                                            <input id = "apps_to_fo_inspection_notice_telegram_number_${appsToFoId}_1" class="apps_to_fo_inspection_notice_telegram_number_${appsToFoId} apps_to_fo_inspection_notice_telegram_numbers" aria-describedby="apps_to_fo_inspection_notice_telegram_number_help_block_${appsToFoId}_1" placeholder="№ телеграммы" type="text" size="8" required>
+                                            <input id = "apps_to_fo_inspection_notice_telegram_number_${appsToFoId}_1" class="apps_to_fo_inspection_notice_telegram_number_${appsToFoId} apps_to_fo_inspection_notice_telegram_numbers deactivation" aria-describedby="apps_to_fo_inspection_notice_telegram_number_help_block_${appsToFoId}_1" placeholder="№ телеграммы" type="text" size="8" required>
                                             <small id="apps_to_fo_inspection_notice_telegram_number_help_block_${appsToFoId}_1" class="form-text">
-                                                № телеграммы
-                                                <i class="fa fa-question-circle" aria-hidden="true" tabindex="0" data-trigger="focus" data-toggle="popover"></i>
+                                                <div class="form-inline">
+                                                    <input id="apps_to_fo_inspection_notice_telegram_number_deactivate_${appsToFoId}_1" class="deactivator" type="checkbox">
+                                                    <label for="apps_to_fo_inspection_notice_telegram_number_deactivate_${appsToFoId}_1" class="ml-2 form-check-label">№ телеграммы</label>
+                                                    <i class="fa fa-question-circle ml-2" aria-hidden="true" tabindex="0" data-trigger="focus" data-toggle="popover"></i>
+                                                </div>
                                             </small>
                                         </div>
                                         <div class="form-group col-md-3">
-                                            <input id = "apps_to_fo_inspection_notice_telegram_date_of_inspection_${appsToFoId}_1" class = "apps_to_fo_inspection_notice_telegram_date_of_inspection_${appsToFoId} apps_to_fo_inspection_notice_telegram_date_of_inspections datepicker-here" aria-describedby="apps_to_fo_inspection_notice_telegram_date_of_inspection_help_block_${appsToFoId}_1" placeholder="Дата" type="text" size="10" required>
+                                            <input id = "apps_to_fo_inspection_notice_telegram_date_of_inspection_${appsToFoId}_1" class = "apps_to_fo_inspection_notice_telegram_date_of_inspection_${appsToFoId} apps_to_fo_inspection_notice_telegram_date_of_inspections datepicker-here deactivation" aria-describedby="apps_to_fo_inspection_notice_telegram_date_of_inspection_help_block_${appsToFoId}_1" placeholder="Дата" type="text" size="10" required>
                                             <small id="apps_to_fo_inspection_notice_telegram_date_of_inspection_help_block_${appsToFoId}_1" class="form-text">
-                                                Дата проведения осмотра
-                                                <i class="fa fa-question-circle" aria-hidden="true" tabindex="0" data-trigger="focus" data-toggle="popover"></i>
+                                                <div class="form-inline">
+                                                    <input id="apps_to_fo_inspection_notice_telegram_date_of_inspection_deactivate_${appsToFoId}_1" class="deactivator" type="checkbox">
+                                                    <label for="apps_to_fo_inspection_notice_telegram_date_of_inspection_deactivate_${appsToFoId}_1" class="ml-2 form-check-label">Дата проведения осмотра</label>
+                                                    <i class="fa fa-question-circle ml-2" aria-hidden="true" tabindex="0" data-trigger="focus" data-toggle="popover"></i>
+                                                </div>
                                             </small>
                                         </div>
                                     </div>
                                     <div class="form-row">
                                         <div class="form-group col-md-12">
-                                            <textarea id = "apps_to_fo_inspection_notice_telegram_place_of_inspection_${appsToFoId}_1" class="apps_to_fo_request_documents_${appsToFoId} apps_to_fo_request_documents" aria-describedby="apps_to_fo_inspection_notice_telegram_place_of_inspection_help_block_${appsToFoId}_1" placeholder="Адрес места осмотра ТС" type="text" size="8" required></textarea>
+                                            <textarea id = "apps_to_fo_inspection_notice_telegram_place_of_inspection_${appsToFoId}_1" class="apps_to_fo_request_documents_${appsToFoId} apps_to_fo_request_documents deactivation" aria-describedby="apps_to_fo_inspection_notice_telegram_place_of_inspection_help_block_${appsToFoId}_1" placeholder="Адрес места осмотра ТС" type="text" size="8" required></textarea>
                                             <small id="apps_to_fo_inspection_notice_telegram_place_of_inspection_help_block_${appsToFoId}_1" class="form-text">
-                                                Введите адрес места осмотра ТС
-                                                <i class="fa fa-question-circle" aria-hidden="true" tabindex="0" data-trigger="focus" data-toggle="popover"></i>
+                                                <div class="form-inline">
+                                                    <input id="apps_to_fo_inspection_notice_telegram_place_of_inspection_deactivate_${appsToFoId}_1" class="deactivator" type="checkbox">
+                                                    <label for="apps_to_fo_inspection_notice_telegram_place_of_inspection_deactivate_${appsToFoId}_1" class="ml-2 form-check-label">Введите адрес места осмотра ТС</label>
+                                                    <i class="fa fa-question-circle ml-2" aria-hidden="true" tabindex="0" data-trigger="focus" data-toggle="popover"></i>
+                                                </div>
                                             </small>
                                         </div>
                                     </div>
                                     <div class="form-row">
                                         <div class="form-group col-md-6">
-                                            <select id="apps_to_fo_inspection_notice_telegram_notice_of_delivery_type_${appsToFoId}_1" class="apps_to_fo_inspection_notice_telegram_notice_of_delivery_type_${appsToFoId} apps_to_fo_inspection_notice_telegram_notice_of_delivery_types custom-select col-md-12" required>
+                                            <select id="apps_to_fo_inspection_notice_telegram_notice_of_delivery_type_${appsToFoId}_1" class="apps_to_fo_inspection_notice_telegram_notice_of_delivery_type_${appsToFoId} apps_to_fo_inspection_notice_telegram_notice_of_delivery_types custom-select col-md-12 deactivation" required>
                                                 <option value="">Факт получения телеграммы</option>
                                                 <option>Телеграмма получена</option>
                                                 <option>Телеграмма не получена</option>
                                             </select>
                                         </div>
                                         <div class="form-group col-md-3">
-                                            <input id = "apps_to_fo_inspection_notice_telegram_notice_of_delivery_date_${appsToFoId}_1" class = "apps_to_fo_inspection_notice_telegram_notice_of_delivery_date_${appsToFoId} apps_to_fo_inspection_notice_telegram_notice_of_delivery_dates datepicker-here" aria-describedby="apps_to_fo_inspection_notice_telegram_notice_of_delivery_date_help_block_${appsToFoId}_1" placeholder="Дата" type="text" size="10" required>
+                                            <input id = "apps_to_fo_inspection_notice_telegram_notice_of_delivery_date_${appsToFoId}_1" class = "apps_to_fo_inspection_notice_telegram_notice_of_delivery_date_${appsToFoId} apps_to_fo_inspection_notice_telegram_notice_of_delivery_dates datepicker-here deactivation" aria-describedby="apps_to_fo_inspection_notice_telegram_notice_of_delivery_date_help_block_${appsToFoId}_1" placeholder="Дата" type="text" size="10" required>
                                             <small id="apps_to_fo_inspection_notice_telegram_notice_of_delivery_date_help_block_${appsToFoId}_1" class="form-text">
-                                                Дата уведомления о вручении
-                                                <i class="fa fa-question-circle" aria-hidden="true" tabindex="0" data-trigger="focus" data-toggle="popover"></i>
+                                                <div class="form-inline">
+                                                    <input id="apps_to_fo_inspection_notice_telegram_notice_of_delivery_date_deactivate_${appsToFoId}_1" class="deactivator" type="checkbox">
+                                                    <label for="apps_to_fo_inspection_notice_telegram_notice_of_delivery_date_deactivate_${appsToFoId}_1" class="ml-2 form-check-label">Дата уведомления о вручении</label>
+                                                    <i class="fa fa-question-circle ml-2" aria-hidden="true" tabindex="0" data-trigger="focus" data-toggle="popover"></i>
+                                                </div>
                                             </small>
                                         </div>
                                         <div class="form-group col-md-3">
-                                            <input id = "apps_to_fo_inspection_notice_telegram_notice_of_delivery_number_${appsToFoId}_1" class="apps_to_fo_inspection_notice_telegram_notice_of_delivery_number_${appsToFoId} apps_to_fo_inspection_notice_telegram_notice_of_delivery_numbers" aria-describedby="apps_to_fo_inspection_notice_telegram_notice_of_delivery_number_help_block_${appsToFoId}_1" placeholder="№ уведомления" type="text" size="8" required>
+                                            <input id = "apps_to_fo_inspection_notice_telegram_notice_of_delivery_number_${appsToFoId}_1" class="apps_to_fo_inspection_notice_telegram_notice_of_delivery_number_${appsToFoId} apps_to_fo_inspection_notice_telegram_notice_of_delivery_numbers deactivation" aria-describedby="apps_to_fo_inspection_notice_telegram_notice_of_delivery_number_help_block_${appsToFoId}_1" placeholder="№ уведомления" type="text" size="8" required>
                                             <small id="apps_to_fo_inspection_notice_telegram_notice_of_delivery_number_help_block_${appsToFoId}_1" class="form-text">
-                                                № уведомления о вручении
-                                                <i class="fa fa-question-circle" aria-hidden="true" tabindex="0" data-trigger="focus" data-toggle="popover"></i>
+                                                <div class="form-inline">
+                                                    <input id="apps_to_fo_inspection_notice_telegram_notice_of_delivery_number_deactivate_${appsToFoId}_1" class="deactivator" type="checkbox">
+                                                    <label for="apps_to_fo_inspection_notice_telegram_notice_of_delivery_number_deactivate_${appsToFoId}_1" class="ml-2 form-check-label">№ уведомления о вручении</label>
+                                                    <i class="fa fa-question-circle ml-2" aria-hidden="true" tabindex="0" data-trigger="focus" data-toggle="popover"></i>
+                                                </div>
                                             </small>
                                         </div>
                                     </div>
@@ -978,39 +996,51 @@ function addAppToFo() {
                                 <div id="apps_to_fo_inspection_notice_letter_${appsToFoId}_1" class="apps_to_fo_inspection_notice_letter_${appsToFoId} apps_to_fo_inspection_notice_letters" style="display:none">
                                     <div class="form-row">
                                         <div class="form-group col-md-3">
-                                            <input id = "apps_to_fo_inspection_notice_letter_number_${appsToFoId}_1" class="apps_to_fo_inspection_notice_letter_number_${appsToFoId} apps_to_fo_inspection_notice_letter_numbers" aria-describedby="apps_to_fo_inspection_notice_letter_number_help_block_${appsToFoId}_1" placeholder="№ письма" type="text" size="8" required>
+                                            <input id = "apps_to_fo_inspection_notice_letter_number_${appsToFoId}_1" class="apps_to_fo_inspection_notice_letter_number_${appsToFoId} apps_to_fo_inspection_notice_letter_numbers deactivation" aria-describedby="apps_to_fo_inspection_notice_letter_number_help_block_${appsToFoId}_1" placeholder="№ письма" type="text" size="8" required>
                                             <small id="apps_to_fo_inspection_notice_letter_number_help_block_${appsToFoId}_1" class="form-text">
-                                                № письма
-                                                <i class="fa fa-question-circle" aria-hidden="true" tabindex="0" data-trigger="focus" data-toggle="popover"></i>
+                                                <div class="form-inline">
+                                                    <input id="apps_to_fo_inspection_notice_letter_number_deactivate_${appsToFoId}_1" class="deactivator" type="checkbox">
+                                                    <label for="apps_to_fo_inspection_notice_letter_number_deactivate_${appsToFoId}_1" class="ml-2 form-check-label">№ письма</label>
+                                                    <i class="fa fa-question-circle ml-2" aria-hidden="true" tabindex="0" data-trigger="focus" data-toggle="popover"></i>
+                                                </div>
                                             </small>
                                         </div>
                                         <div class="form-group col-md-3">
-                                            <input id = "apps_to_fo_inspection_notice_letter_date_${appsToFoId}_1" class = "apps_to_fo_inspection_notice_letter_date_${appsToFoId} apps_to_fo_inspection_notice_letter_dates datepicker-here" aria-describedby="apps_to_fo_inspection_notice_letter_date_help_block_${appsToFoId}_1" placeholder="Дата" type="text" size="10" required>
+                                            <input id = "apps_to_fo_inspection_notice_letter_date_${appsToFoId}_1" class = "apps_to_fo_inspection_notice_letter_date_${appsToFoId} apps_to_fo_inspection_notice_letter_dates datepicker-here deactivation" aria-describedby="apps_to_fo_inspection_notice_letter_date_help_block_${appsToFoId}_1" placeholder="Дата" type="text" size="10" required>
                                             <small id="apps_to_fo_inspection_notice_letter_date_help_block_${appsToFoId}_1" class="form-text">
-                                                Дата Направления на осмотр
-                                                <i class="fa fa-question-circle" aria-hidden="true" tabindex="0" data-trigger="focus" data-toggle="popover"></i>
+                                                <div class="form-inline">
+                                                    <input id="apps_to_fo_inspection_notice_letter_date_deactivate_${appsToFoId}_1" class="deactivator" type="checkbox">
+                                                    <label for="apps_to_fo_inspection_notice_letter_date_deactivate_${appsToFoId}_1" class="ml-2 form-check-label">Дата Направления на осмотр</label>
+                                                    <i class="fa fa-question-circle ml-2" aria-hidden="true" tabindex="0" data-trigger="focus" data-toggle="popover"></i>
+                                                </div>
                                             </small>
                                         </div>
                                         <div class="form-group col-md-3">
-                                            <input id = "apps_to_fo_inspection_notice_letter_direction_number_${appsToFoId}_1" class="apps_to_fo_inspection_notice_letter_direction_number_${appsToFoId} apps_to_fo_inspection_notice_letter_direction_numbers" aria-describedby="apps_to_fo_inspection_notice_letter_direction_number_help_block_${appsToFoId}_1" placeholder="№ Направления" type="text" size="8" required>
+                                            <input id = "apps_to_fo_inspection_notice_letter_direction_number_${appsToFoId}_1" class="apps_to_fo_inspection_notice_letter_direction_number_${appsToFoId} apps_to_fo_inspection_notice_letter_direction_numbers deactivation" aria-describedby="apps_to_fo_inspection_notice_letter_direction_number_help_block_${appsToFoId}_1" placeholder="№ Направления" type="text" size="8" required>
                                             <small id="apps_to_fo_inspection_notice_letter_direction_number_help_block_${appsToFoId}_1" class="form-text">
-                                                № Направления на осмотр
-                                                <i class="fa fa-question-circle" aria-hidden="true" tabindex="0" data-trigger="focus" data-toggle="popover"></i>
+                                                <div class="form-inline">
+                                                    <input id="apps_to_fo_inspection_notice_letter_direction_number_deactivate_${appsToFoId}_1" class="deactivator" type="checkbox">
+                                                    <label for="apps_to_fo_inspection_notice_letter_direction_number_deactivate_${appsToFoId}_1" class="ml-2 form-check-label">№ Направления на осмотр</label>
+                                                    <i class="fa fa-question-circle ml-2" aria-hidden="true" tabindex="0" data-trigger="focus" data-toggle="popover"></i>
+                                                </div>
                                             </small>
                                         </div>
                                     </div>
                                     <div class="form-row">
                                         <div class="form-group col-md-6">
-                                            <input id = "apps_to_fo_inspection_notice_letter_organization_${appsToFoId}_1" class="apps_to_fo_inspection_notice_letter_organization_${appsToFoId} apps_to_fo_inspection_notice_letter_organizations li-quotes" aria-describedby="apps_to_fo_inspection_notice_letter_organization_help_block_${appsToFoId}_1" placeholder="Наименование организации" type="text" size="8" required>
+                                            <input id = "apps_to_fo_inspection_notice_letter_organization_${appsToFoId}_1" class="apps_to_fo_inspection_notice_letter_organization_${appsToFoId} apps_to_fo_inspection_notice_letter_organizations li-quotes deactivation" aria-describedby="apps_to_fo_inspection_notice_letter_organization_help_block_${appsToFoId}_1" placeholder="Наименование организации" type="text" size="8" required>
                                             <small id="apps_to_fo_inspection_notice_letter_organization_help_block_${appsToFoId}_1" class="form-text">
-                                                Наименование организации
-                                                <i class="fa fa-question-circle" aria-hidden="true" tabindex="0" data-trigger="focus" data-toggle="popover"></i>
+                                                <div class="form-inline">
+                                                    <input id="apps_to_fo_inspection_notice_letter_organization_deactivate_${appsToFoId}_1" class="deactivator" type="checkbox">
+                                                    <label for="apps_to_fo_inspection_notice_letter_organization_deactivate_${appsToFoId}_1" class="ml-2 form-check-label">Наименование организации</label>
+                                                    <i class="fa fa-question-circle ml-2" aria-hidden="true" tabindex="0" data-trigger="focus" data-toggle="popover"></i>
+                                                </div>
                                             </small>
                                         </div>
                                     </div>
                                     <div class="form-row">
                                         <div class="form-group col-md-6">
-                                            <select id="apps_to_fo_inspection_notice_letter_confirmation_of_delivery_type_${appsToFoId}_1" class="apps_to_fo_inspection_notice_letter_confirmation_of_delivery_type_${appsToFoId} apps_to_fo_inspection_notice_letter_confirmation_of_delivery_types custom-select col-md-12" required>
+                                            <select id="apps_to_fo_inspection_notice_letter_confirmation_of_delivery_type_${appsToFoId}_1" class="apps_to_fo_inspection_notice_letter_confirmation_of_delivery_type_${appsToFoId} apps_to_fo_inspection_notice_letter_confirmation_of_delivery_types custom-select col-md-12 deactivation" required>
                                                 <option value="">Подтверждение выдачи Направления</option>
                                                 <option>Список внутренних почтовых отправлений</option>
                                                 <option>Опись вложения</option>
@@ -1019,47 +1049,65 @@ function addAppToFo() {
                                     </div>
                                     <div class="form-row">
                                         <div class="form-group col-md-3">
-                                            <input id = "apps_to_fo_inspection_notice_letter_confirmation_of_delivery_date_${appsToFoId}_1" class = "apps_to_fo_inspection_notice_letter_confirmation_of_delivery_date_${appsToFoId} apps_to_fo_inspection_notice_letter_confirmation_of_delivery_dates datepicker-here" aria-describedby="apps_to_fo_inspection_notice_letter_confirmation_of_delivery_date_help_block_${appsToFoId}_1" placeholder="Дата" type="text" size="10" required>
+                                            <input id = "apps_to_fo_inspection_notice_letter_confirmation_of_delivery_date_${appsToFoId}_1" class = "apps_to_fo_inspection_notice_letter_confirmation_of_delivery_date_${appsToFoId} apps_to_fo_inspection_notice_letter_confirmation_of_delivery_dates datepicker-here deactivation" aria-describedby="apps_to_fo_inspection_notice_letter_confirmation_of_delivery_date_help_block_${appsToFoId}_1" placeholder="Дата" type="text" size="10" required>
                                             <small id="apps_to_fo_inspection_notice_letter_confirmation_of_delivery_date_help_block_${appsToFoId}_1" class="form-text">
-                                                Дата списка
-                                                <i class="fa fa-question-circle" aria-hidden="true" tabindex="0" data-trigger="focus" data-toggle="popover"></i>
+                                                <div class="form-inline">
+                                                    <input id="apps_to_fo_inspection_notice_letter_confirmation_of_delivery_date_deactivate_${appsToFoId}_1" class="deactivator" type="checkbox">
+                                                    <label for="apps_to_fo_inspection_notice_letter_confirmation_of_delivery_date_deactivate_${appsToFoId}_1" class="ml-2 form-check-label">Дата списка</label>
+                                                    <i class="fa fa-question-circle ml-2" aria-hidden="true" tabindex="0" data-trigger="focus" data-toggle="popover"></i>
+                                                </div>
                                             </small>
                                         </div>
                                         <div class="form-group col-md-3">
-                                            <input id = "apps_to_fo_inspection_notice_letter_confirmation_of_delivery_number_${appsToFoId}_1" class="apps_to_fo_inspection_notice_letter_confirmation_of_delivery_number_${appsToFoId} apps_to_fo_inspection_notice_letter_confirmation_of_delivery_numbers" aria-describedby="apps_to_fo_inspection_notice_letter_confirmation_of_delivery_number_help_block_${appsToFoId}_1" placeholder="№ списка" type="text" size="8" required>
+                                            <input id = "apps_to_fo_inspection_notice_letter_confirmation_of_delivery_number_${appsToFoId}_1" class="apps_to_fo_inspection_notice_letter_confirmation_of_delivery_number_${appsToFoId} apps_to_fo_inspection_notice_letter_confirmation_of_delivery_numbers deactivation" aria-describedby="apps_to_fo_inspection_notice_letter_confirmation_of_delivery_number_help_block_${appsToFoId}_1" placeholder="№ списка" type="text" size="8" required>
                                             <small id="apps_to_fo_inspection_notice_letter_confirmation_of_delivery_number_help_block_${appsToFoId}_1" class="form-text">
-                                                № списка
-                                                <i class="fa fa-question-circle" aria-hidden="true" tabindex="0" data-trigger="focus" data-toggle="popover"></i>
+                                                <div class="form-inline">
+                                                    <input id="apps_to_fo_inspection_notice_letter_confirmation_of_delivery_number_deactivate_${appsToFoId}_1" class="deactivator" type="checkbox">
+                                                    <label for="apps_to_fo_inspection_notice_letter_confirmation_of_delivery_number_deactivate_${appsToFoId}_1" class="ml-2 form-check-label">№ списка</label>
+                                                    <i class="fa fa-question-circle ml-2" aria-hidden="true" tabindex="0" data-trigger="focus" data-toggle="popover"></i>
+                                                </div>
                                             </small>
                                         </div>
                                         <div class="form-group col-md-3">
-                                            <input id = "apps_to_fo_inspection_notice_letter_post_number_${appsToFoId}_1" class="apps_to_fo_inspection_notice_letter_post_number_${appsToFoId} apps_to_fo_inspection_notice_letter_post_numbers" aria-describedby="apps_to_fo_inspection_notice_letter_post_number_help_block_${appsToFoId}_1" placeholder="№ идентификатора" type="text" size="8" required>
+                                            <input id = "apps_to_fo_inspection_notice_letter_post_number_${appsToFoId}_1" class="apps_to_fo_inspection_notice_letter_post_number_${appsToFoId} apps_to_fo_inspection_notice_letter_post_numbers deactivation" aria-describedby="apps_to_fo_inspection_notice_letter_post_number_help_block_${appsToFoId}_1" placeholder="№ идентификатора" type="text" size="8" required>
                                             <small id="apps_to_fo_inspection_notice_letter_post_number_help_block_${appsToFoId}_1" class="form-text">
-                                                № почтового идентификатора
-                                                <i class="fa fa-question-circle" aria-hidden="true" tabindex="0" data-trigger="focus" data-toggle="popover"></i>
+                                                <div class="form-inline">
+                                                    <input id="apps_to_fo_inspection_notice_letter_post_number_deactivate_${appsToFoId}_1" class="deactivator" type="checkbox">
+                                                    <label for="apps_to_fo_inspection_notice_letter_post_number_deactivate_${appsToFoId}_1" class="ml-2 form-check-label">№ почтового идентификатора</label>
+                                                    <i class="fa fa-question-circle ml-2" aria-hidden="true" tabindex="0" data-trigger="focus" data-toggle="popover"></i>
+                                                </div>
                                             </small>
                                         </div>
                                     </div>
                                     <div class="form-row">
                                         <div class="form-group col-md-3">
-                                            <input id = "apps_to_fo_inspection_notice_letter_post_date1_${appsToFoId}_1" class = "apps_to_fo_inspection_notice_letter_post_date1_${appsToFoId} apps_to_fo_inspection_notice_letter_post_date1 datepicker-here" aria-describedby="apps_to_fo_inspection_notice_letter_post_date1_help_block_${appsToFoId}_1" placeholder="Дата" type="text" size="10" required>
+                                            <input id = "apps_to_fo_inspection_notice_letter_post_date1_${appsToFoId}_1" class = "apps_to_fo_inspection_notice_letter_post_date1_${appsToFoId} apps_to_fo_inspection_notice_letter_post_date1 datepicker-here deactivation" aria-describedby="apps_to_fo_inspection_notice_letter_post_date1_help_block_${appsToFoId}_1" placeholder="Дата" type="text" size="10" required>
                                             <small id="apps_to_fo_inspection_notice_letter_post_date1_help_block_${appsToFoId}_1" class="form-text">
-                                                Дата передачи в отделение связи
-                                                <i class="fa fa-question-circle" aria-hidden="true" tabindex="0" data-trigger="focus" data-toggle="popover"></i>
+                                                <div class="form-inline">
+                                                    <input id="apps_to_fo_inspection_notice_letter_post_date1_${appsToFoId}_1" class="deactivator" type="checkbox">
+                                                    <label for="apps_to_fo_inspection_notice_letter_post_date1_${appsToFoId}_1" class="ml-2 form-check-label">Дата передачи в отделение связи</label>
+                                                    <i class="fa fa-question-circle ml-2" aria-hidden="true" tabindex="0" data-trigger="focus" data-toggle="popover"></i>
+                                                </div>
                                             </small>
                                         </div>
                                         <div class="form-group col-md-3">
-                                            <input id = "apps_to_fo_inspection_notice_letter_post_date2_${appsToFoId}_1" class = "apps_to_fo_inspection_notice_letter_post_date2_${appsToFoId} apps_to_fo_inspection_notice_letter_post_date2 datepicker-here" aria-describedby="apps_to_fo_inspection_notice_letter_post_date2_help_block_${appsToFoId}_1" placeholder="Дата" type="text" size="10" required>
+                                            <input id = "apps_to_fo_inspection_notice_letter_post_date2_${appsToFoId}_1" class = "apps_to_fo_inspection_notice_letter_post_date2_${appsToFoId} apps_to_fo_inspection_notice_letter_post_date2 datepicker-here deactivation" aria-describedby="apps_to_fo_inspection_notice_letter_post_date2_help_block_${appsToFoId}_1" placeholder="Дата" type="text" size="10" required>
                                             <small id="apps_to_fo_inspection_notice_letter_post_date2_help_block_${appsToFoId}_1" class="form-text">
-                                                Дата доставки в место вручения
-                                                <i class="fa fa-question-circle" aria-hidden="true" tabindex="0" data-trigger="focus" data-toggle="popover"></i>
+                                                <div class="form-inline">
+                                                    <input id="apps_to_fo_inspection_notice_letter_post_date2_${appsToFoId}_1" class="deactivator" type="checkbox">
+                                                    <label for="apps_to_fo_inspection_notice_letter_post_date2_${appsToFoId}_1" class="ml-2 form-check-label">Дата доставки в место вручения</label>
+                                                    <i class="fa fa-question-circle ml-2" aria-hidden="true" tabindex="0" data-trigger="focus" data-toggle="popover"></i>
+                                                </div>
                                             </small>
                                         </div>
                                         <div class="form-group col-md-3">
-                                            <input id = "apps_to_fo_inspection_notice_letter_post_date3_${appsToFoId}_1" class = "apps_to_fo_inspection_notice_letter_post_date3_${appsToFoId} apps_to_fo_inspection_notice_letter_post_date3 datepicker-here" aria-describedby="apps_to_fo_inspection_notice_letter_post_date3_help_block_${appsToFoId}_1" placeholder="Дата" type="text" size="10" required>
+                                            <input id = "apps_to_fo_inspection_notice_letter_post_date3_${appsToFoId}_1" class = "apps_to_fo_inspection_notice_letter_post_date3_${appsToFoId} apps_to_fo_inspection_notice_letter_post_date3 datepicker-here deactivation" aria-describedby="apps_to_fo_inspection_notice_letter_post_date3_help_block_${appsToFoId}_1" placeholder="Дата" type="text" size="10" required>
                                             <small id="apps_to_fo_inspection_notice_letter_post_date3_help_block_${appsToFoId}_1" class="form-text">
-                                                Дата вручения адресату
-                                                <i class="fa fa-question-circle" aria-hidden="true" tabindex="0" data-trigger="focus" data-toggle="popover"></i>
+                                                <div class="form-inline">
+                                                    <input id="apps_to_fo_inspection_notice_letter_post_date3_${appsToFoId}_1" class="deactivator" type="checkbox">
+                                                    <label for="apps_to_fo_inspection_notice_letter_post_date3_${appsToFoId}_1" class="ml-2 form-check-label">Дата вручения адресату</label>
+                                                    <i class="fa fa-question-circle ml-2" aria-hidden="true" tabindex="0" data-trigger="focus" data-toggle="popover"></i>
+                                                </div>
                                             </small>
                                         </div>
                                     </div>
@@ -1873,56 +1921,74 @@ function addInspectionNotice(appsToFoId) {
         <div id="apps_to_fo_inspection_notice_telegram_${appsToFoId}_${inspectionNotice}" class="apps_to_fo_inspection_notice_telegram_${appsToFoId} apps_to_fo_inspection_notice_telegrams" style="display:none">
             <div class="form-row">
                 <div class="form-group col-md-3">
-                    <input id = "apps_to_fo_inspection_notice_telegram_date_${appsToFoId}_${inspectionNotice}" class = "apps_to_fo_inspection_notice_telegram_date_${appsToFoId} apps_to_fo_inspection_notice_telegram_dates datepicker-here form-control" aria-describedby="apps_to_fo_inspection_notice_telegram_date_help_block_${appsToFoId}_${inspectionNotice}" placeholder="Дата" type="text" size="10" required>
+                    <input id = "apps_to_fo_inspection_notice_telegram_date_${appsToFoId}_${inspectionNotice}" class = "apps_to_fo_inspection_notice_telegram_date_${appsToFoId} apps_to_fo_inspection_notice_telegram_dates datepicker-here form-control deactivation" aria-describedby="apps_to_fo_inspection_notice_telegram_date_help_block_${appsToFoId}_${inspectionNotice}" placeholder="Дата" type="text" size="10" required>
                     <small id="apps_to_fo_inspection_notice_telegram_date_help_block_${appsToFoId}_${inspectionNotice}" class="form-text">
-                        Дата телеграммы
-                        <i class="fa fa-question-circle" aria-hidden="true" tabindex="0" data-trigger="focus" data-toggle="popover"></i>
+                        <div class="form-inline">
+                            <input id="apps_to_fo_inspection_notice_telegram_date_deactivate_${appsToFoId}_${inspectionNotice}" class="deactivator" type="checkbox">
+                            <label for="apps_to_fo_inspection_notice_telegram_date_deactivate_${appsToFoId}_${inspectionNotice}" class="ml-2 form-check-label">Дата телеграммы</label>
+                            <i class="fa fa-question-circle ml-2" aria-hidden="true" tabindex="0" data-trigger="focus" data-toggle="popover"></i>
+                        </div>
                     </small>
                 </div>
                 <div class="form-group col-md-3">
-                    <input id = "apps_to_fo_inspection_notice_telegram_number_${appsToFoId}_${inspectionNotice}" class="apps_to_fo_inspection_notice_telegram_number_${appsToFoId} apps_to_fo_inspection_notice_telegram_numbers form-control" aria-describedby="apps_to_fo_inspection_notice_telegram_number_help_block_${appsToFoId}_${inspectionNotice}" placeholder="№ телеграммы" type="text" size="8" required>
+                    <input id = "apps_to_fo_inspection_notice_telegram_number_${appsToFoId}_${inspectionNotice}" class="apps_to_fo_inspection_notice_telegram_number_${appsToFoId} apps_to_fo_inspection_notice_telegram_numbers form-control deactivation" aria-describedby="apps_to_fo_inspection_notice_telegram_number_help_block_${appsToFoId}_${inspectionNotice}" placeholder="№ телеграммы" type="text" size="8" required>
                     <small id="apps_to_fo_inspection_notice_telegram_number_help_block_${appsToFoId}_${inspectionNotice}" class="form-text">
-                        № телеграммы
-                        <i class="fa fa-question-circle" aria-hidden="true" tabindex="0" data-trigger="focus" data-toggle="popover"></i>
+                        <div class="form-inline">
+                            <input id="apps_to_fo_inspection_notice_telegram_number_deactivate_${appsToFoId}_${inspectionNotice}" class="deactivator" type="checkbox">
+                            <label for="apps_to_fo_inspection_notice_telegram_number_deactivate_${appsToFoId}_${inspectionNotice}" class="ml-2 form-check-label">№ телеграммы</label>
+                            <i class="fa fa-question-circle ml-2" aria-hidden="true" tabindex="0" data-trigger="focus" data-toggle="popover"></i>
+                        </div>
                     </small>
                 </div>
                 <div class="form-group col-md-3">
-                    <input id = "apps_to_fo_inspection_notice_telegram_date_of_inspection_${appsToFoId}_${inspectionNotice}" class = "apps_to_fo_inspection_notice_telegram_date_of_inspection_${appsToFoId} apps_to_fo_inspection_notice_telegram_date_of_inspections datepicker-here form-control" aria-describedby="apps_to_fo_inspection_notice_telegram_date_of_inspection_help_block_${appsToFoId}_${inspectionNotice}" placeholder="Дата" type="text" size="10" required>
+                    <input id = "apps_to_fo_inspection_notice_telegram_date_of_inspection_${appsToFoId}_${inspectionNotice}" class = "apps_to_fo_inspection_notice_telegram_date_of_inspection_${appsToFoId} apps_to_fo_inspection_notice_telegram_date_of_inspections datepicker-here form-control deactivation" aria-describedby="apps_to_fo_inspection_notice_telegram_date_of_inspection_help_block_${appsToFoId}_${inspectionNotice}" placeholder="Дата" type="text" size="10" required>
                     <small id="apps_to_fo_inspection_notice_telegram_date_of_inspection_help_block_${appsToFoId}_${inspectionNotice}" class="form-text">
-                        Дата проведения осмотра
-                        <i class="fa fa-question-circle" aria-hidden="true" tabindex="0" data-trigger="focus" data-toggle="popover"></i>
+                        <div class="form-inline">
+                            <input id="apps_to_fo_inspection_notice_telegram_date_of_inspection_deactivate_${appsToFoId}_${inspectionNotice}" class="deactivator" type="checkbox">
+                            <label for="apps_to_fo_inspection_notice_telegram_date_of_inspection_deactivate_${appsToFoId}_${inspectionNotice}" class="ml-2 form-check-label">Дата проведения осмотра</label>
+                            <i class="fa fa-question-circle ml-2" aria-hidden="true" tabindex="0" data-trigger="focus" data-toggle="popover"></i>
+                        </div>
                     </small>
                 </div>
             </div>
             <div class="form-row">
                 <div class="form-group col-md-12">
-                    <textarea id = "apps_to_fo_inspection_notice_telegram_place_of_inspection_${appsToFoId}_${inspectionNotice}" class="apps_to_fo_request_documents_${appsToFoId} apps_to_fo_request_documents form-control" aria-describedby="apps_to_fo_inspection_notice_telegram_place_of_inspection_help_block_${appsToFoId}_${inspectionNotice}" placeholder="Адрес места осмотра ТС" type="text" size="8" required></textarea>
+                    <textarea id = "apps_to_fo_inspection_notice_telegram_place_of_inspection_${appsToFoId}_${inspectionNotice}" class="apps_to_fo_request_documents_${appsToFoId} apps_to_fo_request_documents form-control deactivation" aria-describedby="apps_to_fo_inspection_notice_telegram_place_of_inspection_help_block_${appsToFoId}_${inspectionNotice}" placeholder="Адрес места осмотра ТС" type="text" size="8" required></textarea>
                     <small id="apps_to_fo_inspection_notice_telegram_place_of_inspection_help_block_${appsToFoId}_${inspectionNotice}" class="form-text">
-                        Введите адрес места осмотра ТС
-                        <i class="fa fa-question-circle" aria-hidden="true" tabindex="0" data-trigger="focus" data-toggle="popover"></i>
+                        <div class="form-inline">
+                            <input id="apps_to_fo_inspection_notice_telegram_place_of_inspection_deactivate_${appsToFoId}_${inspectionNotice}" class="deactivator" type="checkbox">
+                            <label for="apps_to_fo_inspection_notice_telegram_place_of_inspection_deactivate_${appsToFoId}_${inspectionNotice}" class="ml-2 form-check-label">Введите адрес места осмотра ТС</label>
+                            <i class="fa fa-question-circle ml-2" aria-hidden="true" tabindex="0" data-trigger="focus" data-toggle="popover"></i>
+                        </div>
                     </small>
                 </div>
             </div>
             <div class="form-row">
                 <div class="form-group col-md-6">
-                    <select id="apps_to_fo_inspection_notice_telegram_notice_of_delivery_type_${appsToFoId}_${inspectionNotice}" class="apps_to_fo_inspection_notice_telegram_notice_of_delivery_type_${appsToFoId} apps_to_fo_inspection_notice_telegram_notice_of_delivery_types custom-select form-control col-md-12" required>
+                    <select id="apps_to_fo_inspection_notice_telegram_notice_of_delivery_type_${appsToFoId}_${inspectionNotice}" class="apps_to_fo_inspection_notice_telegram_notice_of_delivery_type_${appsToFoId} apps_to_fo_inspection_notice_telegram_notice_of_delivery_types custom-select form-control col-md-12 deactivation" required>
                         <option value="">Выберите вариант</option>
                         <option>Телеграмма получена</option>
                         <option>Телеграмма не получена</option>
                     </select>
                 </div>
                 <div class="form-group col-md-3">
-                    <input id = "apps_to_fo_inspection_notice_telegram_notice_of_delivery_date_${appsToFoId}_${inspectionNotice}" class = "apps_to_fo_inspection_notice_telegram_notice_of_delivery_date_${appsToFoId} apps_to_fo_inspection_notice_telegram_notice_of_delivery_dates datepicker-here form-control" aria-describedby="apps_to_fo_inspection_notice_telegram_notice_of_delivery_date_help_block_${appsToFoId}_${inspectionNotice}" placeholder="Дата" type="text" size="10" required>
+                    <input id = "apps_to_fo_inspection_notice_telegram_notice_of_delivery_date_${appsToFoId}_${inspectionNotice}" class = "apps_to_fo_inspection_notice_telegram_notice_of_delivery_date_${appsToFoId} apps_to_fo_inspection_notice_telegram_notice_of_delivery_dates datepicker-here form-control deactivation" aria-describedby="apps_to_fo_inspection_notice_telegram_notice_of_delivery_date_help_block_${appsToFoId}_${inspectionNotice}" placeholder="Дата" type="text" size="10" required>
                     <small id="apps_to_fo_inspection_notice_telegram_notice_of_delivery_date_help_block_${appsToFoId}_${inspectionNotice}" class="form-text">
-                        Дата уведомления о вручении
-                        <i class="fa fa-question-circle" aria-hidden="true" tabindex="0" data-trigger="focus" data-toggle="popover"></i>
+                        <div class="form-inline">
+                            <input id="apps_to_fo_inspection_notice_telegram_notice_of_delivery_date_deactivate_${appsToFoId}_${inspectionNotice}" class="deactivator" type="checkbox">
+                            <label for="apps_to_fo_inspection_notice_telegram_notice_of_delivery_date_deactivate_${appsToFoId}_${inspectionNotice}" class="ml-2 form-check-label">Дата уведомления о вручении</label>
+                            <i class="fa fa-question-circle ml-2" aria-hidden="true" tabindex="0" data-trigger="focus" data-toggle="popover"></i>
+                        </div>
                     </small>
                 </div>
                 <div class="form-group col-md-3">
-                    <input id = "apps_to_fo_inspection_notice_telegram_notice_of_delivery_number_${appsToFoId}_${inspectionNotice}" class="apps_to_fo_inspection_notice_telegram_notice_of_delivery_number_${appsToFoId} apps_to_fo_inspection_notice_telegram_notice_of_delivery_numbers form-control" aria-describedby="apps_to_fo_inspection_notice_telegram_notice_of_delivery_number_help_block_${appsToFoId}_${inspectionNotice}" placeholder="№ уведомления" type="text" size="8" required>
+                    <input id = "apps_to_fo_inspection_notice_telegram_notice_of_delivery_number_${appsToFoId}_${inspectionNotice}" class="apps_to_fo_inspection_notice_telegram_notice_of_delivery_number_${appsToFoId} apps_to_fo_inspection_notice_telegram_notice_of_delivery_numbers form-control deactivation" aria-describedby="apps_to_fo_inspection_notice_telegram_notice_of_delivery_number_help_block_${appsToFoId}_${inspectionNotice}" placeholder="№ уведомления" type="text" size="8" required>
                     <small id="apps_to_fo_inspection_notice_telegram_notice_of_delivery_number_help_block_${appsToFoId}_${inspectionNotice}" class="form-text">
-                        № уведомления о вручении
-                        <i class="fa fa-question-circle" aria-hidden="true" tabindex="0" data-trigger="focus" data-toggle="popover"></i>
+                        <div class="form-inline">
+                            <input id="apps_to_fo_inspection_notice_telegram_notice_of_delivery_number_deactivate_${appsToFoId}_${inspectionNotice}" class="deactivator" type="checkbox">
+                            <label for="apps_to_fo_inspection_notice_telegram_notice_of_delivery_number_deactivate_${appsToFoId}_${inspectionNotice}" class="ml-2 form-check-label">№ уведомления о вручении</label>
+                            <i class="fa fa-question-circle ml-2" aria-hidden="true" tabindex="0" data-trigger="focus" data-toggle="popover"></i>
+                        </div>
                     </small>
                 </div>
             </div>
@@ -1930,39 +1996,51 @@ function addInspectionNotice(appsToFoId) {
         <div id="apps_to_fo_inspection_notice_letter_${appsToFoId}_${inspectionNotice}" class="apps_to_fo_inspection_notice_letter_${appsToFoId} apps_to_fo_inspection_notice_letters" style="display:none">
             <div class="form-row">
                 <div class="form-group col-md-3">
-                    <input id = "apps_to_fo_inspection_notice_letter_number_${appsToFoId}_${inspectionNotice}" class="apps_to_fo_inspection_notice_letter_number_${appsToFoId} apps_to_fo_inspection_notice_letter_numbers form-control" aria-describedby="apps_to_fo_inspection_notice_letter_number_help_block_${appsToFoId}_${inspectionNotice}" placeholder="№ письма" type="text" size="8" required>
+                    <input id = "apps_to_fo_inspection_notice_letter_number_${appsToFoId}_${inspectionNotice}" class="apps_to_fo_inspection_notice_letter_number_${appsToFoId} apps_to_fo_inspection_notice_letter_numbers form-control deactivation" aria-describedby="apps_to_fo_inspection_notice_letter_number_help_block_${appsToFoId}_${inspectionNotice}" placeholder="№ письма" type="text" size="8" required>
                     <small id="apps_to_fo_inspection_notice_letter_number_help_block_${appsToFoId}_${inspectionNotice}" class="form-text">
-                        № письма
-                        <i class="fa fa-question-circle" aria-hidden="true" tabindex="0" data-trigger="focus" data-toggle="popover"></i>
+                    <div class="form-inline">
+                    <input id="apps_to_fo_inspection_notice_letter_number_deactivate_1_1" class="deactivator" type="checkbox">
+                    <label for="apps_to_fo_inspection_notice_letter_number_deactivate_1_1" class="ml-2 form-check-label">№ письма</label>
+                    <i class="fa fa-question-circle ml-2" aria-hidden="true" tabindex="0" data-trigger="focus" data-toggle="popover"></i>
+                  </div>
                     </small>
                 </div>
                 <div class="form-group col-md-3">
-                    <input id = "apps_to_fo_inspection_notice_letter_date_${appsToFoId}_${inspectionNotice}" class = "apps_to_fo_inspection_notice_letter_date_${appsToFoId} apps_to_fo_inspection_notice_letter_dates datepicker-here form-control" aria-describedby="apps_to_fo_inspection_notice_letter_date_help_block_${appsToFoId}_${inspectionNotice}" placeholder="Дата" type="text" size="10" required>
+                    <input id = "apps_to_fo_inspection_notice_letter_date_${appsToFoId}_${inspectionNotice}" class = "apps_to_fo_inspection_notice_letter_date_${appsToFoId} apps_to_fo_inspection_notice_letter_dates datepicker-here form-control deactivation" aria-describedby="apps_to_fo_inspection_notice_letter_date_help_block_${appsToFoId}_${inspectionNotice}" placeholder="Дата" type="text" size="10" required>
                     <small id="apps_to_fo_inspection_notice_letter_date_help_block_${appsToFoId}_${inspectionNotice}" class="form-text">
-                        Дата Направления на осмотр
-                        <i class="fa fa-question-circle" aria-hidden="true" tabindex="0" data-trigger="focus" data-toggle="popover"></i>
+                        <div class="form-inline">
+                            <input id="apps_to_fo_inspection_notice_letter_date_deactivate_${appsToFoId}_${inspectionNotice}" class="deactivator" type="checkbox">
+                            <label for="apps_to_fo_inspection_notice_letter_date_deactivate_${appsToFoId}_${inspectionNotice}" class="ml-2 form-check-label">Дата Направления на осмотр</label>
+                            <i class="fa fa-question-circle ml-2" aria-hidden="true" tabindex="0" data-trigger="focus" data-toggle="popover"></i>
+                        </div>
                     </small>
                 </div>
                 <div class="form-group col-md-3">
-                    <input id = "apps_to_fo_inspection_notice_letter_direction_number_${appsToFoId}_${inspectionNotice}" class="apps_to_fo_inspection_notice_letter_direction_number_${appsToFoId} apps_to_fo_inspection_notice_letter_direction_numbers form-control" aria-describedby="apps_to_fo_inspection_notice_letter_direction_number_help_block_${appsToFoId}_${inspectionNotice}" placeholder="№ Направления" type="text" size="8" required>
+                    <input id = "apps_to_fo_inspection_notice_letter_direction_number_${appsToFoId}_${inspectionNotice}" class="apps_to_fo_inspection_notice_letter_direction_number_${appsToFoId} apps_to_fo_inspection_notice_letter_direction_numbers form-control deactivation" aria-describedby="apps_to_fo_inspection_notice_letter_direction_number_help_block_${appsToFoId}_${inspectionNotice}" placeholder="№ Направления" type="text" size="8" required>
                     <small id="apps_to_fo_inspection_notice_letter_direction_number_help_block_${appsToFoId}_${inspectionNotice}" class="form-text">
-                        № Направления на осмотр
-                        <i class="fa fa-question-circle" aria-hidden="true" tabindex="0" data-trigger="focus" data-toggle="popover"></i>
+                        <div class="form-inline">
+                            <input id="apps_to_fo_inspection_notice_letter_direction_number_deactivate_${appsToFoId}_${inspectionNotice}" class="deactivator" type="checkbox">
+                            <label for="apps_to_fo_inspection_notice_letter_direction_number_deactivate_${appsToFoId}_${inspectionNotice}" class="ml-2 form-check-label">№ Направления на осмотр</label>
+                            <i class="fa fa-question-circle ml-2" aria-hidden="true" tabindex="0" data-trigger="focus" data-toggle="popover"></i>
+                        </div>
                     </small>
                 </div>
             </div>
             <div class="form-row">
                 <div class="form-group col-md-6">
-                    <input id = "apps_to_fo_inspection_notice_letter_organization_${appsToFoId}_${inspectionNotice}" class="apps_to_fo_inspection_notice_letter_organization_${appsToFoId} apps_to_fo_inspection_notice_letter_organizations form-control li-quotes" aria-describedby="apps_to_fo_inspection_notice_letter_organization_help_block_${appsToFoId}_${inspectionNotice}" placeholder="Наименование организации" type="text" size="8" required>
+                    <input id = "apps_to_fo_inspection_notice_letter_organization_${appsToFoId}_${inspectionNotice}" class="apps_to_fo_inspection_notice_letter_organization_${appsToFoId} apps_to_fo_inspection_notice_letter_organizations form-control li-quotes deactivation" aria-describedby="apps_to_fo_inspection_notice_letter_organization_help_block_${appsToFoId}_${inspectionNotice}" placeholder="Наименование организации" type="text" size="8" required>
                     <small id="apps_to_fo_inspection_notice_letter_organization_help_block_${appsToFoId}_${inspectionNotice}" class="form-text">
-                        Наименование организации
-                        <i class="fa fa-question-circle" aria-hidden="true" tabindex="0" data-trigger="focus" data-toggle="popover"></i>
+                        <div class="form-inline">
+                            <input id="apps_to_fo_inspection_notice_letter_organization_deactivate_${appsToFoId}_${inspectionNotice}" class="deactivator" type="checkbox">
+                            <label for="apps_to_fo_inspection_notice_letter_organization_deactivate_${appsToFoId}_${inspectionNotice}" class="ml-2 form-check-label">Наименование организации</label>
+                            <i class="fa fa-question-circle ml-2" aria-hidden="true" tabindex="0" data-trigger="focus" data-toggle="popover"></i>
+                        </div>
                     </small>
                 </div>
             </div>
             <div class="form-row">
                 <div class="form-group col-md-6">
-                    <select id="apps_to_fo_inspection_notice_letter_confirmation_of_delivery_type_${appsToFoId}_${inspectionNotice}" class="apps_to_fo_inspection_notice_letter_confirmation_of_delivery_type_${appsToFoId} apps_to_fo_inspection_notice_letter_confirmation_of_delivery_types custom-select form-control col-md-12" required>
+                    <select id="apps_to_fo_inspection_notice_letter_confirmation_of_delivery_type_${appsToFoId}_${inspectionNotice}" class="apps_to_fo_inspection_notice_letter_confirmation_of_delivery_type_${appsToFoId} apps_to_fo_inspection_notice_letter_confirmation_of_delivery_types custom-select form-control col-md-12 deactivation" required>
                         <option value="">Подтверждение выдачи Направления</option>
                         <option>Список внутренних почтовых отправлений</option>
                         <option>Опись вложения</option>
@@ -1971,47 +2049,65 @@ function addInspectionNotice(appsToFoId) {
             </div>
             <div class="form-row">
                 <div class="form-group col-md-3">
-                    <input id = "apps_to_fo_inspection_notice_letter_confirmation_of_delivery_date_${appsToFoId}_${inspectionNotice}" class = "apps_to_fo_inspection_notice_letter_confirmation_of_delivery_date_${appsToFoId} apps_to_fo_inspection_notice_letter_confirmation_of_delivery_dates datepicker-here form-control" aria-describedby="apps_to_fo_inspection_notice_letter_confirmation_of_delivery_date_help_block_${appsToFoId}_${inspectionNotice}" placeholder="Дата" type="text" size="10" required>
+                    <input id = "apps_to_fo_inspection_notice_letter_confirmation_of_delivery_date_${appsToFoId}_${inspectionNotice}" class = "apps_to_fo_inspection_notice_letter_confirmation_of_delivery_date_${appsToFoId} apps_to_fo_inspection_notice_letter_confirmation_of_delivery_dates datepicker-here form-control deactivation" aria-describedby="apps_to_fo_inspection_notice_letter_confirmation_of_delivery_date_help_block_${appsToFoId}_${inspectionNotice}" placeholder="Дата" type="text" size="10" required>
                     <small id="apps_to_fo_inspection_notice_letter_confirmation_of_delivery_date_help_block_${appsToFoId}_${inspectionNotice}" class="form-text">
-                        Дата списка
-                        <i class="fa fa-question-circle" aria-hidden="true" tabindex="0" data-trigger="focus" data-toggle="popover"></i>
+                        <div class="form-inline">
+                            <input id="apps_to_fo_inspection_notice_letter_confirmation_of_delivery_date_deactivate_${appsToFoId}_${inspectionNotice}" class="deactivator" type="checkbox">
+                            <label for="apps_to_fo_inspection_notice_letter_confirmation_of_delivery_date_deactivate_${appsToFoId}_${inspectionNotice}" class="ml-2 form-check-label">Дата списка</label>
+                            <i class="fa fa-question-circle ml-2" aria-hidden="true" tabindex="0" data-trigger="focus" data-toggle="popover"></i>
+                        </div>
                     </small>
                 </div>
                 <div class="form-group col-md-3">
-                    <input id = "apps_to_fo_inspection_notice_letter_confirmation_of_delivery_number_${appsToFoId}_${inspectionNotice}" class="apps_to_fo_inspection_notice_letter_confirmation_of_delivery_number_${appsToFoId} apps_to_fo_inspection_notice_letter_confirmation_of_delivery_numbers form-control" aria-describedby="apps_to_fo_inspection_notice_letter_confirmation_of_delivery_number_help_block_${appsToFoId}_${inspectionNotice}" placeholder="№ списка" type="text" size="8" required>
+                    <input id = "apps_to_fo_inspection_notice_letter_confirmation_of_delivery_number_${appsToFoId}_${inspectionNotice}" class="apps_to_fo_inspection_notice_letter_confirmation_of_delivery_number_${appsToFoId} apps_to_fo_inspection_notice_letter_confirmation_of_delivery_numbers form-control deactivation" aria-describedby="apps_to_fo_inspection_notice_letter_confirmation_of_delivery_number_help_block_${appsToFoId}_${inspectionNotice}" placeholder="№ списка" type="text" size="8" required>
                     <small id="apps_to_fo_inspection_notice_letter_confirmation_of_delivery_number_help_block_${appsToFoId}_${inspectionNotice}" class="form-text">
-                        № списка
-                        <i class="fa fa-question-circle" aria-hidden="true" tabindex="0" data-trigger="focus" data-toggle="popover"></i>
+                        <div class="form-inline">
+                            <input id="apps_to_fo_inspection_notice_letter_confirmation_of_delivery_number_deactivate_${appsToFoId}_${inspectionNotice}" class="deactivator" type="checkbox">
+                            <label for="apps_to_fo_inspection_notice_letter_confirmation_of_delivery_number_deactivate_${appsToFoId}_${inspectionNotice}" class="ml-2 form-check-label">№ списка</label>
+                            <i class="fa fa-question-circle ml-2" aria-hidden="true" tabindex="0" data-trigger="focus" data-toggle="popover"></i>
+                        </div>
                     </small>
                 </div>
                 <div class="form-group col-md-3">
-                    <input id = "apps_to_fo_inspection_notice_letter_post_number_${appsToFoId}_${inspectionNotice}" class="apps_to_fo_inspection_notice_letter_post_number_${appsToFoId} apps_to_fo_inspection_notice_letter_post_numbers form-control" aria-describedby="apps_to_fo_inspection_notice_letter_post_number_help_block_${appsToFoId}_${inspectionNotice}" placeholder="№ идентификатора" type="text" size="8" required>
+                    <input id = "apps_to_fo_inspection_notice_letter_post_number_${appsToFoId}_${inspectionNotice}" class="apps_to_fo_inspection_notice_letter_post_number_${appsToFoId} apps_to_fo_inspection_notice_letter_post_numbers form-control deactivation" aria-describedby="apps_to_fo_inspection_notice_letter_post_number_help_block_${appsToFoId}_${inspectionNotice}" placeholder="№ идентификатора" type="text" size="8" required>
                     <small id="apps_to_fo_inspection_notice_letter_post_number_help_block_${appsToFoId}_${inspectionNotice}" class="form-text">
-                        № почтового идентификатора
-                        <i class="fa fa-question-circle" aria-hidden="true" tabindex="0" data-trigger="focus" data-toggle="popover"></i>
+                        <div class="form-inline">
+                            <input id="apps_to_fo_inspection_notice_letter_post_number_deactivate_${appsToFoId}_${inspectionNotice}" class="deactivator" type="checkbox">
+                            <label for="apps_to_fo_inspection_notice_letter_post_number_deactivate_${appsToFoId}_${inspectionNotice}" class="ml-2 form-check-label">№ почтового идентификатора</label>
+                            <i class="fa fa-question-circle ml-2" aria-hidden="true" tabindex="0" data-trigger="focus" data-toggle="popover"></i>
+                        </div>
                     </small>
                 </div>
             </div>
             <div class="form-row">
                 <div class="form-group col-md-3">
-                    <input id = "apps_to_fo_inspection_notice_letter_post_date1_${appsToFoId}_${inspectionNotice}" class = "apps_to_fo_inspection_notice_letter_post_date1_${appsToFoId} apps_to_fo_inspection_notice_letter_post_date1 datepicker-here form-control" aria-describedby="apps_to_fo_inspection_notice_letter_post_date1_help_block_${appsToFoId}_${inspectionNotice}" placeholder="Дата" type="text" size="10" required>
+                    <input id = "apps_to_fo_inspection_notice_letter_post_date1_${appsToFoId}_${inspectionNotice}" class = "apps_to_fo_inspection_notice_letter_post_date1_${appsToFoId} apps_to_fo_inspection_notice_letter_post_date1 datepicker-here form-control deactivation" aria-describedby="apps_to_fo_inspection_notice_letter_post_date1_help_block_${appsToFoId}_${inspectionNotice}" placeholder="Дата" type="text" size="10" required>
                     <small id="apps_to_fo_inspection_notice_letter_post_date1_help_block_${appsToFoId}_${inspectionNotice}" class="form-text">
-                        Дата передачи в отделение связи
-                        <i class="fa fa-question-circle" aria-hidden="true" tabindex="0" data-trigger="focus" data-toggle="popover"></i>
+                        <div class="form-inline">
+                            <input id="apps_to_fo_inspection_notice_letter_post_date1_${appsToFoId}_${inspectionNotice}" class="deactivator" type="checkbox">
+                            <label for="apps_to_fo_inspection_notice_letter_post_date1_${appsToFoId}_${inspectionNotice}" class="ml-2 form-check-label">Дата передачи в отделение связи</label>
+                            <i class="fa fa-question-circle ml-2" aria-hidden="true" tabindex="0" data-trigger="focus" data-toggle="popover"></i>
+                        </div>
                     </small>
                 </div>
                 <div class="form-group col-md-3">
-                    <input id = "apps_to_fo_inspection_notice_letter_post_date2_${appsToFoId}_${inspectionNotice}" class = "apps_to_fo_inspection_notice_letter_post_date2_${appsToFoId} apps_to_fo_inspection_notice_letter_post_date2 datepicker-here form-control" aria-describedby="apps_to_fo_inspection_notice_letter_post_date2_help_block_${appsToFoId}_${inspectionNotice}" placeholder="Дата" type="text" size="10" required>
+                    <input id = "apps_to_fo_inspection_notice_letter_post_date2_${appsToFoId}_${inspectionNotice}" class = "apps_to_fo_inspection_notice_letter_post_date2_${appsToFoId} apps_to_fo_inspection_notice_letter_post_date2 datepicker-here form-control deactivation" aria-describedby="apps_to_fo_inspection_notice_letter_post_date2_help_block_${appsToFoId}_${inspectionNotice}" placeholder="Дата" type="text" size="10" required>
                     <small id="apps_to_fo_inspection_notice_letter_post_date2_help_block_${appsToFoId}_${inspectionNotice}" class="form-text">
-                        Дата доставки в место вручения
-                        <i class="fa fa-question-circle" aria-hidden="true" tabindex="0" data-trigger="focus" data-toggle="popover"></i>
+                        <div class="form-inline">
+                            <input id="apps_to_fo_inspection_notice_letter_post_date2_${appsToFoId}_${inspectionNotice}" class="deactivator" type="checkbox">
+                            <label for="apps_to_fo_inspection_notice_letter_post_date2_${appsToFoId}_${inspectionNotice}" class="ml-2 form-check-label">Дата доставки в место вручения</label>
+                            <i class="fa fa-question-circle ml-2" aria-hidden="true" tabindex="0" data-trigger="focus" data-toggle="popover"></i>
+                        </div>
                     </small>
                 </div>
                 <div class="form-group col-md-3">
-                    <input id = "apps_to_fo_inspection_notice_letter_post_date3_${appsToFoId}_${inspectionNotice}" class = "apps_to_fo_inspection_notice_letter_post_date3_${appsToFoId} apps_to_fo_inspection_notice_letter_post_date3 datepicker-here form-control" aria-describedby="apps_to_fo_inspection_notice_letter_post_date3_help_block_${appsToFoId}_${inspectionNotice}" placeholder="Дата" type="text" size="10" required>
+                    <input id = "apps_to_fo_inspection_notice_letter_post_date3_${appsToFoId}_${inspectionNotice}" class = "apps_to_fo_inspection_notice_letter_post_date3_${appsToFoId} apps_to_fo_inspection_notice_letter_post_date3 datepicker-here form-control deactivation" aria-describedby="apps_to_fo_inspection_notice_letter_post_date3_help_block_${appsToFoId}_${inspectionNotice}" placeholder="Дата" type="text" size="10" required>
                     <small id="apps_to_fo_inspection_notice_letter_post_date3_help_block_${appsToFoId}_${inspectionNotice}" class="form-text">
-                        Дата вручения адресату
-                        <i class="fa fa-question-circle" aria-hidden="true" tabindex="0" data-trigger="focus" data-toggle="popover"></i>
+                        <div class="form-inline">
+                            <input id="apps_to_fo_inspection_notice_letter_post_date3_${appsToFoId}_${inspectionNotice}" class="deactivator" type="checkbox">
+                            <label for="apps_to_fo_inspection_notice_letter_post_date3_${appsToFoId}_${inspectionNotice}" class="ml-2 form-check-label">Дата вручения адресату</label>
+                            <i class="fa fa-question-circle ml-2" aria-hidden="true" tabindex="0" data-trigger="focus" data-toggle="popover"></i>
+                        </div>
                     </small>
                 </div>
             </div>

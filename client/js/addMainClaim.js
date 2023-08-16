@@ -116,6 +116,7 @@ function addClaimsContract() {
                           <div class="form-inline">
                             <input id="add_main_claim_info_ev_date_deactivate_${ContractId}_1" class="deactivator" type="checkbox">
                             <label for="add_main_claim_info_ev_date_deactivate_${ContractId}_1" class="ml-2 form-check-label">Сведений не имеется</label>
+                            <i class="fa fa-question-circle ml-2" aria-hidden="true" tabindex="0" data-trigger="focus" data-toggle="popover"></i>
                           </div>
                         </small>
                       </div>
@@ -130,6 +131,7 @@ function addClaimsContract() {
                             <div class="form-inline">
                               <input id="add_main_claim_info_ev_route_deactivate_${ContractId}_1" class="deactivator" type="checkbox">
                               <label for="add_main_claim_info_ev_route_deactivate_${ContractId}_1" class="ml-2 form-check-label">Сведений не имеется</label>
+                              <i class="fa fa-question-circle ml-2" aria-hidden="true" tabindex="0" data-trigger="focus" data-toggle="popover"></i>
                             </div>
                           </small>
                         </div>
@@ -145,6 +147,7 @@ function addClaimsContract() {
                           <div class="form-inline">
                             <input id="add_main_claim_info_ev_ground_deactivate_${ContractId}_1" class="deactivator" type="checkbox">
                             <label for="add_main_claim_info_ev_ground_deactivate_${ContractId}_1" class="ml-2 form-check-label">Сведений не имеется</label>
+                            <i class="fa fa-question-circle ml-2" aria-hidden="true" tabindex="0" data-trigger="focus" data-toggle="popover"></i>
                           </div>
                         </small>
                       </div>
@@ -154,6 +157,7 @@ function addClaimsContract() {
                           <div class="form-inline">
                             <input id="add_main_claim_info_ev_number_deactivate_${ContractId}_1" class="deactivator" type="checkbox">
                             <label for="add_main_claim_info_ev_number_deactivate_${ContractId}_1" class="ml-2 form-check-label">Сведений не имеется</label>
+                            <i class="fa fa-question-circle ml-2" aria-hidden="true" tabindex="0" data-trigger="focus" data-toggle="popover"></i>
                           </div>
                         </small>
                       </div>
@@ -322,6 +326,7 @@ function addFuMainClaim(id) {
                     <div class="form-inline">
                       <input id="add_main_claim_info_ev_date_deactivate_${id}_${claimContractId}" class="deactivator" type="checkbox">
                       <label for="add_main_claim_info_ev_date_deactivate_${id}_${claimContractId}" class="ml-2 form-check-label">Сведений не имеется</label>
+                      <i class="fa fa-question-circle ml-2" aria-hidden="true" tabindex="0" data-trigger="focus" data-toggle="popover"></i>
                     </div>
                   </small>
                 </div>
@@ -336,6 +341,7 @@ function addFuMainClaim(id) {
                     <div class="form-inline">
                       <input id="add_main_claim_info_ev_route_deactivate_${id}_${claimContractId}" class="deactivator" type="checkbox">
                       <label for="add_main_claim_info_ev_route_deactivate_${id}_${claimContractId}" class="ml-2 form-check-label">Сведений не имеется</label>
+                      <i class="fa fa-question-circle ml-2" aria-hidden="true" tabindex="0" data-trigger="focus" data-toggle="popover"></i>
                     </div>
                   </small>
                 </div>
@@ -351,6 +357,7 @@ function addFuMainClaim(id) {
                     <div class="form-inline">
                       <input id="add_main_claim_info_ev_ground_deactivate_${id}_${claimContractId}" class="deactivator" type="checkbox">
                       <label for="add_main_claim_info_ev_ground_deactivate_${id}_${claimContractId}" class="ml-2 form-check-label">Сведений не имеется</label>
+                      <i class="fa fa-question-circle ml-2" aria-hidden="true" tabindex="0" data-trigger="focus" data-toggle="popover"></i>
                     </div>
                   </small>
                 </div>
@@ -360,6 +367,7 @@ function addFuMainClaim(id) {
                     <div class="form-inline">
                       <input id="add_main_claim_info_ev_number_deactivate_${id}_${claimContractId}" class="deactivator" type="checkbox">
                       <label for="add_main_claim_info_ev_number_deactivate_${id}_${claimContractId}" class="ml-2 form-check-label">Сведений не имеется</label>
+                      <i class="fa fa-question-circle ml-2" aria-hidden="true" tabindex="0" data-trigger="focus" data-toggle="popover"></i>
                     </div>
                   </small>
                 </div>
