@@ -55,5 +55,34 @@ export const allPopovers = {
                 return `Укажите номер документа-основания. Пример: <img src="img/${this.type}.png" width=100% />`
             },
         },
+        {
+            type: "add_main_claim_info_storage_dates",
+            title: "Заполнение даты оплаты услуг по хранению ТС",
+            content: function () {
+                return `Укажите дату оплаты услуг по хранению ТС. Пример: <img src="img/${this.type}.png" width=100% />`
+            },
+        },
+        {
+            type: "add_main_claim_info_storage_organizations",
+            title: "Заполнение наименование организации, осуществляющей хранение ТС",
+            content: function () {
+                return `Укажите наименование организации, осуществляющей хранение ТС. В случае, если хранение осуществляет ИП, то ФИО ИП необходимо указывать в родительном падеже (ИП Иванова И.И.). Пример: <img src="img/${this.type}.png" width=100% />`
+            },
+        },
+        {
+            id: 5,
+            type: "add_main_claim_info_storage_grounds",
+            title: "Заполнение типа документа-основания",
+            content: function () {
+                return `Выберите тип документа, которым подтверждается оплата расходов на хранению ТС. Пример: <img src="img/${this.type}.png" width=100% />`
+            },
+        },
+        {
+            type: "add_main_claim_info_storage_numbers",
+            title: "Заполнение номера документа-основания",
+            content: function () {
+                return `Укажите номер документа-основания. Пример: <img src="img/${this.type}.png" width=100% />`
+            },
+        },
     ],
 }

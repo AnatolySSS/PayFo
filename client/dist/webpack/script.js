@@ -1261,6 +1261,32 @@ $(document).on("click", "button", function (event) {
   })
 })
 
+//Увеличивает картинку-пример документа
+$(document).on( "click", '.popover img', function( event ) {
+  console.log($(this)[0].src)
+  $("#module_for_img").append(`
+    <div id="myModal" class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <img src="${$(this)[0].src}" width=100% />
+          </div>
+        </div>
+      </div>
+    </div>
+  `)
+  $('#myModal').modal('show')
+  $('#myModal').on('hidden.bs.modal', function (e) {
+    $("#myModal").remove();
+    console.log("modal removed");
+})
+})
+
 //Изменение галочки европротокол (выведение страховой суммы)
 $('#europrotocol').change(function() {
   //Расчет страховой суммы
@@ -1363,7 +1389,7 @@ $(document).on( "mouseenter", '[data-toggle="popover"]', function( event ) {
           title: element.title,
           content: function () {
               return element.content()
-          }
+          },
         })
       })
     }

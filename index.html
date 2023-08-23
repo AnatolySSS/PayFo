@@ -478,6 +478,7 @@
                         <button id="main_claim_btn_1_1" class="main_claim_btn_1 main_claim_btns btn btn-outline-warning" onclick="addFuMainClaim(1)">+</button>
                       </div>
                     </div>
+                    <!-- BEGIN add_main_claim_info -->
                     <div id="add_main_claim_info_1_1" class="add_main_claim_info_1 add_main_claim_infos form-group ml-3" style="display:none">
                       <div class="form-group">
                         <h6>Период неустойки</h6>
@@ -495,6 +496,8 @@
                         <label for="main_claim_pdf_1_1" class="ml-2 form-check-label">По день факта</label>
                       </div>
                     </div>
+                    <!-- END add_main_claim_info -->
+                    <!-- BEGIN add_main_claim_info_ev -->
                     <div id="add_main_claim_info_ev_1_1" class="add_main_claim_info_ev_1 add_main_claim_info_evs" style="display:none">
                       <div class="form-row">
                         <div class="form-group col-md-3">
@@ -564,6 +567,92 @@
                         </div>
                       </div>
                     </div>
+                    <!-- END add_main_claim_info_ev -->
+                    <!-- BEGIN add_main_claim_info_storage -->
+                    <div id="add_main_claim_info_storage_1_1" class="add_main_claim_info_storage_1 add_main_claim_info_storages" style="display:none">
+                      <div class="form-row">
+                        <div class="form-group col-md-3">
+                          <h6>Дата платежа</h6>
+                        </div>
+                        <div class="form-group col-md-3">
+                          <h6>Организация</h6>
+                        </div>
+                        <div class="form-group col-md-3">
+                          <h6>Чем подтверждается</h6>
+                        </div>
+                        <div class="form-group col-md-3">
+                          <h6>№ документа</h6>
+                        </div>
+                      </div>
+                      <div class="form-row">
+                        <div class="form-group col-md-3">
+                          <input id = "add_main_claim_info_storage_date_1_1" class="add_main_claim_info_storage_date_1 add_main_claim_info_storage_dates datepicker-here deactivation" aria-describedby="add_main_claim_info_storage_date_help_block_1_1" placeholder="Дата" type="text" size="10" required>
+                          <small id="add_main_claim_info_storage_date_help_block_1_1" class="form-text">
+                            <div class="form-inline">
+                              <input id="add_main_claim_info_storage_date_deactivate_1_1" class="deactivator" type="checkbox">
+                              <label for="add_main_claim_info_storage_date_deactivate_1_1" class="ml-2 form-check-label">Сведений не имеется</label>
+                              <i class="fa fa-question-circle ml-2" aria-hidden="true" tabindex="0" data-trigger="focus" data-toggle="popover"></i>
+                            </div>
+                          </small>
+                        </div>
+                        <div class="form-group col-md-3">
+                          <input id="add_main_claim_info_storage_organization_1_1" class="add_main_claim_info_storage_organization_1 add_main_claim_info_storage_organizations deactivation" aria-describedby="add_main_claim_info_storage_organization_help_block_1_1" placeholder="Наименование" type="text" size="10" required>
+                          <small id="add_main_claim_info_storage_route_help_block_1_1" class="form-text">
+                            <div class="form-inline">
+                              <input id="add_main_claim_info_storage_organization_deactivate_1_1" class="deactivator" type="checkbox">
+                              <label for="add_main_claim_info_storage_organization_deactivate_1_1" class="ml-2 form-check-label">Сведений не имеется</label>
+                              <i class="fa fa-question-circle ml-2" aria-hidden="true" tabindex="0" data-trigger="focus" data-toggle="popover"></i>
+                            </div>
+                          </small>
+                        </div>
+                        <div class="form-group col-md-3">
+                          <select id="add_main_claim_info_storage_ground_1_1" class="add_main_claim_info_storage_ground_1 add_main_claim_info_storage_grounds custom-select deactivation col-md-12" aria-describedby="add_main_claim_info_storage_ground_help_block_1_1" required>
+                            <option value="">Выберите вариант</option>
+                            <option>Чек</option>
+                            <option>Квитанция</option>
+                            <option>Договор</option>
+                            <option>Квитанция-договор</option>
+                          </select>
+                          <small id="add_main_claim_info_storage_ground_help_block_1_1" class="form-text">
+                            <div class="form-inline">
+                              <input id="add_main_claim_info_storage_ground_deactivate_1_1" class="deactivator" type="checkbox">
+                              <label for="add_main_claim_info_storage_ground_deactivate_1_1" class="ml-2 form-check-label">Сведений не имеется</label>
+                              <i class="fa fa-question-circle ml-2" aria-hidden="true" tabindex="0" data-trigger="focus" data-toggle="popover"></i>
+                            </div>
+                          </small>
+                        </div>
+                        <div class="form-group col-md-3">
+                          <input id = "add_main_claim_info_storage_number_1_1" class="add_main_claim_info_storage_number_1 add_main_claim_info_storage_numbers deactivation" aria-describedby="add_main_claim_info_storage_number_help_block_1_1" placeholder="№" type="text" size="10" required>
+                          <small id="add_main_claim_info_storage_number_help_block_1_1" class="form-text">
+                            <div class="form-inline">
+                              <input id="add_main_claim_info_storage_number_deactivate_1_1" class="deactivator" type="checkbox">
+                              <label for="add_main_claim_info_storage_number_deactivate_1_1" class="ml-2 form-check-label">Сведений не имеется</label>
+                              <i class="fa fa-question-circle ml-2" aria-hidden="true" tabindex="0" data-trigger="focus" data-toggle="popover"></i>
+                            </div>
+                          </small>
+                        </div>
+                      </div>
+                      <div class="form-row">
+                        <div class="form-group col-md-3">
+                          <h6>Период хранения</h6>
+                        </div>
+                      </div>
+                      <div class="form-row">
+                        <div class="form-group form-inline">
+                          <label for="add_main_claim_info_storage_from_1_1">c</label>
+                          <input id = "add_main_claim_info_storage_from_1_1" class = "add_main_claim_info_storage_from_1 add_main_claim_info_storage_froms ml-2 datepicker-here" placeholder="Дата" type="text" size="10" required>
+                          <label for="add_main_claim_info_storage_to_1_1" class="ml-2">по</label>
+                          <input id = "add_main_claim_info_storage_to_1_1" class = "add_main_claim_info_storage_to_1 add_main_claim_info_storage_tos ml-2 datepicker-here" placeholder="Дата" type="text" size="10" required>
+                        </div>
+                      </div>
+                      <div class="form-row">
+                        <div class="form-group col-md-3">
+                          <input id="add_main_claim_info_storage_without_period_1_1" class="add_main_claim_info_storage_without_period_1 add_main_claim_info_storage_without_periods" type="checkbox" onclick="block_add_main_claim_info_storage_date(1, 1)">
+                          <label for="add_main_claim_info_storage_without_period_1_1" class="ml-2 form-check-label">Период не указан</label>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- END add_main_claim_info_storage -->
                   </div>
                 </div>
               </div>
@@ -3272,6 +3361,7 @@
     <!-- END container -->
 
     <div class="toast"></div>
+    <div id="module_for_img"></div>
 
     <script src="dist/bundle.js"></script>
     <!-- <script type="text/javascript" src="js/server.js"></script> -->

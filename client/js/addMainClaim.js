@@ -94,6 +94,7 @@ function addClaimsContract() {
                       <label for="main_claim_pdf_${ContractId}_1" class="ml-2 form-check-label">По день факта</label>
                     </div>
                   </div>
+                  <!-- BEGIN add_main_claim_info_ev -->
                   <div id="add_main_claim_info_ev_${ContractId}_1" class="add_main_claim_info_ev_${ContractId} add_main_claim_info_evs" style="display:none">
                     <div class="form-row">
                       <div class="form-group col-md-3">
@@ -163,6 +164,92 @@ function addClaimsContract() {
                       </div>
                     </div>
                   </div>
+                  <!-- END add_main_claim_info_ev -->
+                  <!-- BEGIN add_main_claim_info_storage -->
+                  <div id="add_main_claim_info_storage_${ContractId}_1" class="add_main_claim_info_storage_${ContractId} add_main_claim_info_storages" style="display:none">
+                    <div class="form-row">
+                      <div class="form-group col-md-3">
+                        <h6>Дата платежа</h6>
+                      </div>
+                      <div class="form-group col-md-3">
+                        <h6>Организация</h6>
+                      </div>
+                      <div class="form-group col-md-3">
+                        <h6>Чем подтверждается</h6>
+                      </div>
+                      <div class="form-group col-md-3">
+                        <h6>№ документа</h6>
+                      </div>
+                    </div>
+                    <div class="form-row">
+                      <div class="form-group col-md-3">
+                        <input id = "add_main_claim_info_storage_date_${ContractId}_1" class="add_main_claim_info_storage_date_${ContractId} add_main_claim_info_storage_dates datepicker-here deactivation" aria-describedby="add_main_claim_info_storage_date_help_block_${ContractId}_1" placeholder="Дата" type="text" size="10" required>
+                        <small id="add_main_claim_info_storage_date_help_block_${ContractId}_1" class="form-text">
+                          <div class="form-inline">
+                            <input id="add_main_claim_info_storage_date_deactivate_${ContractId}_1" class="deactivator" type="checkbox">
+                            <label for="add_main_claim_info_storage_date_deactivate_${ContractId}_1" class="ml-2 form-check-label">Сведений не имеется</label>
+                            <i class="fa fa-question-circle ml-2" aria-hidden="true" tabindex="0" data-trigger="focus" data-toggle="popover"></i>
+                          </div>
+                        </small>
+                      </div>
+                      <div class="form-group col-md-3">
+                        <input id="add_main_claim_info_storage_organization_${ContractId}_1" class="add_main_claim_info_storage_organization_${ContractId} add_main_claim_info_storage_organizations deactivation" aria-describedby="add_main_claim_info_storage_organization_help_block_${ContractId}_1" placeholder="Наименование" type="text" size="10" required>
+                        <small id="add_main_claim_info_storage_route_help_block_${ContractId}_1" class="form-text">
+                          <div class="form-inline">
+                            <input id="add_main_claim_info_storage_organization_deactivate_${ContractId}_1" class="deactivator" type="checkbox">
+                            <label for="add_main_claim_info_storage_organization_deactivate_${ContractId}_1" class="ml-2 form-check-label">Сведений не имеется</label>
+                            <i class="fa fa-question-circle ml-2" aria-hidden="true" tabindex="0" data-trigger="focus" data-toggle="popover"></i>
+                          </div>
+                        </small>
+                      </div>
+                      <div class="form-group col-md-3">
+                        <select id="add_main_claim_info_storage_ground_${ContractId}_1" class="add_main_claim_info_storage_ground_${ContractId} add_main_claim_info_storage_grounds custom-select deactivation col-md-12" aria-describedby="add_main_claim_info_storage_ground_help_block_${ContractId}_1" required>
+                          <option value="">Выберите вариант</option>
+                          <option>Чек</option>
+                          <option>Квитанция</option>
+                          <option>Договор</option>
+                          <option>Квитанция-договор</option>
+                        </select>
+                        <small id="add_main_claim_info_storage_ground_help_block_${ContractId}_1" class="form-text">
+                          <div class="form-inline">
+                            <input id="add_main_claim_info_storage_ground_deactivate_${ContractId}_1" class="deactivator" type="checkbox">
+                            <label for="add_main_claim_info_storage_ground_deactivate_${ContractId}_1" class="ml-2 form-check-label">Сведений не имеется</label>
+                            <i class="fa fa-question-circle ml-2" aria-hidden="true" tabindex="0" data-trigger="focus" data-toggle="popover"></i>
+                          </div>
+                        </small>
+                      </div>
+                      <div class="form-group col-md-3">
+                        <input id = "add_main_claim_info_storage_number_${ContractId}_1" class="add_main_claim_info_storage_number_${ContractId} add_main_claim_info_storage_numbers deactivation" aria-describedby="add_main_claim_info_storage_number_help_block_${ContractId}_1" placeholder="№" type="text" size="10" required>
+                        <small id="add_main_claim_info_storage_number_help_block_${ContractId}_1" class="form-text">
+                          <div class="form-inline">
+                            <input id="add_main_claim_info_storage_number_deactivate_${ContractId}_1" class="deactivator" type="checkbox">
+                            <label for="add_main_claim_info_storage_number_deactivate_${ContractId}_1" class="ml-2 form-check-label">Сведений не имеется</label>
+                            <i class="fa fa-question-circle ml-2" aria-hidden="true" tabindex="0" data-trigger="focus" data-toggle="popover"></i>
+                          </div>
+                        </small>
+                      </div>
+                    </div>
+                    <div class="form-row">
+                      <div class="form-group col-md-3">
+                        <h6>Период хранения</h6>
+                      </div>
+                    </div>
+                    <div class="form-row">
+                      <div class="form-group form-inline">
+                        <label for="add_main_claim_info_storage_from_${ContractId}_1">c</label>
+                        <input id = "add_main_claim_info_storage_from_${ContractId}_1" class = "add_main_claim_info_storage_from_${ContractId} add_main_claim_info_storage_froms ml-2 datepicker-here" placeholder="Дата" type="text" size="10" required>
+                        <label for="add_main_claim_info_storage_to_${ContractId}_1" class="ml-2">по</label>
+                        <input id = "add_main_claim_info_storage_to_${ContractId}_1" class = "add_main_claim_info_storage_to_${ContractId} add_main_claim_info_storage_tos ml-2 datepicker-here" placeholder="Дата" type="text" size="10" required>
+                      </div>
+                    </div>
+                    <div class="form-row">
+                      <div class="form-group col-md-3">
+                        <input id="add_main_claim_info_storage_without_period_${ContractId}_1" class="add_main_claim_info_storage_without_period_${ContractId} add_main_claim_info_storage_without_periods" type="checkbox" onclick="block_add_main_claim_info_storage_date(${ContractId}, 1)">
+                        <label for="add_main_claim_info_storage_without_period_${ContractId}_1" class="ml-2 form-check-label">Период не указан</label>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- END add_main_claim_info_storage -->
                 </div>
               </div>`
 
@@ -170,6 +257,9 @@ function addClaimsContract() {
   $(`#date_main_claim_from_${ContractId}_1`).datepicker();
   $(`#date_main_claim_to_${ContractId}_1`).datepicker();
   $(`#add_main_claim_info_ev_date_${ContractId}_1`).datepicker();
+  $(`#add_main_claim_info_storage_date_${ContractId}_1`).datepicker();
+  $(`#add_main_claim_info_storage_from_${ContractId}_1`).datepicker();
+  $(`#add_main_claim_info_storage_to_${ContractId}_1`).datepicker();
 
   $('.datepicker-here').toArray().forEach(function(field){
     new Cleave(field, {
@@ -189,11 +279,6 @@ function addClaimsContract() {
         numeralIntegerScale: 8
     })
   });
-
-  //Вызывает функцию, изменяющую общую картинку валидации
-  // validationCheck('main-claims-all')
-  // validationCheckUpdate('main-claims-all')
-
 }
 
 function removeClaimsContract(id) {
@@ -201,7 +286,6 @@ function removeClaimsContract(id) {
   if ($(`#add_main_claims_info_btn_${ContractId}`).find(".toggle").hasClass("rotate")) {
     $(`#add_main_claims_info_btn_${ContractId}`).find(".toggle").removeClass("rotate");
   }
-  // validationCheckUpdate('main-claims-all')
   ContractId--;
 }
 
@@ -304,6 +388,7 @@ function addFuMainClaim(id) {
                 <label for="main_claim_pdf_${id}_${claimContractId}" class="ml-2 form-check-label">По день факта</label>
               </div>
             </div>
+            <!-- BEGIN add_main_claim_info_ev -->
             <div id="add_main_claim_info_ev_${id}_${claimContractId}" class="add_main_claim_info_ev_${id} add_main_claim_info_evs" style="display:none">
               <div class="form-row">
                 <div class="form-group col-md-3">
@@ -372,7 +457,93 @@ function addFuMainClaim(id) {
                   </small>
                 </div>
               </div>
-            </div>`
+            </div>
+            <!-- END add_main_claim_info_ev -->
+            <!-- BEGIN add_main_claim_info_storage -->
+            <div id="add_main_claim_info_storage_${id}_${claimContractId}" class="add_main_claim_info_storage_${id} add_main_claim_info_storages" style="display:none">
+              <div class="form-row">
+                <div class="form-group col-md-3">
+                  <h6>Дата платежа</h6>
+                </div>
+                <div class="form-group col-md-3">
+                  <h6>Организация</h6>
+                </div>
+                <div class="form-group col-md-3">
+                  <h6>Чем подтверждается</h6>
+                </div>
+                <div class="form-group col-md-3">
+                  <h6>№ документа</h6>
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="form-group col-md-3">
+                  <input id = "add_main_claim_info_storage_date_${id}_${claimContractId}" class="add_main_claim_info_storage_date_${id} add_main_claim_info_storage_dates datepicker-here deactivation" aria-describedby="add_main_claim_info_storage_date_help_block_${id}_${claimContractId}" placeholder="Дата" type="text" size="10" required>
+                  <small id="add_main_claim_info_storage_date_help_block_${id}_${claimContractId}" class="form-text">
+                    <div class="form-inline">
+                      <input id="add_main_claim_info_storage_date_deactivate_${id}_${claimContractId}" class="deactivator" type="checkbox">
+                      <label for="add_main_claim_info_storage_date_deactivate_${id}_${claimContractId}" class="ml-2 form-check-label">Сведений не имеется</label>
+                      <i class="fa fa-question-circle ml-2" aria-hidden="true" tabindex="0" data-trigger="focus" data-toggle="popover"></i>
+                    </div>
+                  </small>
+                </div>
+                <div class="form-group col-md-3">
+                  <input id="add_main_claim_info_storage_organization_${id}_${claimContractId}" class="add_main_claim_info_storage_organization_${id} add_main_claim_info_storage_organizations deactivation" aria-describedby="add_main_claim_info_storage_organization_help_block_${id}_${claimContractId}" placeholder="Наименование" type="text" size="10" required>
+                  <small id="add_main_claim_info_storage_route_help_block_${id}_${claimContractId}" class="form-text">
+                    <div class="form-inline">
+                      <input id="add_main_claim_info_storage_organization_deactivate_${id}_${claimContractId}" class="deactivator" type="checkbox">
+                      <label for="add_main_claim_info_storage_organization_deactivate_${id}_${claimContractId}" class="ml-2 form-check-label">Сведений не имеется</label>
+                      <i class="fa fa-question-circle ml-2" aria-hidden="true" tabindex="0" data-trigger="focus" data-toggle="popover"></i>
+                    </div>
+                  </small>
+                </div>
+                <div class="form-group col-md-3">
+                  <select id="add_main_claim_info_storage_ground_${id}_${claimContractId}" class="add_main_claim_info_storage_ground_${id} add_main_claim_info_storage_grounds custom-select deactivation col-md-12" aria-describedby="add_main_claim_info_storage_ground_help_block_${id}_${claimContractId}" required>
+                    <option value="">Выберите вариант</option>
+                    <option>Чек</option>
+                    <option>Квитанция</option>
+                    <option>Договор</option>
+                    <option>Квитанция-договор</option>
+                  </select>
+                  <small id="add_main_claim_info_storage_ground_help_block_${id}_${claimContractId}" class="form-text">
+                    <div class="form-inline">
+                      <input id="add_main_claim_info_storage_ground_deactivate_${id}_${claimContractId}" class="deactivator" type="checkbox">
+                      <label for="add_main_claim_info_storage_ground_deactivate_${id}_${claimContractId}" class="ml-2 form-check-label">Сведений не имеется</label>
+                      <i class="fa fa-question-circle ml-2" aria-hidden="true" tabindex="0" data-trigger="focus" data-toggle="popover"></i>
+                    </div>
+                  </small>
+                </div>
+                <div class="form-group col-md-3">
+                  <input id = "add_main_claim_info_storage_number_${id}_${claimContractId}" class="add_main_claim_info_storage_number_${id} add_main_claim_info_storage_numbers deactivation" aria-describedby="add_main_claim_info_storage_number_help_block_${id}_${claimContractId}" placeholder="№" type="text" size="10" required>
+                  <small id="add_main_claim_info_storage_number_help_block_${id}_${claimContractId}" class="form-text">
+                    <div class="form-inline">
+                      <input id="add_main_claim_info_storage_number_deactivate_${id}_${claimContractId}" class="deactivator" type="checkbox">
+                      <label for="add_main_claim_info_storage_number_deactivate_${id}_${claimContractId}" class="ml-2 form-check-label">Сведений не имеется</label>
+                      <i class="fa fa-question-circle ml-2" aria-hidden="true" tabindex="0" data-trigger="focus" data-toggle="popover"></i>
+                    </div>
+                  </small>
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="form-group col-md-3">
+                  <h6>Период хранения</h6>
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="form-group form-inline">
+                  <label for="add_main_claim_info_storage_from_${id}_${claimContractId}">c</label>
+                  <input id = "add_main_claim_info_storage_from_${id}_${claimContractId}" class = "add_main_claim_info_storage_from_${id} add_main_claim_info_storage_froms ml-2 datepicker-here" placeholder="Дата" type="text" size="10" required>
+                  <label for="add_main_claim_info_storage_to_${id}_${claimContractId}" class="ml-2">по</label>
+                  <input id = "add_main_claim_info_storage_to_${id}_${claimContractId}" class = "add_main_claim_info_storage_to_${id} add_main_claim_info_storage_tos ml-2 datepicker-here" placeholder="Дата" type="text" size="10" required>
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="form-group col-md-3">
+                  <input id="add_main_claim_info_storage_without_period_${id}_${claimContractId}" class="add_main_claim_info_storage_without_period_${id} add_main_claim_info_storage_without_periods" type="checkbox" onclick="block_add_main_claim_info_storage_date(${id}, ${claimContractId})">
+                  <label for="add_main_claim_info_storage_without_period_${id}_${claimContractId}" class="ml-2 form-check-label">Период не указан</label>
+                </div>
+              </div>
+            </div>
+            <!-- END add_main_claim_info_storage -->`
 
 
 
@@ -380,6 +551,9 @@ function addFuMainClaim(id) {
 	$(`#date_main_claim_from_${id}_${claimContractId}`).datepicker();
 	$(`#date_main_claim_to_${id}_${claimContractId}`).datepicker();
   $(`#add_main_claim_info_ev_date_${id}_${claimContractId}`).datepicker();
+  $(`#add_main_claim_info_storage_date_${id}_${claimContractId}`).datepicker();
+  $(`#add_main_claim_info_storage_from_${id}_${claimContractId}`).datepicker();
+  $(`#add_main_claim_info_storage_to_${id}_${claimContractId}`).datepicker();
 
   $('.datepicker-here').toArray().forEach(function(field){
     new Cleave(field, {
@@ -399,17 +573,13 @@ function addFuMainClaim(id) {
         numeralIntegerScale: 8
     })
   });
-
-  //Вызывает функцию, изменяющую общую картинку валидации
-  // validationCheck('main-claims-all')
-  // validationCheckUpdate('main-claims-all')
 }
 
 function removeFuMainClaim(id, claimContractId) {
     $(`#main_claim_${id}_${claimContractId}`).remove();
     $(`#add_main_claim_info_${id}_${claimContractId}`).remove();
     $(`#add_main_claim_info_ev_${id}_${claimContractId}`).remove();
-    // validationCheckUpdate('main-claims-all')
+    $(`#add_main_claim_info_storage_${id}_${claimContractId}`).remove();
 }
 
 //Добавляет период взыскания неустойки судом
@@ -442,6 +612,27 @@ $(document).on("change", ".main_claim_types", function (event) {
 	}
 });
 
+//Добавляет дополнительные сведения по требованию о взыскании расходов на хранение ТС
+$(document).on("change", ".main_claim_types", function (event) {
+	if ($(this).find(':selected').text() == "Хранение") {
+		$(this).parent().parent().next().next().next().show('fast');
+    $(this).parent().parent().next().next().next().find('.add_main_claim_info_storage_dates').addClass('form-control')
+    $(this).parent().parent().next().next().next().find('.add_main_claim_info_storage_organizations').addClass('form-control')
+    $(this).parent().parent().next().next().next().find('.add_main_claim_info_storage_grounds').addClass('form-control')
+    $(this).parent().parent().next().next().next().find('.add_main_claim_info_storage_numbers').addClass('form-control')
+    $(this).parent().parent().next().next().next().find('.add_main_claim_info_storage_froms').addClass('form-control')
+    $(this).parent().parent().next().next().next().find('.add_main_claim_info_storage_tos').addClass('form-control')
+	} else {
+    $(this).parent().parent().next().next().next().hide('fast');
+    $(this).parent().parent().next().next().next().find('.add_main_claim_info_storage_dates').removeClass('form-control')
+    $(this).parent().parent().next().next().next().find('.add_main_claim_info_storage_organizations').removeClass('form-control')
+    $(this).parent().parent().next().next().next().find('.add_main_claim_info_storage_grounds').removeClass('form-control')
+    $(this).parent().parent().next().next().next().find('.add_main_claim_info_storage_numbers').removeClass('form-control')
+    $(this).parent().parent().next().next().next().find('.add_main_claim_info_storage_froms').removeClass('form-control')
+    $(this).parent().parent().next().next().next().find('.add_main_claim_info_storage_tos').removeClass('form-control')
+	}
+});
+
 //Блокировать даты судебной неустойки при проставленной галочке "Период не указан"
 function block_main_claim_date(id, claimContractId){
   if ($(`#main_claim_without_period_${id}_${claimContractId}`).prop('checked')) {
@@ -457,7 +648,20 @@ function block_main_claim_date(id, claimContractId){
     $(`#date_main_claim_to_${id}_${claimContractId}`).prop('disabled', false);
     $(`#main_claim_pdf_${id}_${claimContractId}`).prop('disabled', false);
   }
-    // validationCheckUpdate('main-claims-all')
+}
+
+//Блокировать даты периода хранения при проставленной галочке "Период не указан"
+function block_add_main_claim_info_storage_date(id, claimContractId){
+  if ($(`#add_main_claim_info_storage_without_period_${id}_${claimContractId}`).prop('checked')) {
+    $(`#add_main_claim_info_storage_from_${id}_${claimContractId}`).prop('disabled', true);
+    $(`#add_main_claim_info_storage_to_${id}_${claimContractId}`).prop('disabled', true);
+
+    $(`#add_main_claim_info_storage_from_${id}_${claimContractId}`).val('');
+    $(`#add_main_claim_info_storage_to_${id}_${claimContractId}`).val('');
+  } else {
+    $(`#add_main_claim_info_storage_from_${id}_${claimContractId}`).prop('disabled', false);
+    $(`#add_main_claim_info_storage_to_${id}_${claimContractId}`).prop('disabled', false);
+  }
 }
 
 //Блокирует дату "по" в периоде взыскания неустойки ПДФ
@@ -468,7 +672,6 @@ $(document).on("click", ".main_claim_pdfs", function (event) {
   } else {
     $(this).parent().prev().find('.date_main_claim_tos').prop('disabled', false);
   }
-    // validationCheckUpdate('main-claims-all')
 })
 
 //Изменяет картинку валидации
@@ -477,20 +680,3 @@ function validationCheck(className) {
     validationCheckUpdate(className)
   })
 }
-
-//Обновлет сведения о валидации инпутов
-// function validationCheckUpdate(className) {
-//   setTimeout(() => {
-//     var isOk = true
-//     $(`.${className} .form-control`).each(function() {
-//       if ($(this).css('border-color') == 'rgb(220, 53, 69)') {
-//         isOk = false
-//       }
-//     })
-//     if (isOk) {
-//       $(`#${className}`).children().first().children().first().children().first().next().html(`<i class="fa fa-check-square-o fa-2x" aria-hidden="true" style="color: #28a745;"></i>`)
-//     } else {
-//       $(`#${className}`).children().first().children().first().children().first().next().html(`<i class="fa fa-exclamation-circle fa-2x" aria-hidden="true" style="color: #dc3545;"></i>`)
-//     }
-//   }, 200); 
-// }
