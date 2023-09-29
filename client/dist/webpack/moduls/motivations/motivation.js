@@ -1,12 +1,16 @@
 import { changeDateType } from '../changeDateType';
-import { DATE_NEW_OSAGO_METHODOKOGY, DATE_FZ_123_START } from "../variables";
+import { DATE_NEW_OSAGO_METHODOKOGY, DATE_FZ_123_START, DAY } from "../variables";
 import { findMaxSumm } from "../findMaxSumm.js";
 import { findLastDay } from '../findLastDay.js';
+import { formatDate } from '../formatDate';
 import { expertiseQuestions } from "../objects/allExpertiseQuestions"
 import { makePercentageText_genitive } from "../makePercentageText_genitive"
 import { makeRubText_genitive } from '../makeRubText_genitive.js';
 import { osagoPenaltyParagraph } from "./osago/osagoPenalty";
 import { evacuation_pay_order_ground_helper, evacuation_route_helper } from '../objects/helpers';
+import { declinationDays } from '../declinationDays'
+import { declinationYears } from '../declinationYears'
+import { confirmation_type_helper } from '../objects/helpers';
 
 export function check_signs(totalData, signs) {
     let signs_filled = signs
@@ -209,8 +213,152 @@ export function check_signs(totalData, signs) {
         signs_filled['Срок для обращения к ФУ пропущен'] = "НЕТ"
     }
 
+    //Определение периода хранения ТС
+    let storage_date_from, storage_date_to
+    for (let i = 0; i < totalData.claimsToFuData.claimsContractAll.length; i++) {
+        for (let j = 0; j < totalData.claimsToFuData.claimsContractAll[i].claim.length; j++) {
+            if (totalData.claimsToFuData.claimsContractAll[i].claim[j].type == "Хранение") {
+                storage_date_from = Date.parse(changeDateType(totalData.claimsToFuData.claimsContractAll[i].claim[j].storage_from) + 'T00:00:00')
+                storage_date_to = Date.parse(changeDateType(totalData.claimsToFuData.claimsContractAll[i].claim[j].storage_to) + 'T00:00:00')
+            }
+            
+        }
+    }
 
+    if (storage_date_from == Date.parse(changeDateType(totalData.dtpData.date_dtp) + 'T00:00:00') &&
+        storage_date_to == Date.parse(changeDateType(totalData.appToFoData.appToFoAll[0].inspectionsObjects[0].date) + 'T00:00:00')) {
+        signs_filled['Период хранения ТС'] = "ДТП - ОСМОТР"
+    } else if (storage_date_from == Date.parse(changeDateType(totalData.dtpData.date_dtp) + 'T00:00:00') &&
+               storage_date_to > Date.parse(changeDateType(totalData.appToFoData.appToFoAll[0].inspectionsObjects[0].date) + 'T00:00:00')) {
+        signs_filled['Период хранения ТС'] = "ДТП - ПОСЛЕ ОСМОТРА"
+    } else if (storage_date_from == Date.parse(changeDateType(totalData.dtpData.date_dtp) + 'T00:00:00') &&
+               storage_date_to < Date.parse(changeDateType(totalData.appToFoData.appToFoAll[0].inspectionsObjects[0].date) + 'T00:00:00')) {
+        signs_filled['Период хранения ТС'] = "ДТП - ДО ОСМОТРА"
+    }
 
+    //Срок выдачи направления на СТОА пропущен
+    let date_send_repair = Date.parse(changeDateType(totalData.appToFoData.appToFoAll[0].repairingObjects[0].confirmation_date) + 'T00:00:00')
+    let last_date_for_repair = Date.parse(last_day_for_pay_fu)
+    if (date_send_repair > last_date_for_repair) {
+        signs_filled['Срок выдачи направления на СТОА пропущен'] = "ДА"
+    } else if (date_send_repair <= last_date_for_repair) {
+        signs_filled['Срок выдачи направления на СТОА пропущен'] = "НЕТ"
+    }
+
+    //Направление на СТОА получено Заявителем
+    if (totalData.appToFoData.appToFoAll[0].repairingObjects[0].received == "Направление на ремонт получено Заявителем") {
+        signs_filled['Направление на СТОА получено Заявителем'] = "ДА"
+    } else if (totalData.appToFoData.appToFoAll[0].repairingObjects[0].received == "Направление на ремонт не получено Заявителем") {
+        signs_filled['Направление на СТОА получено Заявителем'] = "НЕТ"
+    }
+
+    //Направление на СТОА соответствует требованиям Правил ОСАГО
+    if (totalData.appToFoData.appToFoAll[0].repairingObjects[0].complies_insurance_rule == "Соответствует") {
+        signs_filled['Направление на СТОА соответствует требованиям Правил ОСАГО'] = "ДА"
+    } else if (totalData.appToFoData.appToFoAll[0].repairingObjects[0].complies_insurance_rule != "Соответствует") {
+        signs_filled['Направление на СТОА соответствует требованиям Правил ОСАГО'] = "НЕТ"
+    }
+
+    //Расстояние от места ДТП и места жительства до СТОА превышает 50 км
+    let distance_dtp_stor = totalData.appToFoData.appToFoAll[0].repairingObjects[0].distance_dtp_stor
+    let distance_home_stor = totalData.appToFoData.appToFoAll[0].repairingObjects[0].distance_home_stor
+    if (isNaN(distance_dtp_stor)) {
+        distance_dtp_stor = 0
+    }
+    if (isNaN(distance_home_stor)) {
+        distance_home_stor = 0
+    }
+
+    //Место ДТП - СТОА
+    if (distance_dtp_stor > 50) {
+        signs_filled['Расстояние от места ДТП до СТОА превышает 50 км'] = "ДА"
+    } else {
+        signs_filled['Расстояние от места ДТП до СТОА превышает 50 км'] = "НЕТ"
+    }
+
+    //Место жительства - СТОА
+    if (distance_home_stor > 50) {
+        signs_filled['Расстояние от места жительства до СТОА превышает 50 км'] = "ДА"
+    } else {
+        signs_filled['Расстояние от места жительства до СТОА превышает 50 км'] = "НЕТ"
+    }
+
+    //Заявителем выбран способ выдачи направления на СТОА
+    let method_of_performance
+    for (let i = 0; i < totalData.appToFoData.appToFoAll.length; i++) {
+        method_of_performance = totalData.appToFoData.appToFoAll[i].repairingObjects[0].method_of_performance
+        if (method_of_performance != "") {
+            switch (method_of_performance) {
+                case "Направление на СТОА по месту жительства":
+                    signs_filled['Заявителем выбран способ выдачи направления на СТОА'] = "МЖ"
+                    break;
+                case "Направление на СТОА по месту ДТП":
+                    signs_filled['Заявителем выбран способ выдачи направления на СТОА'] = "ДТП"
+                    break;
+                case "Не выбран":
+                    signs_filled['Заявителем выбран способ выдачи направления на СТОА'] = "НЕТ"
+                    break;
+                default:
+                    break;
+            }
+        }
+    }
+
+    //Возраст ТС более 2 лет
+    let car_year = totalData.dtpData.dtpParticipants[0].car_year
+    let first_app_claim_year = new Date(Date.parse(changeDateType(totalData.appToFoData.appToFoAll[0].appDate) + 'T00:00:00')).getFullYear()
+    if (first_app_claim_year - car_year > 2) {
+        signs_filled['Возраст ТС более 2 лет'] = "ДА"
+    } else if (first_app_claim_year - car_year <= 2) {
+        signs_filled['Возраст ТС более 2 лет'] = "НЕТ"
+    }
+
+    //СТОА является официальным представителем завода изготовителя ТС
+    for (let i = 0; i < totalData.appToFoData.appToFoAll.length; i++) {
+        if (totalData.appToFoData.appToFoAll[i].repairingObjects[0].stor_status == "СТОА является дилером") {
+            signs_filled['СТОА является официальным представителем завода изготовителя ТС'] = "ДА"
+            break
+        } else if (totalData.appToFoData.appToFoAll[i].repairingObjects[0].stor_status == "СТОА не является дилером") {
+            signs_filled['СТОА является официальным представителем завода изготовителя ТС'] = "НЕТ"
+            break
+        }
+    }
+
+    //По НТЭ Заявителя наступила конструктивная гибель ТС
+    signs_filled['По НТЭ Заявителя наступила конструктивная гибель ТС'] = "НЕТ"
+    for (let i = 0; i < totalData.appToFoData.appToFoAll.length; i++) {
+        if (totalData.appToFoData.appToFoAll[i].expertiseAppsObjects[0].summ_without > totalData.appToFoData.appToFoAll[i].expertiseAppsObjects[0].summ_market && 
+            totalData.appToFoData.appToFoAll[i].expertiseAppsObjects[0].summ_market != 0) {
+            signs_filled['По НТЭ Заявителя наступила конструктивная гибель ТС'] = "ДА"
+        }
+    }
+
+    //По НТЭ ФО наступила конструктивная гибель ТС
+    signs_filled['По НТЭ ФО наступила конструктивная гибель ТС'] = "НЕТ"
+    for (let i = 0; i < totalData.appToFoData.appToFoAll.length; i++) {
+        if (totalData.appToFoData.appToFoAll[i].expertiseObjects[0].summ_without > totalData.appToFoData.appToFoAll[i].expertiseObjects[0].summ_market && 
+            totalData.appToFoData.appToFoAll[i].expertiseObjects[0].summ_market != 0) {
+            signs_filled['По НТЭ ФО наступила конструктивная гибель ТС'] = "ДА"
+        }
+    }
+
+    //По НТЭ Заявителя ущерб превышает установленную Законом № 40-ФЗ страховую сумму
+    signs_filled['По НТЭ Заявителя ущерб превышает установленную Законом № 40-ФЗ страховую сумму'] = "НЕТ"
+    for (let i = 0; i < totalData.appToFoData.appToFoAll.length; i++) {
+        if (totalData.appToFoData.appToFoAll[i].expertiseAppsObjects[0].summ_without > max_summ) {
+            signs_filled['По НТЭ Заявителя ущерб превышает установленную Законом № 40-ФЗ страховую сумму'] = "ДА"
+        }
+    }
+
+    //По НТЭ ФО ущерб превышает установленную Законом № 40-ФЗ страховую сумму
+    signs_filled['По НТЭ ФО ущерб превышает установленную Законом № 40-ФЗ страховую сумму'] = "НЕТ"
+    for (let i = 0; i < totalData.appToFoData.appToFoAll.length; i++) {
+        if (totalData.appToFoData.appToFoAll[i].expertiseObjects[0].summ_without > max_summ) {
+            signs_filled['По НТЭ ФО ущерб превышает установленную Законом № 40-ФЗ страховую сумму'] = "ДА"
+        }
+    }
+    
+    console.log(signs_filled);
     return signs_filled
 }
 
@@ -225,7 +373,8 @@ export function make_motivation_paragraph(dtpData,
                                           total_penalty_summ_accrued,
                                           total_penalty_summ_paid,
                                           max_summ,
-                                          data_from_db) {
+                                          data_from_db,
+                                          totalData) {
     let out_data = {}
     let all_found_claims = []
     let all_not_found_claims = []
@@ -379,19 +528,20 @@ export function make_motivation_paragraph(dtpData,
                     if (Object.values(data_from_db.total_data[right_sign_max_index])[i] != null) {
                         let paragraphs = Object.values(data_from_db.total_data[right_sign_max_index])[i]
                         paragraphs = fillMotiveParagraph(dtpData,
-                                                            claimsContract,
-                                                            dtpParticipant,
-                                                            appToFo,
-                                                            paymentVoluntary,
-                                                            paymentFu,
-                                                            paymentCourt,
-                                                            fuExpertise,
-                                                            total_penalty_summ_accrued,
-                                                            total_penalty_summ_paid,
-                                                            max_summ,
-                                                            data_from_db,
-                                                            Object.values(data_from_db.total_data[0])[i],
-                                                            paragraphs)
+                                                        claimsContract,
+                                                        dtpParticipant,
+                                                        appToFo,
+                                                        paymentVoluntary,
+                                                        paymentFu,
+                                                        paymentCourt,
+                                                        fuExpertise,
+                                                        total_penalty_summ_accrued,
+                                                        total_penalty_summ_paid,
+                                                        max_summ,
+                                                        data_from_db,
+                                                        Object.values(data_from_db.total_data[0])[i],
+                                                        paragraphs,
+                                                        totalData)
 
                             paragraphs = paragraphs.split(String.fromCharCode(10))
                             for (const iterator of paragraphs) {
@@ -440,7 +590,8 @@ export function make_motivation_paragraph(dtpData,
                                                              max_summ,
                                                              data_from_db,
                                                              Object.values(data_from_db.total_data[0])[i],
-                                                             paragraphs)
+                                                             paragraphs,
+                                                             totalData)
 
                                 paragraphs = paragraphs.split(String.fromCharCode(10))
                             for (const iterator of paragraphs) {
@@ -525,13 +676,28 @@ export function make_motivation_paragraph(dtpData,
         satisfaction_summ = max_summ
     }
 
-    //Определение суммы расходов на эвакуацию ТС
-    let satisfaction_ev_summ
+    //Определение суммы расходов на эвакуацию и/или хранение ТС
+    let satisfaction_ev_summ, satisfaction_store_summ, storage_pay_summ, storage_date_from, storage_date_to, inspection_date, count_days, count_days_right
     for (let i = 0; i < claimsContract.length; i++) {
         if (claimsContract[i].type.value == "ОСАГО") {
             for (let j = 0; j < claimsContract[i].claimObjects.length; j++) {
                 if (claimsContract[i].claimObjects[j].type == "Эвакуатор") {
                     satisfaction_ev_summ = claimsContract[i].claimObjects[j].summ
+                } else if (claimsContract[i].claimObjects[j].type == "Хранение") {
+                    storage_pay_summ = claimsContract[i].claimObjects[j].summ
+                    storage_date_from = claimsContract[i].claimObjects[j].storage_from
+                    storage_date_to = claimsContract[i].claimObjects[j].storage_to
+                    inspection_date = appToFo[0].inspections[0].date.value
+                    count_days = (Date.parse(changeDateType(storage_date_to) + 'T00:00:00') - Date.parse(changeDateType(storage_date_from) + 'T00:00:00')) / DAY
+                    count_days_right = (Date.parse(changeDateType(inspection_date) + 'T00:00:00') - Date.parse(changeDateType(storage_date_from) + 'T00:00:00')) / DAY
+                    //Если дата окончания периода хранения ТС соответствует дате осмотра или ранее даты осмотра
+                    if (Date.parse(changeDateType(storage_date_to) + 'T00:00:00') == Date.parse(changeDateType(inspection_date) + 'T00:00:00') ||
+                        Date.parse(changeDateType(storage_date_to) + 'T00:00:00') < Date.parse(changeDateType(inspection_date) + 'T00:00:00')) {
+                            satisfaction_store_summ = storage_pay_summ
+                    //Если дата окончания хранения после даты осмотра
+                    } else if (Date.parse(changeDateType(storage_date_to) + 'T00:00:00') > Date.parse(changeDateType(inspection_date) + 'T00:00:00')) {
+                        satisfaction_store_summ = storage_pay_summ * count_days_right / count_days
+                    }
                 }
             }
         }
@@ -548,6 +714,12 @@ export function make_motivation_paragraph(dtpData,
         } else if (all_found_claims[i].name == "Эвакуатор") {
             if (all_found_claims[i].result == "УДОВЛЕТВОРИТЬ") {
                 all_found_claims[i].summ = satisfaction_ev_summ
+            } else {
+                all_found_claims[i].summ = 0
+            }
+        } else if (all_found_claims[i].name == "Хранение") {
+            if (all_found_claims[i].result == "УДОВЛЕТВОРИТЬ") {
+                all_found_claims[i].summ = satisfaction_store_summ
             } else {
                 all_found_claims[i].summ = 0
             }
@@ -592,7 +764,8 @@ function fillMotiveParagraph(dtpData,
                              max_summ,
                              data_from_db,
                              total_data_keys,
-                             paragraph) {
+                             paragraph,
+                             totalData) {
 
     let result_paragraph = ""
     
@@ -676,6 +849,13 @@ function fillMotiveParagraph(dtpData,
         let technician = fuExpertise[1].technician.value
         result_paragraph = result_paragraph.replaceAll("technician", technician)
 
+    } else if (total_data_keys == "В целях проверки доводов Заявителя Финансовым уполномоченным назначена экспертиза 1 (Комплекс)") {
+        
+        let organization = fuExpertise[0].organization.value
+        let technician = fuExpertise[0].technician.value
+        result_paragraph = paragraph.replaceAll("organization", organization)
+        result_paragraph = result_paragraph.replaceAll("technician", technician)
+    
     } else if (total_data_keys == "Вопросы для эксперта ФУ 1 (Комплекс)") {
         
         let question_paragraph = ""
@@ -728,6 +908,51 @@ function fillMotiveParagraph(dtpData,
         result_paragraph = result_paragraph.replaceAll("\n", "")
 
     } else if (total_data_keys == "Выводы эксперта ФУ 1 (Комплекс)") {
+        
+        let expertises_summ_paragraph_helper = ""
+        if (fuExpertise[0].trasa.value != "") {
+            expertises_summ_paragraph_helper = expertises_summ_paragraph_helper + `${fuExpertise[0].trasa.value}, `
+        }
+        if (fuExpertise[0].summ_without != 0) {
+            expertises_summ_paragraph_helper = expertises_summ_paragraph_helper + `стоимость восстановительного ремонта 
+            Транспортного средства Заявителя без учета износа составила ${fuExpertise[0].summ_without_text}, `
+        }
+        if (fuExpertise[0].summ_without != 0) {
+            if (fuExpertise[0].summ_with != 0) {
+                expertises_summ_paragraph_helper = expertises_summ_paragraph_helper + `c учетом износа – ${fuExpertise[0].summ_with_text}, `
+            }
+        } else {
+            if (fuExpertise[0].summ_with != 0) {
+                expertises_summ_paragraph_helper = expertises_summ_paragraph_helper + `стоимость восстановительного ремонта 
+                Транспортного средства Заявителя с учетом износа составила ${fuExpertise[0].summ_with_text}, `
+            }
+        }
+        if (fuExpertise[0].summ_market != 0) {
+            expertises_summ_paragraph_helper = expertises_summ_paragraph_helper + `средняя рыночная стоимость 
+            Транспортного средства до повреждения по состоянию на дату ДТП составляла ${fuExpertise[0].summ_market_text}, `
+        }
+        if (fuExpertise[0].summ_leftovers != 0) {
+            expertises_summ_paragraph_helper = expertises_summ_paragraph_helper + `стоимость годных остатков – ${fuExpertise[0].summ_leftovers_text}, `
+        }
+        if (fuExpertise[0].summ_uts != 0) {
+            expertises_summ_paragraph_helper = expertises_summ_paragraph_helper + `сумма УТС составила ${fuExpertise[0].summ_uts_text}, `
+        }
+        expertises_summ_paragraph_helper = expertises_summ_paragraph_helper.slice(0, -2)
+        expertises_summ_paragraph_helper = expertises_summ_paragraph_helper + "."
+        result_paragraph = paragraph.replaceAll("result", expertises_summ_paragraph_helper)
+
+        let organization = fuExpertise[0].organization.value
+        result_paragraph = result_paragraph.replaceAll("organization", organization)
+        let date_nte = fuExpertise[0].date.value
+        result_paragraph = result_paragraph.replaceAll("date_nte", date_nte)
+        let number = fuExpertise[0].number.value
+        result_paragraph = result_paragraph.replaceAll("number", number)
+
+        result_paragraph = result_paragraph.replaceAll("\r\n", "")
+        result_paragraph = result_paragraph.replaceAll("\r", "")
+        result_paragraph = result_paragraph.replaceAll("\n", "")
+    
+    } else if (total_data_keys == "Выводы эксперта ФУ 1 (Комплекс) (без терминологии)") {
         
         let expertises_summ_paragraph_helper = ""
         if (fuExpertise[0].trasa.value != "") {
@@ -1041,6 +1266,277 @@ function fillMotiveParagraph(dtpData,
                 result_paragraph = result_paragraph.replaceAll("Транспортного средства", "Транспортного средства " + element.evacuation_route_genitive)
             }
         })
+
+    } else if (total_data_keys == "Как следует из материалов Обращения,Заявителем понесены расходы на оплату услуг по хранению 1") {
+        let storage_pay_date, storage_pay_summ, storage_pay_ground, storage_pay_organization, storage_pay_number, storage_date_from, storage_date_to
+        for (let i = 0; i < claimsContract[0].claimObjects.length; i++) {
+            if (claimsContract[0].claimObjects[i].type == "Хранение") {
+                storage_pay_date = claimsContract[0].claimObjects[i].storage_date
+                storage_pay_summ = makeRubText_genitive(claimsContract[0].claimObjects[i].summ)
+                storage_pay_organization = claimsContract[0].claimObjects[i].storage_organization
+                evacuation_pay_order_ground_helper.evacuation_pay_order_ground_helper.forEach(element => {
+                    if (claimsContract[0].claimObjects[i].storage_ground == element.evacuation_pay_order_ground) {
+                        storage_pay_ground = element.evacuation_pay_order_ground_genitive
+                    }
+                })
+                storage_pay_number = claimsContract[0].claimObjects[i].storage_number
+                storage_date_from = claimsContract[0].claimObjects[i].storage_from
+                storage_date_to = claimsContract[0].claimObjects[i].storage_to
+            }
+        }
+
+        result_paragraph = paragraph.replaceAll("storage_pay_date", storage_pay_date)
+        result_paragraph = result_paragraph.replaceAll("storage_pay_summ", storage_pay_summ)
+        result_paragraph = result_paragraph.replaceAll("storage_pay_ground", storage_pay_ground)
+        result_paragraph = result_paragraph.replaceAll("storage_pay_organization", storage_pay_organization)
+        result_paragraph = result_paragraph.replaceAll("storage_pay_number", storage_pay_number)
+        result_paragraph = result_paragraph.replaceAll("storage_date_from", storage_date_from)
+        result_paragraph = result_paragraph.replaceAll("storage_date_to", storage_date_to)
+
+    } else if (total_data_keys == "Учитывая изложенное, удовлетворению подлежит требование Заявителя о взыскании расходов на хранение 1") {
+        let storage_pay_summ
+        for (let i = 0; i < claimsContract[0].claimObjects.length; i++) {
+            if (claimsContract[0].claimObjects[i].type == "Хранение") {
+                storage_pay_summ = makeRubText_genitive(claimsContract[0].claimObjects[i].summ)
+            }
+        }
+        result_paragraph = paragraph.replaceAll("storage_pay_summ", storage_pay_summ)
+
+    } else if (total_data_keys == "Как следует из материалов Обращения,Заявителем понесены расходы на оплату услуг по хранению 2") {
+        let storage_pay_date, storage_pay_summ, storage_pay_ground, storage_pay_organization, storage_pay_number, storage_date_from, storage_date_to, count_days
+        for (let i = 0; i < claimsContract[0].claimObjects.length; i++) {
+            if (claimsContract[0].claimObjects[i].type == "Хранение") {
+                storage_pay_date = claimsContract[0].claimObjects[i].storage_date
+                storage_pay_summ = makeRubText_genitive(claimsContract[0].claimObjects[i].summ)
+                storage_pay_organization = claimsContract[0].claimObjects[i].storage_organization
+                evacuation_pay_order_ground_helper.evacuation_pay_order_ground_helper.forEach(element => {
+                    if (claimsContract[0].claimObjects[i].storage_ground == element.evacuation_pay_order_ground) {
+                        storage_pay_ground = element.evacuation_pay_order_ground_genitive
+                    }
+                })
+                storage_pay_number = claimsContract[0].claimObjects[i].storage_number
+                storage_date_from = claimsContract[0].claimObjects[i].storage_from
+                storage_date_to = claimsContract[0].claimObjects[i].storage_to
+            }
+        }
+
+        count_days = (Date.parse(changeDateType(storage_date_to) + 'T00:00:00') - Date.parse(changeDateType(storage_date_from) + 'T00:00:00')) / DAY
+
+        result_paragraph = paragraph.replaceAll("storage_pay_date", storage_pay_date)
+        result_paragraph = result_paragraph.replaceAll("storage_pay_summ", storage_pay_summ)
+        result_paragraph = result_paragraph.replaceAll("storage_pay_ground", storage_pay_ground)
+        result_paragraph = result_paragraph.replaceAll("storage_pay_organization", storage_pay_organization)
+        result_paragraph = result_paragraph.replaceAll("storage_pay_number", storage_pay_number)
+        result_paragraph = result_paragraph.replaceAll("storage_date_from", storage_date_from)
+        result_paragraph = result_paragraph.replaceAll("storage_date_to", storage_date_to)
+        result_paragraph = result_paragraph.replaceAll("count_days", declinationDays(count_days))
+
+    } else if (total_data_keys == "Осмотр Транспортного средства Заявителя произведен") {
+        let inspection_date,  storage_date_from, storage_date_to, count_days_right
+        for (let i = 0; i < claimsContract[0].claimObjects.length; i++) {
+            if (claimsContract[0].claimObjects[i].type == "Хранение") {
+                storage_date_from = claimsContract[0].claimObjects[i].storage_from
+                storage_date_to = claimsContract[0].claimObjects[i].storage_to
+            }
+        }
+
+        inspection_date = appToFo[0].inspections[0].date.value
+        count_days_right = (Date.parse(changeDateType(inspection_date) + 'T00:00:00') - Date.parse(changeDateType(storage_date_from) + 'T00:00:00')) / DAY
+
+        result_paragraph = paragraph.replaceAll("inspection_date", inspection_date)
+        result_paragraph = result_paragraph.replaceAll("count_days_right", declinationDays(count_days_right))
+
+    } else if (total_data_keys == "Учитывая изложенное, удовлетворению подлежит требование Заявителя о взыскании расходов на хранение 2") {
+        let inspection_date,  storage_date_from, storage_date_to, storage_pay_summ, storage_pay_summ_right, count_days, count_days_right
+        for (let i = 0; i < claimsContract[0].claimObjects.length; i++) {
+            if (claimsContract[0].claimObjects[i].type == "Хранение") {
+                storage_pay_summ = claimsContract[0].claimObjects[i].summ
+                storage_date_from = claimsContract[0].claimObjects[i].storage_from
+                storage_date_to = claimsContract[0].claimObjects[i].storage_to
+            }
+        }
+
+        inspection_date = appToFo[0].inspections[0].date.value
+        count_days = (Date.parse(changeDateType(storage_date_to) + 'T00:00:00') - Date.parse(changeDateType(storage_date_from) + 'T00:00:00')) / DAY
+        count_days_right = (Date.parse(changeDateType(inspection_date) + 'T00:00:00') - Date.parse(changeDateType(storage_date_from) + 'T00:00:00')) / DAY
+        storage_pay_summ_right = storage_pay_summ * count_days_right / count_days
+
+        result_paragraph = paragraph.replaceAll("storage_date_from", storage_date_from)
+        result_paragraph = result_paragraph.replaceAll("inspection_date", inspection_date)
+        result_paragraph = result_paragraph.replaceAll("storage_pay_summ_right", makeRubText_genitive(storage_pay_summ_right))
+        result_paragraph = result_paragraph.replaceAll("storage_pay_summ", makeRubText_genitive(storage_pay_summ))
+        result_paragraph = result_paragraph.replaceAll("count_days_right", declinationDays(count_days_right))
+        result_paragraph = result_paragraph.replaceAll("count_days", declinationDays(count_days))
+        
+
+    } else if (total_data_keys == "Срок выдачи направления на СТОА") {
+        let app_to_fo_date = appToFo[0].appDate.value
+        let last_date_for_repair = formatDate(new Date(findLastDay(app_to_fo_date)))
+
+        result_paragraph = paragraph.replaceAll("app_to_fo_date", app_to_fo_date)
+        result_paragraph = result_paragraph.replaceAll("last_date_for_repair", last_date_for_repair)
+
+    } else if (total_data_keys == "Направление на СТОА выдано Заявителю") {
+        let date_send_repair 
+        for (let i = 0; i < appToFo.length; i++) {
+            if (appToFo[0].repairingObjects[i].confirmation_date != "") {
+                date_send_repair = appToFo[i].repairingObjects[0].confirmation_date
+                break
+            }
+        }
+
+        result_paragraph = paragraph.replaceAll("date_send_repair", date_send_repair)
+
+    } else if (total_data_keys == "Подтверждение получения направления на СТОА (получено)") {
+        let confirmation_of_receipt 
+
+        confirmation_type_helper.confirmation_type_helper.forEach(element => {
+            for (let i = 0; i < appToFo.length; i++) {
+                if (appToFo[i].repairingObjects[0].confirmation_date != "") {
+                    if (element.confirmation_type == appToFo[i].repairingObjects[0].confirmation_type) {
+                        confirmation_of_receipt = element.confirmation_type_genitive
+                        break
+                    }
+                }
+            }
+        });
+
+        result_paragraph = paragraph.replaceAll("confirmation_of_receipt", confirmation_of_receipt)
+
+    } else if (total_data_keys == "Подтверждение получения направления на СТОА (не получено)") {
+        let confirmation_of_receipt 
+
+        confirmation_type_helper.confirmation_type_helper.forEach(element => {
+            for (let i = 0; i < appToFo.length; i++) {
+                if (appToFo[i].repairingObjects[0].confirmation_date != "") {
+                    if (element.confirmation_type == appToFo[i].repairingObjects[0].confirmation_type) {
+                        confirmation_of_receipt = element.confirmation_type_genitive
+                        break
+                    }
+                }
+            }
+        });
+
+        result_paragraph = paragraph.replaceAll("confirmation_of_receipt", confirmation_of_receipt)
+
+    } else if (total_data_keys == "Место жительства Заявителя - место ДТП") {
+        let app_home_address = totalData.preambulaData.app_registration_address
+        let dtp_place = totalData.dtpData.place_dtp
+
+        result_paragraph = paragraph.replaceAll("app_home_address", app_home_address)
+        result_paragraph = result_paragraph.replaceAll("dtp_place", dtp_place)
+
+    } else if (total_data_keys == "Адрес СТОА") {
+        let repair_address
+
+        for (let i = 0; i < totalData.appToFoData.appToFoAll.length; i++) {
+            if (totalData.appToFoData.appToFoAll[i].repairingObjects[0].confirmation_date != "") {
+                repair_address = totalData.appToFoData.appToFoAll[i].repairingObjects[0].stor_address
+                break
+            }
+        }
+
+        result_paragraph = paragraph.replaceAll("repair_address", repair_address)
+
+    } else if (total_data_keys == "Годом выпуска ТС является") {
+        let car_year = totalData.dtpData.dtpParticipants[0].car_year
+        let first_app_claim_year = new Date(Date.parse(changeDateType(totalData.appToFoData.appToFoAll[0].appDate) + 'T00:00:00')).getFullYear()
+        let car_age = first_app_claim_year - car_year
+
+        result_paragraph = paragraph.replaceAll("car_year", car_year)
+
+        if (car_age > 2) {
+            result_paragraph = result_paragraph.replaceAll("car_age", "более " + declinationYears(car_age))
+        } else {
+            result_paragraph = result_paragraph.replaceAll("car_age", "менее 2 лет")
+        }
+
+    } else if (total_data_keys == "Стоимость ремонта по НТЭ ФО") {
+        let nte_fo_name, nte_fo_date, nte_fo_number, summ_without, summ_with
+
+        for (let i = 0; i < totalData.appToFoData.appToFoAll.length; i++) {
+            if (totalData.appToFoData.appToFoAll[i].expertiseObjects[0].date != "") {
+                nte_fo_name = totalData.appToFoData.appToFoAll[i].expertiseObjects[0].organization
+                nte_fo_date = totalData.appToFoData.appToFoAll[i].expertiseObjects[0].date
+                nte_fo_number = totalData.appToFoData.appToFoAll[i].expertiseObjects[0].number
+                summ_without = makeRubText_genitive(totalData.appToFoData.appToFoAll[i].expertiseObjects[0].summ_without)
+                summ_with = makeRubText_genitive(totalData.appToFoData.appToFoAll[i].expertiseObjects[0].summ_with)
+                break
+            }
+        }
+
+        result_paragraph = paragraph.replaceAll("nte_fo_name", nte_fo_name)
+        result_paragraph = result_paragraph.replaceAll("nte_fo_date", nte_fo_date)
+        result_paragraph = result_paragraph.replaceAll("nte_fo_number", nte_fo_number)
+        result_paragraph = result_paragraph.replaceAll("summ_without", summ_without)
+        result_paragraph = result_paragraph.replaceAll("summ_with", summ_with)
+
+    } else if (total_data_keys == "Стоимость ремонта по НТЭ Заявителя") {
+        let nte_app_name, nte_app_date, nte_app_number, summ_without, summ_with
+
+        for (let i = 0; i < totalData.appToFoData.appToFoAll.length; i++) {
+            if (totalData.appToFoData.appToFoAll[i].expertiseAppsObjects[0].date != "") {
+                nte_app_name = totalData.appToFoData.appToFoAll[i].expertiseAppsObjects[0].organization
+                nte_app_date = totalData.appToFoData.appToFoAll[i].expertiseAppsObjects[0].date
+                nte_app_number = totalData.appToFoData.appToFoAll[i].expertiseAppsObjects[0].number
+                summ_without = makeRubText_genitive(totalData.appToFoData.appToFoAll[i].expertiseAppsObjects[0].summ_without)
+                summ_with = makeRubText_genitive(totalData.appToFoData.appToFoAll[i].expertiseAppsObjects[0].summ_with)
+                break
+            }
+        }
+
+        result_paragraph = paragraph.replaceAll("nte_app_name", nte_app_name)
+        result_paragraph = result_paragraph.replaceAll("nte_app_date", nte_app_date)
+        result_paragraph = result_paragraph.replaceAll("nte_app_number", nte_app_number)
+        result_paragraph = result_paragraph.replaceAll("summ_without", summ_without)
+        result_paragraph = result_paragraph.replaceAll("summ_with", summ_with)
+
+    } else if (total_data_keys == "Способ исполнения обязательств, выбранный Заявителем (направление на СТОА) (выбран)") {
+        let method_of_performance
+
+        for (let i = 0; i < totalData.appToFoData.appToFoAll.length; i++) {
+            method_of_performance = totalData.appToFoData.appToFoAll[i].repairingObjects[0].method_of_performance
+            if (method_of_performance != "") {
+                switch (method_of_performance) {
+                    case "Направление на СТОА по месту жительства":
+                        method_of_performance = "по месту жительства"
+                        break;
+                    case "Направление на СТОА по месту ДТП":
+                        method_of_performance = "по месту совершения ДТП"
+                        break;
+                    default:
+                        break;
+                }
+                break
+            }
+        }
+
+        result_paragraph = paragraph.replaceAll("method_of_performance", method_of_performance)
+
+    } else if (total_data_keys == "СТОА является официальным представителем") {
+        let stor_status_source, car_brand
+
+        car_brand = totalData.dtpData.dtpParticipants[0].car_brand
+
+        for (let i = 0; i < totalData.appToFoData.appToFoAll.length; i++) {
+            stor_status_source = totalData.appToFoData.appToFoAll[i].repairingObjects[0].stor_status_source
+            if (stor_status_source != "") {
+                switch (stor_status_source) {
+                    case "Предоставлены ФО":
+                        stor_status_source = "предоставленным Финансовой организацией"
+                        break;
+                    case "Содержатся на сайте производителя ТС":
+                        stor_status_source = "содержащимся на сайте производителя Транспортного средства"
+                        break;
+                    default:
+                        break;
+                }
+                break
+            }
+        }
+
+        result_paragraph = paragraph.replaceAll("stor_status_source", stor_status_source)
+        result_paragraph = result_paragraph.replaceAll("car_brand", car_brand)
 
     } else {
         result_paragraph = paragraph

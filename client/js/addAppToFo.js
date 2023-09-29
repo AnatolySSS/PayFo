@@ -636,7 +636,7 @@ function addAppToFo() {
                     <!-- END payments -->
 
                     <!-- BEGIN stor -->
-                    <div id="apps_to_fo_stor_${appsToFoId}" class="apps_to_fo_stors" style="display:none">
+                    <div id="apps_to_fo_stor_${appsToFoId}" class="apps_to_fo_stor_${appsToFoId} apps_to_fo_stors" style="display:none">
                         <div class="form-row">
                             <div class="form-group col-md-6">
                                 <h6>Наименование СТОА</h6>
@@ -650,44 +650,170 @@ function addAppToFo() {
                         </div>
                         <div class="form-row">
                             <div class="form-group col-md-6">
-                                <input id = "apps_to_fo_stor_name_${appsToFoId}" class="apps_to_fo_stor_names" placeholder="Наименование СТОА" type="text" size="8" required>
+                                <input id = "apps_to_fo_stor_name_${appsToFoId}" class="apps_to_fo_stor_name_${appsToFoId} apps_to_fo_stor_names li-quotes" placeholder="Наименование СТОА" type="text" size="8" required>
                             </div>
                             <div class="form-group col-md-3">
-                                <input id = "apps_to_fo_stor_date_${appsToFoId}" class = "apps_to_fo_stor_dates datepicker-here" placeholder="Дата" type="text" size="10" required>
+                                <input id = "apps_to_fo_stor_date_${appsToFoId}" class = "apps_to_fo_stor_date_${appsToFoId} apps_to_fo_stor_dates datepicker-here deactivation" aria-describedby="apps_to_fo_stor_stor_date_help_block_${appsToFoId}" placeholder="Дата" type="text" size="10" required>
+                                <small id="apps_to_fo_stor_date_help_block_1" class="form-text">
+                                <div class="form-inline">
+                                    <input id="apps_to_fo_stor_date_deactivate_${appsToFoId}" class="deactivator" type="checkbox">
+                                    <label for="apps_to_fo_stor_date_deactivate_${appsToFoId}" class="ml-2 form-check-label">Сведений не имеется</label>
+                                    <i class="fa fa-question-circle ml-2" aria-hidden="true" tabindex="0" data-trigger="focus" data-toggle="popover"></i>
+                                </div>
+                                </small>
                             </div>
                             <div class="form-group col-md-2">
-                                <input id = "apps_to_fo_stor_number_${appsToFoId}" class="apps_to_fo_stor_numbers" placeholder="№" type="text" size="8" required>
+                                <input id = "apps_to_fo_stor_number_${appsToFoId}" class="apps_to_fo_stor_number_${appsToFoId} apps_to_fo_stor_numbers deactivation" aria-describedby="apps_to_fo_stor_stor_number_help_block_${appsToFoId}" placeholder="№" type="text" size="8" required>
+                                <small id="apps_to_fo_stor_number_help_block_${appsToFoId}" class="form-text">
+                                <div class="form-inline">
+                                    <input id="apps_to_fo_stor_number_deactivate_${appsToFoId}" class="deactivator" type="checkbox">
+                                    <label for="apps_to_fo_stor_number_deactivate_${appsToFoId}" class="ml-2 form-check-label">Сведений не имеется</label>
+                                    <i class="fa fa-question-circle ml-2" aria-hidden="true" tabindex="0" data-trigger="focus" data-toggle="popover"></i>
+                                </div>
+                                </small>
                             </div>
                             <div class="form-group col-ms-1">
-                                <button id="apps_to_fo_add_stor_info_btn_${appsToFoId}" class="apps_to_fo_add_stor_info_btns btn btn-outline-warning add_info">
+                                <button id="apps_to_fo_add_stor_info_btn_${appsToFoId}" class="apps_to_fo_add_stor_info_btn_${appsToFoId} apps_to_fo_add_stor_info_btns btn btn-outline-warning add_info">
                                     <i class="fa fa-chevron-down toggle"></i>
                                 </button>
                             </div>
                         </div>
-                        <div class="form-row">
-                            <div class="form-group col-md-9">
-                                <h6>Получение направления на СТОА подтверждает</h6>
+                        <div id="apps_to_fo_add_stor_info_${appsToFoId}" class="apps_to_fo_add_stor_info_${appsToFoId} apps_to_fo_add_stor_infos" style="display:none">
+                            <div class="form-row">
+                                <div class="form-group col-md-12">
+                                    <input id = "apps_to_fo_stor_address_${appsToFoId}" class="apps_to_fo_stor_address_${appsToFoId} apps_to_fo_stor_addresses deactivation" aria-describedby="apps_to_fo_stor_stor_address_help_block_${appsToFoId}" placeholder="Адрес СТОА" type="text" size="10" required>
+                                    <small id="apps_to_fo_stor_address_help_block_${appsToFoId}" class="form-text">
+                                        <div class="form-inline">
+                                            <input id="apps_to_fo_stor_address_deactivate_${appsToFoId}" class="deactivator" type="checkbox">
+                                            <label for="apps_to_fo_stor_address_deactivate_${appsToFoId}" class="ml-2 form-check-label">Сведений не имеется</label>
+                                            <i class="fa fa-question-circle ml-2" aria-hidden="true" tabindex="0" data-trigger="focus" data-toggle="popover"></i>
+                                        </div>
+                                    </small>
+                                </div>
                             </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="form-group col-md-6">
-                                <select id="apps_to_fo_stor_confirmation_${appsToFoId}" class="apps_to_fo_stor_confirmations custom-select" required>
-                                    <option value="">Выберите вариант</option>
-                                    <option>Собственноручная подпись</option>
-                                    <option>Почтовая квитанция</option>
-                                    <option>Опись вложения</option>
-                                    <option>Список почтовых отправлений</option>
-                                    <option>Реестр почтовых отправлений</option>
-                                    <option>Почтовый идентификатор</option>
-                                </select>
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <h6>Расстояние до СТОА</h6>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <h6>Выбор способа исполнения обстоятельства</h6>
+                                </div>
                             </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="form-group col-md-3">
-                                <input id = "apps_to_fo_stor_confirmation_date_${appsToFoId}" class = "apps_to_fo_stor_confirmation_dates datepicker-here" placeholder="Дата" type="text" size="10" required>
+                            <div class="form-row">
+                                <div class="form-group col-md-3">
+                                    <input id = "apps_to_fo_stor_distance_dtp_stor_${appsToFoId}" class="apps_to_fo_stor_distance_dtp_stor_${appsToFoId} apps_to_fo_stor_distance_dtp_stors input-numeral deactivation" aria-describedby="apps_to_fo_stor_distance_dtp_stor_help_block_${appsToFoId}" placeholder="ДТП - СТОА" type="text" size="10" required>
+                                    <small id="apps_to_fo_stor_distance_dtp_stor_help_block_${appsToFoId}" class="form-text">
+                                        <div class="form-inline">
+                                            <input id="apps_to_fo_stor_distance_dtp_stor_deactivate_${appsToFoId}" class="deactivator" type="checkbox">
+                                            <label for="apps_to_fo_stor_distance_dtp_stor_deactivate_${appsToFoId}" class="ml-2 form-check-label">Расстояние в км</label>
+                                            <i class="fa fa-question-circle ml-2" aria-hidden="true" tabindex="0" data-trigger="focus" data-toggle="popover"></i>
+                                        </div>
+                                    </small>
+                                </div>
+                                <div class="form-group col-md-3">
+                                    <input id = "apps_to_fo_stor_distance_home_stor_${appsToFoId}" class="apps_to_fo_stor_distance_home_stor_${appsToFoId} apps_to_fo_stor_distance_home_stors input-numeral deactivation" aria-describedby="apps_to_fo_stor_distance_home_stor_help_block_${appsToFoId}" placeholder="МЖ - СТОА" type="text" size="10" required>
+                                    <small id="apps_to_fo_stor_distance_home_stor_help_block_${appsToFoId}" class="form-text">
+                                        <div class="form-inline">
+                                            <input id="apps_to_fo_stor_distance_home_stor_deactivate_${appsToFoId}" class="deactivator" type="checkbox">
+                                            <label for="apps_to_fo_stor_distance_home_stor_deactivate_${appsToFoId}" class="ml-2 form-check-label">Расстояние в км</label>
+                                            <i class="fa fa-question-circle ml-2" aria-hidden="true" tabindex="0" data-trigger="focus" data-toggle="popover"></i>
+                                        </div>
+                                    </small>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <select id="apps_to_fo_stor_method_of_performance_${appsToFoId}" class="apps_to_fo_stor_method_of_performance_${appsToFoId} apps_to_fo_stor_method_of_performances custom-select" required>
+                                        <option value="">Выберите вариант</option>
+                                        <option>Направление на СТОА по месту жительства</option>
+                                        <option>Направление на СТОА по месту ДТП</option>
+                                        <option>Не выбран</option>
+                                    </select>
+                                </div>
                             </div>
-                            <div class="form-group col-md-4">
-                                <input id = "apps_to_fo_stor_confirmation_number_${appsToFoId}" class="apps_to_fo_stor_confirmation_numbers" placeholder="трек номер" type="text" size="8" required>
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <h6>Статус СТОА</h6>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <h6>Источник сведений о статусе СТОА</h6>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <select id="apps_to_fo_stor_status_${appsToFoId}" class="apps_to_fo_stor_status_${appsToFoId} apps_to_fo_stor_statuses custom-select deactivation" aria-describedby="apps_to_fo_stor_status_help_block_${appsToFoId}" required>
+                                        <option value="">Выберите вариант</option>
+                                        <option>СТОА является дилером</option>
+                                        <option>СТОА не является дилером</option>
+                                    </select>
+                                    <small id="apps_to_fo_stor_status_help_block_${appsToFoId}" class="form-text">
+                                        <div class="form-inline">
+                                            <input id="apps_to_fo_stor_status_deactivate_${appsToFoId}" class="deactivator" type="checkbox">
+                                            <label for="apps_to_fo_stor_status_deactivate_${appsToFoId}" class="ml-2 form-check-label">Сведений не имеется</label>
+                                            <i class="fa fa-question-circle ml-2" aria-hidden="true" tabindex="0" data-trigger="focus" data-toggle="popover"></i>
+                                        </div>
+                                    </small>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <select id="apps_to_fo_stor_status_source_${appsToFoId}" class="apps_to_fo_stor_status_source_${appsToFoId} apps_to_fo_stor_statuse_sources custom-select deactivation" aria-describedby="apps_to_fo_stor_status_source_help_block_${appsToFoId}" required>
+                                        <option value="">Выберите вариант</option>
+                                        <option>Предоставлены ФО</option>
+                                        <option>Содержатся на сайте производителя ТС</option>
+                                    </select>
+                                    <small id="apps_to_fo_stor_status_source_help_block_${appsToFoId}" class="form-text">
+                                        <div class="form-inline">
+                                            <input id="apps_to_fo_stor_status_source_deactivate_${appsToFoId}" class="deactivator" type="checkbox">
+                                            <label for="apps_to_fo_stor_status_source_deactivate_${appsToFoId}" class="ml-2 form-check-label">Сведений не имеется</label>
+                                            <i class="fa fa-question-circle ml-2" aria-hidden="true" tabindex="0" data-trigger="focus" data-toggle="popover"></i>
+                                        </div>
+                                    </small>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <h6>Соответствие Правилам ОСАГО</h6>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <select id="apps_to_fo_stor_complies_insurance_rule_${appsToFoId}" class="apps_to_fo_stor_complies_insurance_rule_${appsToFoId} apps_to_fo_stor_complies_insurance_rules custom-select" required>
+                                        <option value="">Направление на СТОА соответствует требованиям пункта 4.17 Правил ОСАГО?</option>
+                                        <option>Соответствует</option>
+                                        <option>Не соответствует</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md-9">
+                                    <h6>Подтверждение выдачи направления на СТОА</h6>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <select id="apps_to_fo_stor_received_${appsToFoId}" class="apps_to_fo_stor_received_${appsToFoId} apps_to_fo_stor_receiveds custom-select" required>
+                                        <option value="">Выберите вариант</option>
+                                        <option>Направление на ремонт получено Заявителем</option>
+                                        <option>Направление на ремонт не получено Заявителем</option>
+                                    </select>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <select id="apps_to_fo_stor_confirmation_${appsToFoId}" class="apps_to_fo_stor_confirmation_${appsToFoId} apps_to_fo_stor_confirmations custom-select" required>
+                                        <option value="">Подтверждение выдачи направления:</option>
+                                        <option>Собственноручная подпись</option>
+                                        <option>Почтовая квитанция</option>
+                                        <option>Опись вложения</option>
+                                        <option>Список почтовых отправлений</option>
+                                        <option>Реестр почтовых отправлений</option>
+                                        <option>Почтовый идентификатор</option>
+                                        <option>Сведения с сайта АО «Почта России»</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md-3">
+                                    <input id = "apps_to_fo_stor_confirmation_date_${appsToFoId}" class = "apps_to_fo_stor_confirmation_date_${appsToFoId} apps_to_fo_stor_confirmation_dates datepicker-here" placeholder="Дата" type="text" size="10" required>
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <input id = "apps_to_fo_stor_confirmation_number_${appsToFoId}" class="apps_to_fo_stor_confirmation_number_${appsToFoId} apps_to_fo_stor_confirmation_numbers" placeholder="трек номер" type="text" size="8" required>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -749,6 +875,7 @@ function addAppToFo() {
                                     <option>Список почтовых отправлений</option>
                                     <option>Реестр почтовых отправлений</option>
                                     <option>Почтовый идентификатор</option>
+                                    <option>Сведения с сайта АО «Почта России»</option>
                                 </select>
                             </div>
                         </div>
@@ -1614,17 +1741,6 @@ $(document).on("change", ".apps_to_fo_claim_types", function (event) {
         $(this).parent().parent().next().hide('fast');
         $(this).parent().parent().next().find('.date_apps_to_fo_claim_froms').removeClass('form-control')
         $(this).parent().parent().next().find('.date_apps_to_fo_claim_tos').removeClass('form-control')
-	}
-});
-
-//Добавляет маршрут эвакуации
-$(document).on("change", ".apps_to_fo_claim_types", function (event) {
-	if ($(this).find(':selected').text() == "Эвакуатор") {
-		$(this).parent().parent().next().next().show('fast');
-        $(this).parent().parent().next().next().find('.apps_to_fo_claim_ev_routes').addClass('form-control')
-	} else {
-        $(this).parent().parent().next().next().hide('fast');
-        $(this).parent().parent().next().next().find('.apps_to_fo_claim_ev_routes').removeClass('form-control')
 	}
 });
 
@@ -2531,6 +2647,17 @@ $(document).on("change", ".apps_to_fo_answer_fos", function (event) {
 	}
 });
 
+//Показать дополнительную информацию по направлению на СТОА
+$(document).on("click", ".apps_to_fo_add_stor_info_btns", function (event) {
+    if (!($(this).find(".toggle").hasClass("rotate"))) {
+        $(this).parent().parent().next().show('fast'); //Показывает .apps_to_fo_add_stor_info
+        $(this).find(".toggle").addClass("rotate");
+    } else {
+        $(this).parent().parent().next().hide('fast'); //Скрывает .apps_to_fo_add_stor_info
+        $(this).find(".toggle").removeClass("rotate");
+    }
+});
+
 function addPayment(appsToFoId) {
 	paymentId++;
   var str = `
@@ -2674,30 +2801,6 @@ $(document).on("change", ".payments_names", function (event) {
         $(this).parent().parent().next().next().find('.payment_ev_routes').removeClass('form-control')
 	}
 });
-
-//Изменяет картинку валидации
-// function validationCheck(className) {
-// $(`.${className} .form-control`).focusout(function(){
-//     validationCheckUpdate(className)
-// })
-// }
-
-//Обновлет сведения о валидации инпутов
-// function validationCheckUpdate(className) {
-// setTimeout(() => {
-//     var isOk = true
-//     $(`.${className} .form-control`).each(function() {
-//     if ($(this).css('border-color') == 'rgb(220, 53, 69)') {
-//         isOk = false
-//     }
-//     })
-//     if (isOk) {
-//     $(`#${className}`).children().first().children().first().children().first().next().html(`<i class="fa fa-check-square-o fa-2x" aria-hidden="true" style="color: #28a745;"></i>`)
-//     } else {
-//     $(`#${className}`).children().first().children().first().children().first().next().html(`<i class="fa fa-exclamation-circle fa-2x" aria-hidden="true" style="color: #dc3545;"></i>`)
-//     }
-// }, 200); 
-// }
 
 //Добавляет подсказки к полям
 function addPopover(className) {

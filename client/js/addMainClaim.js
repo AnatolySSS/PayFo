@@ -193,7 +193,7 @@ function addClaimsContract() {
                         </small>
                       </div>
                       <div class="form-group col-md-3">
-                        <input id="add_main_claim_info_storage_organization_${ContractId}_1" class="add_main_claim_info_storage_organization_${ContractId} add_main_claim_info_storage_organizations deactivation" aria-describedby="add_main_claim_info_storage_organization_help_block_${ContractId}_1" placeholder="Наименование" type="text" size="10" required>
+                        <input id="add_main_claim_info_storage_organization_${ContractId}_1" class="add_main_claim_info_storage_organization_${ContractId} add_main_claim_info_storage_organizations deactivation li-quotes" aria-describedby="add_main_claim_info_storage_organization_help_block_${ContractId}_1" placeholder="Наименование" type="text" size="10" required>
                         <small id="add_main_claim_info_storage_route_help_block_${ContractId}_1" class="form-text">
                           <div class="form-inline">
                             <input id="add_main_claim_info_storage_organization_deactivate_${ContractId}_1" class="deactivator" type="checkbox">
@@ -487,7 +487,7 @@ function addFuMainClaim(id) {
                   </small>
                 </div>
                 <div class="form-group col-md-3">
-                  <input id="add_main_claim_info_storage_organization_${id}_${claimContractId}" class="add_main_claim_info_storage_organization_${id} add_main_claim_info_storage_organizations deactivation" aria-describedby="add_main_claim_info_storage_organization_help_block_${id}_${claimContractId}" placeholder="Наименование" type="text" size="10" required>
+                  <input id="add_main_claim_info_storage_organization_${id}_${claimContractId}" class="add_main_claim_info_storage_organization_${id} add_main_claim_info_storage_organizations deactivation li-quotes" aria-describedby="add_main_claim_info_storage_organization_help_block_${id}_${claimContractId}" placeholder="Наименование" type="text" size="10" required>
                   <small id="add_main_claim_info_storage_route_help_block_${id}_${claimContractId}" class="form-text">
                     <div class="form-inline">
                       <input id="add_main_claim_info_storage_organization_deactivate_${id}_${claimContractId}" class="deactivator" type="checkbox">

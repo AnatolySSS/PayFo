@@ -837,18 +837,16 @@ $('#btn_desicion').click(function() {
     fuExpertiseData : fuExpertiseData,
   }
   
+  console.log("totalData:");
   console.log(totalData);
   //Получение данных из таблицы motivations
   let motivationsPromise = getMotivations(totalData)
   motivationsPromise.then(result => {
     data_from_db = result
-    console.log("data_from_db1")
     //Получение данных из таблицы data
     let dataPromise = getData(totalData)
     dataPromise.then(result => {
       data_from_db.data = result
-      console.log("data_from_db2")
-      console.log(claimsContract);
       decision = makeTextDecision(
         dtpData,
         claimsContract,
@@ -1263,12 +1261,13 @@ $(document).on("click", "button", function (event) {
 
 //Увеличивает картинку-пример документа
 $(document).on( "click", '.popover img', function( event ) {
-  console.log($(this)[0].src)
+  console.log($(this)[0])
   $("#module_for_img").append(`
     <div id="myModal" class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
       <div class="modal-dialog modal-lg">
         <div class="modal-content">
           <div class="modal-header">
+            <h5>ДАННОЕ ИЗОБРАЖЕНИЕ ЯВЛЯЕТСЯ ПРИМЕРОМ.</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>

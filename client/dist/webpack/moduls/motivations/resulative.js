@@ -181,6 +181,8 @@ export function make_resulative_paragraph(total_penalty_summ_accrued,
                                 ev_route_text = " " + element.evacuation_route_genitive;
                                 }
                             });
+                        } else {
+                            ev_route_text = ""
                         }
                         claims_satisfied_helper = claims_satisfied_helper + `${element.res}${ev_route_text} в размере 
                         ${makeRubText_genitive(all_found_claims[i].summ)}, `

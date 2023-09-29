@@ -388,6 +388,81 @@ class Refusal {
     }
 }
 
+class Repairing {
+
+    app_id
+    stor_name
+    stor_date
+    stor_number
+    stor_address
+    stor_status
+    stor_status_source
+    received
+    confirmation_type
+    confirmation_date
+    confirmation_number
+    complies_insurance_rule
+    distance_dtp_stor
+    distance_home_stor
+    method_of_performance
+
+    constructor (app_id,
+                stor_name,
+                stor_date, 
+                stor_number,
+                stor_address,
+                stor_status,
+                stor_status_source,
+                received, 
+                confirmation_type, 
+                confirmation_date, 
+                confirmation_number,
+                complies_insurance_rule,
+                distance_dtp_stor,
+                distance_home_stor,
+                method_of_performance) {
+        this.app_id = app_id
+        this.stor_name = stor_name
+        this.stor_date = stor_date
+        this.stor_number = stor_number
+        this.stor_address = stor_address
+        this.stor_status = stor_status
+        this.stor_status_source = stor_status_source
+        this.received = received
+        this.confirmation_type = confirmation_type
+        this.confirmation_date = confirmation_date
+        this.confirmation_number = confirmation_number
+        this.complies_insurance_rule = complies_insurance_rule
+        this.distance_dtp_stor = distance_dtp_stor
+        this.distance_home_stor = distance_home_stor
+        this.method_of_performance = method_of_performance
+    }
+
+    getDate() {return Date.parse(changeDateType(this.stor_date.value) + 'T00:00:00');}
+    getDateFormatted() { return formatDate(new Date(this.getDate())); }
+    getConfirmationDate() {return Date.parse(changeDateType(this.confirmation_date.value) + 'T00:00:00');}
+    getConfirmationDateFormatted() { return formatDate(new Date(this.getConfirmationDate())); }
+
+    setObject() {
+        return {
+            stor_name : this.stor_name.value,
+            stor_date : this.stor_date.value,
+            stor_number : this.stor_number.value,
+            stor_address : this.stor_address.value,
+            stor_status : this.stor_status.value,
+            stor_status_source : this.stor_status_source.value,
+            received : this.received.value,
+            confirmation_type : this.confirmation_type.value,
+            confirmation_date : this.confirmation_date.value,
+            confirmation_number : this.confirmation_number.value,
+            complies_insurance_rule : this.complies_insurance_rule.value,
+            distance_dtp_stor : parseInt(this.distance_dtp_stor.value),
+            distance_home_stor : parseInt(this.distance_home_stor.value),
+            method_of_performance : this.method_of_performance.value,
+        }
+    }
+}
+
 export class AppToFo {
 
     id
@@ -438,6 +513,8 @@ export class AppToFo {
     answerFoInfo
     answerFo
     paymentVoluntary = []
+    repairing = []
+    repairingObjects = []
     refusal = []
     refusalObjects = []
 
@@ -616,7 +693,7 @@ export class AppToFo {
                                                             payment_ev_routes[i])
         }
 
-        //Создание экземпляра класса Согласия на уведомление по СМС
+        //Создание экземпляра класса отказа в выплате страхового возмещения
         var number_of_apps_to_fo_refusals = $(`.apps_to_fo_refusal_${id}`).length
         var apps_to_fo_refusal_type = $(`.apps_to_fo_refusal_type_${id}`)
         var apps_to_fo_refusal_date = $(`.apps_to_fo_refusal_date_${id}`)
@@ -640,6 +717,42 @@ export class AppToFo {
                                     apps_to_fo_refusal_confirmation_number[i],
                                     apps_to_fo_refusal_confirmation_post_number[i])
             this.refusalObjects[i] = this.refusal[i].setObject()
+        }
+        
+        //Создание экземпляра класса выдачи направления на ремонт
+        var number_of_apps_to_fo_stors = $(`.apps_to_fo_stor_${id}`).length
+        var apps_to_fo_stor_name = $(`.apps_to_fo_stor_name_${id}`)
+        var apps_to_fo_stor_date = $(`.apps_to_fo_stor_date_${id}`)
+        var apps_to_fo_stor_number = $(`.apps_to_fo_stor_number_${id}`)
+        var apps_to_fo_stor_address = $(`.apps_to_fo_stor_address_${id}`)
+        var apps_to_fo_stor_status = $(`.apps_to_fo_stor_status_${id}`)
+        var apps_to_fo_stor_status_source = $(`.apps_to_fo_stor_status_source_${id}`)
+        var apps_to_fo_stor_received = $(`.apps_to_fo_stor_received_${id}`)
+        var apps_to_fo_stor_confirmation = $(`.apps_to_fo_stor_confirmation_${id}`)
+        var apps_to_fo_stor_confirmation_date = $(`.apps_to_fo_stor_confirmation_date_${id}`)
+        var apps_to_fo_stor_confirmation_number = $(`.apps_to_fo_stor_confirmation_number_${id}`)
+        var apps_to_fo_stor_complies_insurance_rule = $(`.apps_to_fo_stor_complies_insurance_rule_${id}`)
+        var apps_to_fo_stor_distance_dtp_stor = $(`.apps_to_fo_stor_distance_dtp_stor_${id}`)
+        var apps_to_fo_stor_distance_home_stor = $(`.apps_to_fo_stor_distance_home_stor_${id}`)
+        var apps_to_fo_stor_method_of_performance = $(`.apps_to_fo_stor_method_of_performance_${id}`)
+
+        for (var i = 0; i < number_of_apps_to_fo_stors; i++) {
+            this.repairing[i] = new Repairing(id,
+                                    apps_to_fo_stor_name[i],
+                                    apps_to_fo_stor_date[i],
+                                    apps_to_fo_stor_number[i],
+                                    apps_to_fo_stor_address[i],
+                                    apps_to_fo_stor_status[i],
+                                    apps_to_fo_stor_status_source[i],
+                                    apps_to_fo_stor_received[i],
+                                    apps_to_fo_stor_confirmation[i],
+                                    apps_to_fo_stor_confirmation_date[i],
+                                    apps_to_fo_stor_confirmation_number[i],
+                                    apps_to_fo_stor_complies_insurance_rule[i],
+                                    apps_to_fo_stor_distance_dtp_stor[i],
+                                    apps_to_fo_stor_distance_home_stor[i],
+                                    apps_to_fo_stor_method_of_performance[i])
+            this.repairingObjects[i] = this.repairing[i].setObject()
         }
 
         //Получение массива значений всех требований к ФУ
@@ -1029,8 +1142,10 @@ export class AppToFo {
 
                     //Формирование абзаца с ответом ФО на Заявление
                     if (this.answerFoInfo.options.selectedIndex == 1) {
+                        //Возврат документов
                         if (this.answerFo.options.selectedIndex == 1) {
-                            
+                        
+                        //Осуществление выплаты
                         } else if (this.answerFo.options.selectedIndex == 2) {
                             var answerFo_paragraph_one = ""
                             if (this.paymentVoluntary.length == 1) {
@@ -1056,10 +1171,11 @@ export class AppToFo {
                                 }
                                 answerFo_paragraph_one = answerFo_paragraph_one.replaceAll("расходов", "возмещения расходов")
                             }
-                            
                             this.answerFo_paragraph = this.answerFo_paragraph + answerFo_paragraph_one
+                        //Выдача направления на ремонт
                         } else if (this.answerFo.options.selectedIndex == 3) {
-                            
+
+                        //Отказ в выплате
                         } else if (this.answerFo.options.selectedIndex == 4) {
 
                             let confirmation_type = ""
@@ -1094,11 +1210,11 @@ export class AppToFo {
                                 if (text_helper == "") {
                                     text_helper = `согласно выводам проведенной экспертизы, все повреждения Транспортного средства Заявителя 
                                     не могли образоваться при заявленных обстоятельствах ДТП, в связи с чем, правовых оснований 
-                                    для урегулирования данного убытка у ${fo_name_genitive} не имеется.`
+                                    для урегулирования данного убытка у ${fo_name_genitive} не имеется`
                                 }
                                 this.answerFo_paragraph = `<p>${fo_name_nominative} ${send} Заявителю письмо от 
                                 ${this.refusal[0].getRefusalDateFormatted()} № ${this.refusal[0].number.value}, в котором сообщалось 
-                                что ${text_helper} Направление письма подтверждается 
+                                что ${text_helper}. Направление письма подтверждается 
                                 ${confirmation_type}${confirmation_date_helper}${confirmation_number_helper}${confirmation_post_number_helper}.</p>`
                             } else if (this.refusal[0].type.options.selectedIndex == 2) {
                                 
@@ -1174,6 +1290,7 @@ export class AppToFo {
             answerFoInfo : this.answerFoInfo.value,
             answerFo : this.answerFo.value,
             refusalObjects : this.refusalObjects,
+            repairingObjects : this.repairingObjects,
         }
     }
 }

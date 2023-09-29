@@ -491,7 +491,8 @@ export function makeTextDecision(dtpData,
                                               total_penalty_summ_accrued,
                                               total_penalty_summ_paid,
                                               max_summ,
-                                              data_from_db)
+                                              data_from_db,
+                                              totalData)
 
   let decision_name = ""
   if (motivation_part.result == "УДОВЛЕТВОРИТЬ") {

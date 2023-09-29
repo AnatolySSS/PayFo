@@ -2,9 +2,8 @@ export const confirmation_type_helper = {
     confirmation_type_helper: [
         {
             "confirmation_type": "Собственноручная подпись",
-            "confirmation_type_genitive": "собственноручной подписью",
-        },
-        {
+            "confirmation_type_genitive": "собственноручной подписью Заявителя",
+        },{
             "confirmation_type": "Почтовая квитанция",
             "confirmation_type_genitive": "почтовой квитанцией",
         },{
@@ -19,6 +18,9 @@ export const confirmation_type_helper = {
         },{
             "confirmation_type": "Почтовый идентификатор",
             "confirmation_type_genitive": "почтовым идентификатором",
+        },{
+            "confirmation_type": "Сведения с сайта АО «Почта России»",
+            "confirmation_type_genitive": "сведениями с официального сайта АО «Почта России»",
         },
     ]
 }

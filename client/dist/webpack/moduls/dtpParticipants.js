@@ -523,7 +523,7 @@ export class DtpParticipant {
             car_model : this.car_model.value,
             car_reg_number : this.car_reg_number.value,
             car_vin_number : this.car_vin_number.value,
-            car_year : this.car_year.value,
+            car_year : parseInt(this.car_year.value),
             car_type : this.car_type.value,
             car_weight : this.car_weight.value,
             driver_name : this.driver_name.value,
