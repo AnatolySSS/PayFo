@@ -405,6 +405,8 @@ class Repairing {
     distance_dtp_stor
     distance_home_stor
     method_of_performance
+    garanthy_letter
+    garanthy_letter_source
 
     constructor (app_id,
                 stor_name,
@@ -420,7 +422,9 @@ class Repairing {
                 complies_insurance_rule,
                 distance_dtp_stor,
                 distance_home_stor,
-                method_of_performance) {
+                method_of_performance,
+                garanthy_letter,
+                garanthy_letter_source) {
         this.app_id = app_id
         this.stor_name = stor_name
         this.stor_date = stor_date
@@ -436,6 +440,8 @@ class Repairing {
         this.distance_dtp_stor = distance_dtp_stor
         this.distance_home_stor = distance_home_stor
         this.method_of_performance = method_of_performance
+        this.garanthy_letter = garanthy_letter
+        this.garanthy_letter_source = garanthy_letter_source
     }
 
     getDate() {return Date.parse(changeDateType(this.stor_date.value) + 'T00:00:00');}
@@ -459,6 +465,8 @@ class Repairing {
             distance_dtp_stor : parseInt(this.distance_dtp_stor.value),
             distance_home_stor : parseInt(this.distance_home_stor.value),
             method_of_performance : this.method_of_performance.value,
+            garanthy_letter : this.garanthy_letter.value,
+            garanthy_letter_source : this.garanthy_letter_source.value,
         }
     }
 }
@@ -735,6 +743,8 @@ export class AppToFo {
         var apps_to_fo_stor_distance_dtp_stor = $(`.apps_to_fo_stor_distance_dtp_stor_${id}`)
         var apps_to_fo_stor_distance_home_stor = $(`.apps_to_fo_stor_distance_home_stor_${id}`)
         var apps_to_fo_stor_method_of_performance = $(`.apps_to_fo_stor_method_of_performance_${id}`)
+        var apps_to_fo_stor_garanthy_letter = $(`.apps_to_fo_stor_garanthy_letter_${id}`)
+        var apps_to_fo_stor_garanthy_letter_source = $(`.apps_to_fo_stor_garanthy_letter_source_${id}`)
 
         for (var i = 0; i < number_of_apps_to_fo_stors; i++) {
             this.repairing[i] = new Repairing(id,
@@ -751,7 +761,9 @@ export class AppToFo {
                                     apps_to_fo_stor_complies_insurance_rule[i],
                                     apps_to_fo_stor_distance_dtp_stor[i],
                                     apps_to_fo_stor_distance_home_stor[i],
-                                    apps_to_fo_stor_method_of_performance[i])
+                                    apps_to_fo_stor_method_of_performance[i],
+                                    apps_to_fo_stor_garanthy_letter[i],
+                                    apps_to_fo_stor_garanthy_letter_source[i])
             this.repairingObjects[i] = this.repairing[i].setObject()
         }
 
@@ -989,8 +1001,42 @@ export class AppToFo {
                             }
                             
                             this.answerFo_paragraph = this.answerFo_paragraph + answerFo_paragraph_one
+                        
+                        //Выдача направления на ремонт
                         } else if (this.answerFo.options.selectedIndex == 3) {
-                            
+
+                            let confirmation_of_receipt = ""
+                            let confirmation_date_helper = ""
+                            let confirmation_number_helper = ""
+
+                            confirmation_type_helper.confirmation_type_helper.forEach(element => {
+                                if (element.confirmation_type == this.repairing[0].confirmation_type.value) {
+                                    confirmation_of_receipt = element.confirmation_type_genitive
+                                }
+                            });
+
+                            if (this.repairing[0].confirmation_date.value != "" && this.repairing[0].confirmation_type.value != "Почтовый идентификатор") {
+                                confirmation_date_helper = ` от ${this.repairing[0].getConfirmationDateFormatted()}`
+                            }
+                            if (this.repairing[0].confirmation_number.value != "" && this.repairing[0].confirmation_type.value != "Почтовый идентификатор") {
+                                confirmation_number_helper = ` № ${this.repairing[0].confirmation_number.value}`
+                            }
+
+                            switch (this.repairing[0].confirmation_type.value) {
+                                case "Собственноручная подпись":
+                                case "Сведения с сайта АО «Почта России»":
+                                    confirmation_of_receipt = confirmation_of_receipt
+                                    break;
+                                default:
+                                    confirmation_of_receipt = `${confirmation_of_receipt}${confirmation_date_helper}${confirmation_number_helper}`
+                                    break;
+                            }
+                            this.answerFo_paragraph = `<p>${this.repairing[0].getConfirmationDateFormatted()} ${fo_name_nominative} 
+                            выдала Заявителю направление № ${this.repairing[0].stor_number.value} от ${this.repairing[0].getDateFormatted()} 
+                            (далее – Направление) на станцию технического обслуживания автомобилей ${this.repairing[0].stor_name.value} 
+                            (далее – СТОА) для осуществления восстановительного ремонта поврежденного Транспортного средства, 
+                            что подтверждается ${confirmation_of_receipt}.</p>`
+
                         } else if (this.answerFo.options.selectedIndex == 4) {
 
                             let confirmation_type = ""

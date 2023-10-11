@@ -181,11 +181,22 @@ export function check_signs(totalData, signs) {
     
     //Определение максимальной суммы по ОСАГО
     let max_summ = findMaxSumm()
+
+    //Ущерб превышает установленную Законом № 40-ФЗ страховую сумму
     if (totalData.fuExpertiseData.fuExpertiseAll[0].date != "") {
         if (totalData.fuExpertiseData.fuExpertiseAll[0].summ_without > max_summ) {
             signs_filled['Ущерб превышает установленную Законом № 40-ФЗ страховую сумму'] = "ДА"
         } else {
             signs_filled['Ущерб превышает установленную Законом № 40-ФЗ страховую сумму'] = "НЕТ"
+        }
+    }
+
+    //Ущерб (с учетом износа) превышает установленную Законом № 40-ФЗ страховую сумму
+    if (totalData.fuExpertiseData.fuExpertiseAll[0].date != "") {
+        if (totalData.fuExpertiseData.fuExpertiseAll[0].summ_with > max_summ) {
+            signs_filled['Ущерб (с учетом износа) превышает установленную Законом № 40-ФЗ страховую сумму'] = "ДА"
+        } else {
+            signs_filled['Ущерб (с учетом износа) превышает установленную Законом № 40-ФЗ страховую сумму'] = "НЕТ"
         }
     }
 
@@ -345,19 +356,45 @@ export function check_signs(totalData, signs) {
     //По НТЭ Заявителя ущерб превышает установленную Законом № 40-ФЗ страховую сумму
     signs_filled['По НТЭ Заявителя ущерб превышает установленную Законом № 40-ФЗ страховую сумму'] = "НЕТ"
     for (let i = 0; i < totalData.appToFoData.appToFoAll.length; i++) {
-        if (totalData.appToFoData.appToFoAll[i].expertiseAppsObjects[0].summ_without > max_summ) {
-            signs_filled['По НТЭ Заявителя ущерб превышает установленную Законом № 40-ФЗ страховую сумму'] = "ДА"
+        //Если тотал
+        if (totalData.appToFoData.appToFoAll[i].expertiseAppsObjects[0].summ_market > 0 && totalData.appToFoData.appToFoAll[i].expertiseAppsObjects[0].summ_without > totalData.appToFoData.appToFoAll[i].expertiseAppsObjects[0].summ_market) {
+            if ((totalData.appToFoData.appToFoAll[i].expertiseAppsObjects[0].summ_market - totalData.appToFoData.appToFoAll[i].expertiseAppsObjects[0].summ_leftovers) > max_summ) {
+                signs_filled['По НТЭ Заявителя ущерб превышает установленную Законом № 40-ФЗ страховую сумму'] = "ДА"
+            }
+        //Если не тотал
+        } else {
+            if (totalData.appToFoData.appToFoAll[i].expertiseAppsObjects[0].summ_without > max_summ) {
+                signs_filled['По НТЭ Заявителя ущерб превышает установленную Законом № 40-ФЗ страховую сумму'] = "ДА"
+            }
         }
     }
 
     //По НТЭ ФО ущерб превышает установленную Законом № 40-ФЗ страховую сумму
     signs_filled['По НТЭ ФО ущерб превышает установленную Законом № 40-ФЗ страховую сумму'] = "НЕТ"
     for (let i = 0; i < totalData.appToFoData.appToFoAll.length; i++) {
-        if (totalData.appToFoData.appToFoAll[i].expertiseObjects[0].summ_without > max_summ) {
-            signs_filled['По НТЭ ФО ущерб превышает установленную Законом № 40-ФЗ страховую сумму'] = "ДА"
+        //Если тотал
+        if (totalData.appToFoData.appToFoAll[i].expertiseObjects[0].summ_market > 0 && totalData.appToFoData.appToFoAll[i].expertiseObjects[0].summ_without > totalData.appToFoData.appToFoAll[i].expertiseObjects[0].summ_market) {
+            if ((totalData.appToFoData.appToFoAll[i].expertiseObjects[0].summ_market - totalData.appToFoData.appToFoAll[i].expertiseObjects[0].summ_leftovers) > max_summ) {
+                signs_filled['По НТЭ ФО ущерб превышает установленную Законом № 40-ФЗ страховую сумму'] = "ДА"
+            }
+        //Если не тотал
+        } else {
+            if (totalData.appToFoData.appToFoAll[i].expertiseObjects[0].summ_without > max_summ) {
+                signs_filled['По НТЭ ФО ущерб превышает установленную Законом № 40-ФЗ страховую сумму'] = "ДА"
+            }
         }
     }
     
+    //Гарантийное письмо об осуществлении ремонта без доплаты имеется
+    for (let i = 0; i < totalData.appToFoData.appToFoAll.length; i++) {
+        if (totalData.appToFoData.appToFoAll[i].repairingObjects[0].garanthy_letter == "Гарантийное письмо об осуществлении ремонта без доплаты имеется") {
+            signs_filled['Гарантийное письмо об осуществлении ремонта без доплаты имеется'] = "ДА"
+            break
+        } else if (totalData.appToFoData.appToFoAll[i].repairingObjects[0].garanthy_letter == "Гарантийного письма об осуществлении ремонта без доплаты не имеется") {
+            signs_filled['Гарантийное письмо об осуществлении ремонта без доплаты имеется'] = "НЕТ"
+            break
+        }
+    }
     console.log(signs_filled);
     return signs_filled
 }
@@ -1537,6 +1574,28 @@ function fillMotiveParagraph(dtpData,
 
         result_paragraph = paragraph.replaceAll("stor_status_source", stor_status_source)
         result_paragraph = result_paragraph.replaceAll("car_brand", car_brand)
+
+    } else if (total_data_keys == "Наличие гарантийного письма об осущестлении ремонта без доплаты") {
+        let garanthy_letter_from
+
+        for (let i = 0; i < totalData.appToFoData.appToFoAll.length; i++) {
+            garanthy_letter_from = totalData.appToFoData.appToFoAll[i].repairingObjects[0].garanthy_letter_source
+            if (garanthy_letter_from != "") {
+                switch (garanthy_letter_from) {
+                    case "Финансовая организация":
+                        garanthy_letter_from = "Финансовой организации"
+                        break;
+                    case "ССТОА":
+                        garanthy_letter_from = "СТОА"
+                        break;
+                    default:
+                        break;
+                }
+                break
+            }
+        }
+
+        result_paragraph = paragraph.replaceAll("garanthy_letter_from", garanthy_letter_from)
 
     } else {
         result_paragraph = paragraph

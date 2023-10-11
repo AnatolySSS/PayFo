@@ -783,6 +783,41 @@ function addAppToFo() {
                             </div>
                             <div class="form-row">
                                 <div class="form-group col-md-9">
+                                    <h6>Наличие гарантийного письма об осуществлении ремонта без доплаты</h6>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <select id="apps_to_fo_stor_garanthy_letter_${appsToFoId}" class="apps_to_fo_stor_garanthy_letter_${appsToFoId} apps_to_fo_stor_garanthy_letters custom-select deactivation" aria-describedby="apps_to_fo_stor_garanthy_letter_help_block_${appsToFoId}" required>
+                                        <option value="">Выберите вариант</option>
+                                        <option>Гарантийное письмо об осуществлении ремонта без доплаты имеется</option>
+                                        <option>Гарантийного письма об осуществлении ремонта без доплаты не имеется</option>
+                                    </select>
+                                    <small id="apps_to_fo_stor_garanthy_letter_help_block_${appsToFoId}" class="form-text">
+                                        <div class="form-inline">
+                                            <input id="apps_to_fo_stor_garanthy_letter_deactivate_${appsToFoId}" class="deactivator" type="checkbox">
+                                            <label for="apps_to_fo_stor_garanthy_letter_deactivate_${appsToFoId}" class="ml-2 form-check-label">Сведений не имеется</label>
+                                            <i class="fa fa-question-circle ml-2" aria-hidden="true" tabindex="0" data-trigger="focus" data-toggle="popover"></i>
+                                        </div>
+                                    </small>
+                                </div>
+                                <div class="form-group col-md-6" style="display:none">
+                                    <select id="apps_to_fo_stor_garanthy_letter_source_${appsToFoId}" class="apps_to_fo_stor_garanthy_letter_source_${appsToFoId} apps_to_fo_stor_garanthy_letter_sources custom-select deactivation" aria-describedby="apps_to_fo_stor_garanthy_letter_source_help_block_${appsToFoId}" required>
+                                        <option value="">Кем выдано гарантийное письмо</option>
+                                        <option>Финансовая организация</option>
+                                        <option>СТОА</option>
+                                    </select>
+                                    <small id="apps_to_fo_stor_garanthy_letter_source_help_block_${appsToFoId}" class="form-text">
+                                        <div class="form-inline">
+                                            <input id="apps_to_fo_stor_garanthy_letter_source_deactivate_${appsToFoId}" class="deactivator" type="checkbox">
+                                            <label for="apps_to_fo_stor_garanthy_letter_source_deactivate_${appsToFoId}" class="ml-2 form-check-label">Сведений не имеется</label>
+                                            <i class="fa fa-question-circle ml-2" aria-hidden="true" tabindex="0" data-trigger="focus" data-toggle="popover"></i>
+                                        </div>
+                                    </small>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md-9">
                                     <h6>Подтверждение выдачи направления на СТОА</h6>
                                 </div>
                             </div>
@@ -2329,7 +2364,7 @@ $(document).on("click", ".apps_to_fo_inspection_notice_info_btns", function (eve
   
 })
 
-//Добавляет информацию о способах направления ведомления о вызове на осмотр
+//Добавляет информацию о способах направления уведомления о вызове на осмотр
 $(document).on("change", ".apps_to_fo_inspection_notice_types", function (event) {
 
     if (!($(this).parent().next().find(".toggle").hasClass("rotate"))) {
@@ -2585,7 +2620,12 @@ $(document).on("change", ".apps_to_fo_answer_fo_infos", function (event) {
                 $(this).addClass('form-control')
             }
         })
-        $(this).parent().parent().next().find('select').addClass('form-control')
+        $(this).parent().parent().next().find('select').each(function(index){
+            if (!$(this).hasClass('apps_to_fo_stor_garanthy_letter_sources')) {
+                $(this).addClass('form-control')
+            }
+        })
+        // $(this).parent().parent().next().find('select').addClass('form-control')
 	} else {
         $(this).parent().parent().next().hide('fast')
         setTimeout(() => {
@@ -2621,7 +2661,12 @@ $(document).on("change", ".apps_to_fo_answer_fos", function (event) {
         $(this).parent().parent().next().next().show('fast')
 
         $(this).parent().parent().next().next().find('input[type=text]').addClass('form-control')
-        $(this).parent().parent().next().next().find('select').addClass('form-control')
+        $(this).parent().parent().next().next().find('select').each(function(index){
+            if (!$(this).hasClass('apps_to_fo_stor_garanthy_letter_sources')) {
+                $(this).addClass('form-control')
+            }
+        })
+        // $(this).parent().parent().next().next().find('select').addClass('form-control')
         
 	} else {
         $(this).parent().parent().next().next().hide('fast')
@@ -2656,6 +2701,17 @@ $(document).on("click", ".apps_to_fo_add_stor_info_btns", function (event) {
         $(this).parent().parent().next().hide('fast'); //Скрывает .apps_to_fo_add_stor_info
         $(this).find(".toggle").removeClass("rotate");
     }
+});
+
+//Добавляет информацию о лице, выдавшем гарантийное письмо об осуществлении ремонта без доплаты
+$(document).on("change", ".apps_to_fo_stor_garanthy_letters", function (event) {
+	if ($(this).find(':selected').text() == "Гарантийное письмо об осуществлении ремонта без доплаты имеется") {
+		$(this).parent().next().show('fast');
+        $(this).parent().next().find('.payment_ev_routes').addClass('form-control')
+	} else {
+        $(this).parent().next().hide('fast');
+        $(this).parent().next().find('.payment_ev_routes').removeClass('form-control')
+	}
 });
 
 function addPayment(appsToFoId) {
