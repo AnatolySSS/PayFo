@@ -20,6 +20,7 @@ export function make_resulative_paragraph(total_penalty_summ_accrued,
     let partly_boolean = false
     let all_not_found_claims = []
     let found_claims_boolean
+
     //Перебор всех договоров, по которым заявлены требования к ФУ
     for (let i = 0; i < totalData.claimsToFuData.claimsContractAll.length; i++) {
         //Перебор всех требований, заявленных к ФУ
@@ -139,7 +140,7 @@ export function make_resulative_paragraph(total_penalty_summ_accrued,
         if (all_found_claims > 1) {
             claim_count = "требования"
         }
-        resulative_part = resulative_part + `<p>${claim_count} ${app_name} о взыскании с Финансовой организации 
+        resulative_part = resulative_part + `<p>${claim_count} ${app_name} о взыскании с ${totalData.preambulaData.fo_name} 
         ${main_claims_all_paragraph} удовлетворить${partly}.</p>`
 
         let claims_satisfied_helper = ""
@@ -193,14 +194,14 @@ export function make_resulative_paragraph(total_penalty_summ_accrued,
 
         if (claims_order_boolean) {
             claims_order_helper = claims_order_helper.slice(0, -2)
-            claims_order_helper = `<p>Требование ${app_name} о взыскании с Финансовой организации 
+            claims_order_helper = `<p>Требование ${app_name} о взыскании с ${totalData.preambulaData.fo_name} 
             ${claims_order_helper} оставить без рассмотрения.</p>`
         }
 
         //Формирование абзаца про отказ в удовлетворении требований
         if (claims_refuse_boolean) {
             claims_refuse_helper = claims_refuse_helper.slice(0, -2)
-            claims_refuse_helper = `<p>В удовлетворении требования ${app_name} о взыскании с Финансовой организации 
+            claims_refuse_helper = `<p>В удовлетворении требования ${app_name} о взыскании с ${totalData.preambulaData.fo_name} 
             ${claims_refuse_helper} отказать.</p>`
         } else if (partly) {
             claims_refuse_helper = `<p>В удовлетворении остальных требований ${app_name} отказать.</p>`
@@ -208,17 +209,17 @@ export function make_resulative_paragraph(total_penalty_summ_accrued,
 
         claims_satisfied_helper = claims_satisfied_helper.slice(0, -2)
 
-        resulative_part = resulative_part + `<p>Взыскать с Финансовой организации в пользу ${app_name} 
+        resulative_part = resulative_part + `<p>Взыскать с ${totalData.preambulaData.fo_name} в пользу ${app_name} 
         ${claims_satisfied_helper}.</p>${claims_order_helper}${claims_refuse_helper}`
     } else if (result == "ОТКАЗАТЬ") {
 
         if (claims_order_boolean) {
             claims_order_helper = claims_order_helper.slice(0, -2)
-            claims_order_helper = `<p>Требование ${app_name} о взыскании с Финансовой организации 
+            claims_order_helper = `<p>Требование ${app_name} о взыскании с ${totalData.preambulaData.fo_name} 
             ${claims_order_helper} оставить без рассмотрения.</p>`
         }
 
-        resulative_part = resulative_part + `<p>в удовлетворении требования ${app_name} о взыскании с Финансовой организации 
+        resulative_part = resulative_part + `<p>в удовлетворении требования ${app_name} о взыскании с ${totalData.preambulaData.fo_name} 
         ${main_claims_all_paragraph} отказать.</p>${claims_order_helper}`
     } else if (result == "ПРЕКРАТИТЬ") {
         resulative_part = resulative_part + `<p>прекратить рассмотрение Обращения ${app_name} на основании пункта 1 части 1 
@@ -228,11 +229,11 @@ export function make_resulative_paragraph(total_penalty_summ_accrued,
     resulative_part = resulative_part + `<p>Решение вступает в силу по истечении десяти рабочих дней после даты его подписания.</p>`
 
     if (result == "УДОВЛЕТВОРИТЬ") {
-        resulative_part = resulative_part + `<p>Решение подлежит исполнению Финансовой организацией в течение 10 рабочих дней после дня вступления в силу.</p>`
+        resulative_part = resulative_part + `<p>Решение подлежит исполнению ${totalData.preambulaData.fo_name} в течение десяти рабочих дней после дня вступления в силу.</p>`
     }
 
     resulative_part = resulative_part + `<p>В случае несогласия с решением Финансового уполномоченного в соответствии с частью 1 
-    статьи 26 Закона № 123-ФЗ Финансовая организация вправе в течение десяти рабочих дней после дня вступления в силу решения 
+    статьи 26 Закона № 123-ФЗ ${totalData.preambulaData.fo_name} вправе в течение десяти рабочих дней после дня вступления в силу решения 
     Финансового уполномоченного обратиться в суд в порядке, установленном законодательством Российской Федерации. В случае 
     обращения финансовой организации в суд копия заявления подлежит направлению финансовому уполномоченному, рассматривавшему 
     дело, и потребителю финансовых услуг, в отношении обращения которого принято решение Финансового уполномоченного, в течение 
@@ -246,7 +247,7 @@ export function make_resulative_paragraph(total_penalty_summ_accrued,
     }
 
     resulative_part = resulative_part + `<p>В случае несогласия с вступившим в силу решением Финансового уполномоченного Заявитель 
-    в соответствии с частью 3 статьи 25 Закона № 123-ФЗ вправе в течение тридцати дней после дня вступления указанного 
+    в соответствии с частью 3 статьи 25 Закона № 123-ФЗ вправе в течение тридцати дней после дня вступления в силу указанного 
     решения обратиться в суд и заявить требования к финансовой организации по предмету, содержащемуся в обращении, в порядке, 
     установленном законодательством Российской Федерации. Копия обращения в суд подлежит направлению Финансовому уполномоченному.</p>`
 

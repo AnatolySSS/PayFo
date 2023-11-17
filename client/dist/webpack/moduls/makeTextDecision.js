@@ -151,12 +151,12 @@ export function makeTextDecision(dtpData,
   var preambula = ""
   //В случае заполнения всех необходимых полей формируется абзац преамбулы
   if ($('#preambula .fa-2x').css('color') == 'rgb(40, 167, 69)') {
-    installed = "<p class='text-center'><b>УСТАНОВИЛ</b></p>"
+    installed = "<p class='text-center'><b>УСТАНОВИЛ:</b></p>"
     preambula = `<p>${fu_post} ${fu_name} (далее – Финансовый уполномоченный) по результатам рассмотрения обращения от 
                   ${date_appeal} № ${appeal_number} (далее – Обращение) ${app_helper} 
                   (далее – Заявитель) в отношении ${fo_name} (место нахождения: ${fo_registration_address}; 
                   почтовый адрес: ${fo_post_address}; дата государственной регистрации: ${fo_registration_date}; 
-                  идентификационный номер налогоплательщика: ${fo_inn}) (далее – Финансовая организация),</p>`
+                  идентификационный номер налогоплательщика: ${fo_inn}) (далее – Финансовая организация)</p>`
 
     preambula = preambula.replaceAll("\r\n", "")
     preambula = preambula.replaceAll("\r", "")
@@ -552,7 +552,7 @@ export function makeTextDecision(dtpData,
   transitional_to_resulative_paragraph = transitional_to_resulative_paragraph.replaceAll("\n", "")
   let decided = ""
   if (motivation_part.motivation_part != "") {
-    decided = "<p class='text-center'><b>РЕШИЛ</b></p>"
+    decided = "<p class='text-center'><b>РЕШИЛ:</b></p>"
   }
   
   transitional_to_resulative_paragraph =  transitional_to_resulative_paragraph + decided

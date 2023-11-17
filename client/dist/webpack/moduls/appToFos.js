@@ -800,7 +800,7 @@ export class AppToFo {
                     //Формирование процедуры обращения в ФО
                     var procedure_helper = ""
                     if (this.procedure.options.selectedIndex == 1) {
-                        procedure_helper = "о прямом возмещении убытков"
+                        procedure_helper = "о прямом возмещении убытков по Договору ОСАГО"
                     } else if (this.procedure.options.selectedIndex == 2) {
                         procedure_helper = "о страховом возмещении по Договору ОСАГО"
                     }
@@ -817,7 +817,7 @@ export class AppToFo {
 
                     //Формирование первого параграфа заявления в ФО
                     this.app_paragraph = `<p>${this.getAppDateFormatted()} Заявитель обратился в ${fo_name_accusative} с заявлением 
-                    ${procedure_helper}, предоставив все документы, предусмотренные Правилами обязательного 
+                    ${procedure_helper}, предоставив документы, предусмотренные Правилами обязательного 
                     страхования гражданской ответственности владельцев транспортных средств, утвержденными 
                     Положением Банка России от 19.09.2014 № 431-П (далее – Правила ОСАГО).</p>${app_claims_paragraph_helper}`
 
@@ -918,7 +918,7 @@ export class AppToFo {
                         }
                         var inspections_number_helper = ""
                         if (this.inspections[0].number.value != "") {
-                            inspections_number_helper = `, о чем составлен акт осмотра № ${this.inspections[0].number.value}${inspections_data_helper_2}`
+                            inspections_number_helper = `, о чем составлен акт осмотра${inspections_data_helper_2} № ${this.inspections[0].number.value}`
                         }
                         this.inspections_paragraph = `<p>${inspections_data_helper_1} 
                         ${fo_name_instrumental} проведен осмотр принадлежащего Заявителю 
@@ -1032,7 +1032,7 @@ export class AppToFo {
                                     break;
                             }
                             this.answerFo_paragraph = `<p>${this.repairing[0].getConfirmationDateFormatted()} ${fo_name_nominative} 
-                            выдала Заявителю направление № ${this.repairing[0].stor_number.value} от ${this.repairing[0].getDateFormatted()} 
+                            выдала Заявителю направление от ${this.repairing[0].getDateFormatted()} № ${this.repairing[0].stor_number.value} 
                             (далее – Направление) на станцию технического обслуживания автомобилей ${this.repairing[0].stor_name.value} 
                             (далее – СТОА) для осуществления восстановительного ремонта поврежденного Транспортного средства, 
                             что подтверждается ${confirmation_of_receipt}.</p>`
