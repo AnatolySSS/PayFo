@@ -62,10 +62,22 @@ function addDtpParticipant() {
           </select>
         </div>
         <div class="form-group col-md-2" style="display:none">
-          <input id = "car_veight_${dtpParticipant}" class="car_weights form-control" placeholder="масса" type="text" size="8" required>
+          <input id = "car_veight_${dtpParticipant}" class="car_weights form-control deactivation" aria-describedby="car_weight_help_block_${dtpParticipant}" placeholder="масса" type="text" size="8" required>
+          <small id="car_weight_help_block_${dtpParticipant}" class="form-text">
+            <div class="form-inline">
+              <input id="car_weight_deactivate_${dtpParticipant}" class="deactivator" type="checkbox">
+              <label for="car_weight_deactivate_${dtpParticipant}" class="ml-2 form-check-label">Сведений не имеется</label>
+            </div>
+          </small>
         </div>
         <div class="form-group col-md-4" style="display:none">
-          <input id = "car_vin_number_${dtpParticipant}" class="car_vin_numbers form-control" placeholder="VIN" type="text" size="8" required>
+          <input id = "car_vin_number_${dtpParticipant}" class="car_vin_numbers form-control deactivation" aria-describedby="car_vin_number_help_block_${dtpParticipant}" placeholder="VIN" type="text" size="8" required>
+          <small id="car_vin_number_help_block_${dtpParticipant}" class="form-text">
+            <div class="form-inline">
+              <input id="car_vin_number_deactivate_${dtpParticipant}" class="deactivator" type="checkbox">
+              <label for="car_vin_number_deactivate_${dtpParticipant}" class="ml-2 form-check-label">Сведений не имеется</label>
+            </div>
+          </small>
         </div>
       </div>
       <div class="form-row">
@@ -90,7 +102,7 @@ function addDtpParticipant() {
       </div>
       <div class="form-row">
         <div class="form-group col-md-3">
-          <select id="car_type_${dtpParticipant}" class="is_guilties custom-select form-control" required>
+          <select id="is_guilty_${dtpParticipant}" class="is_guilties custom-select form-control" required>
             <option value="">степень вины</option>
             <option>виновен</option>
             <option>не виновен</option>

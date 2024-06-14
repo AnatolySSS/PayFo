@@ -1,5 +1,7 @@
 // склонение сумм в родительном падеже
-export function makeRubText_genitive(sum){
+import { convert as numberToWordsRu } from 'number-to-words-ru';
+
+export function makeRubText_genitive(sum, type = "number"){
   let sumText;
   let rub, kop;
   let rub_string_payment, kop_string_payment;
@@ -34,6 +36,22 @@ export function makeRubText_genitive(sum){
     }
   }
 
+  let rubString = ""
+
+  if (type == "string") {
+    rubString =
+    " (" +
+    numberToWordsRu(rub, {
+      showNumberParts: {
+        fractional: false,
+      },
+      showCurrency: {
+        integer: false,
+      },
+    }) +
+    ")";
+  }
+
   //Склонение копеек/копейки
   if (kop == "11") {
     kop_string_payment = " копеек";
@@ -49,7 +67,7 @@ export function makeRubText_genitive(sum){
     }
   }
 
-  sumText = new Intl.NumberFormat('ru-RU').format(rub) + rub_string_payment + kop + kop_string_payment;
+  sumText = new Intl.NumberFormat('ru-RU').format(rub) + rubString + rub_string_payment + kop + kop_string_payment;
 
   return sumText;
 }

@@ -1,23 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
   <head>
-    <!-- Yandex.Metrika counter -->
-      <script type="text/javascript" >
-        (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
-        m[i].l=1*new Date();
-        for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
-        k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
-        (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
-
-        ym(91467132, "init", {
-            clickmap:true,
-            trackLinks:true,
-            accurateTrackBounce:true,
-            webvisor:true
-        });
-      </script>
-      <noscript><div><img src="https://mc.yandex.ru/watch/91467132" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
-    <!-- /Yandex.Metrika counter -->
     
     <meta charset="utf-8">
     <title>PayFo</title>
@@ -332,7 +315,14 @@
                       <input id="app_name" class="form-control" type="text" placeholder="ФИО заявителя" size="40" required>
                     </div>
                     <div class="form-group col-md-6">
-                      <input id = "app_passport" class="form-control" placeholder="серия и № паспорта" type="text" size="8" required>
+                      <input id = "app_passport" class="form-control" placeholder="серия и № паспорта" data-toggle="tooltip" data-placement="top" title="формат: ХХХХ ХХХХХХ (через пробел)" type="text" size="8" required>
+                      <small id="fo_site_help_block" class="form-text">
+                        <!-- <label for="app_passport" class="ml-2 form-check-label">формат: ХХХХ ХХХХХХ (через пробел)</label> -->
+                        <!-- <div class="form-inline">
+                          <input id="fo_site_deactivate" class="deactivator" type="checkbox">
+                          <label for="fo_site_deactivate" class="ml-2 form-check-label">сведений не имеется</label>
+                        </div> -->
+                      </small>
                     </div>
                   </div>
                   <div class="form-row">
@@ -443,6 +433,7 @@
                           <option>Хранение</option>
                           <option>Неустойка</option>
                           <option>Финансовая санкция</option>
+                          <option>Организация ремонта</option>
                           <option>Экспертиза</option>
                           <option>Юрист</option>
                           <option>Составление претензии</option>
@@ -458,6 +449,13 @@
                           <option>Здоровье</option>
                           <option>Жизнь</option>
                           <option>Иные расходы</option>
+                        </select>
+                      </div>
+                      <div class="form-group col-md-3" style="display:none">
+                        <select id="main_claim_subtype_1_1" class="main_claim_subtype_1 main_claim_subtypes custom-select col-md-12" required>
+                          <option value="">Тип требования</option>
+                          <option>Выплата</option>
+                          <option>Доплата</option>
                         </select>
                       </div>
                       <div class="form-group col-md-3">
@@ -833,10 +831,22 @@
                         </select>
                       </div>
                       <div class="form-group col-md-2" style="display:none">
-                        <input id = "car_weight_1" class="car_weights form-control" placeholder="масса" type="text" size="8" required>
+                        <input id = "car_weight_1" class="car_weights form-control deactivation" aria-describedby="car_weight_help_block_1" placeholder="масса" type="text" size="8" required>
+                        <small id="car_weight_help_block_1" class="form-text">
+                          <div class="form-inline">
+                            <input id="car_weight_deactivate_1" class="deactivator" type="checkbox">
+                            <label for="car_weight_deactivate_1" class="ml-2 form-check-label">Сведений не имеется</label>
+                          </div>
+                        </small>
                       </div>
                       <div class="form-group col-md-4" style="display:none">
-                        <input id = "car_vin_number_1" class="car_vin_numbers form-control" placeholder="VIN" type="text" size="8" required>
+                        <input id = "car_vin_number_1" class="car_vin_numbers form-control deactivation" aria-describedby="car_vin_number_help_block_1" placeholder="VIN" type="text" size="8" required>
+                        <small id="car_vin_number_help_block_1" class="form-text">
+                          <div class="form-inline">
+                            <input id="car_vin_number_deactivate_1" class="deactivator" type="checkbox">
+                            <label for="car_vin_number_deactivate_1" class="ml-2 form-check-label">Сведений не имеется</label>
+                          </div>
+                        </small>
                       </div>
                     </div>
                     <div class="form-row">
@@ -1357,6 +1367,7 @@
                               <option>Хранение</option>
                               <option>Неустойка</option>
                               <option>Финансовая санкция</option>
+                              <option>Организация ремонта</option>
                               <option>Экспертиза</option>
                               <option>Юрист</option>
                               <option>Составление претензии</option>
@@ -1586,7 +1597,7 @@
                       <div id="apps_to_fo_inspection_1_1" class="apps_to_fo_inspections_1">
                         <div class="form-row">
                           <div class="form-group col-md-3">
-                            <input id = "apps_to_fo_inspection_date_1" class = "apps_to_fo_inspection_date_1 apps_to_fo_inspection_dates datepicker-here deactivation" aria-describedby="apps_to_fo_inspection_date_help_block_1_1" placeholder="Дата" type="text" size="10" required>
+                            <input id = "apps_to_fo_inspection_date_1_1" class = "apps_to_fo_inspection_date_1 apps_to_fo_inspection_dates datepicker-here deactivation" aria-describedby="apps_to_fo_inspection_date_help_block_1_1" placeholder="Дата" type="text" size="10" required>
                             <small id="apps_to_fo_inspection_date_help_block_1_1" class="form-text">
                               <div class="form-inline">
                                 <input id="apps_to_fo_inspection_date_deactivate_1_1" class="deactivator" type="checkbox">
@@ -1595,7 +1606,7 @@
                             </small>
                           </div>
                           <div class="form-group col-md-3">
-                            <input id = "apps_to_fo_inspection_number_1" class="apps_to_fo_inspection_number_1 apps_to_fo_inspection_numbers deactivation" aria-describedby="apps_to_fo_inspection_number_help_block_1_1" placeholder="№ акта" type="text" size="8" required>
+                            <input id = "apps_to_fo_inspection_number_1_1" class="apps_to_fo_inspection_number_1 apps_to_fo_inspection_numbers deactivation" aria-describedby="apps_to_fo_inspection_number_help_block_1_1" placeholder="№ акта" type="text" size="8" required>
                             <small id="apps_to_fo_inspection_number_help_block_1_1" class="form-text">
                               <div class="form-inline">
                                 <input id="apps_to_fo_inspection_number_deactivate_1_1" class="deactivator" type="checkbox">
@@ -1603,14 +1614,17 @@
                               </div>
                             </small>
                           </div>
-                          <div class="form-group col-md-6">
-                            <input id = "apps_to_fo_inspection_organization_1" class="apps_to_fo_inspection_organization_1 apps_to_fo_inspection_organizations deactivation li-quotes" aria-describedby="apps_to_fo_inspection_organization_help_block_1_1" placeholder="Наименование экспертной организации" type="text" size="8" required>
+                          <div class="form-group col-md-5">
+                            <input id = "apps_to_fo_inspection_organization_1_1" class="apps_to_fo_inspection_organization_1 apps_to_fo_inspection_organizations deactivation li-quotes" aria-describedby="apps_to_fo_inspection_organization_help_block_1_1" placeholder="Наименование экспертной организации" type="text" size="8" required>
                             <small id="apps_to_fo_inspection_organization_help_block_1_1" class="form-text">
                               <div class="form-inline">
                                 <input id="apps_to_fo_inspection_organization_deactivate_1_1" class="deactivator" type="checkbox">
                                 <label for="apps_to_fo_inspection_organization_deactivate_1_1" class="ml-2 form-check-label">Сведений не имеется</label>
                               </div>
                             </small>
+                          </div>
+                          <div class="form-group col-ms-1">
+                            <button id="apps_to_fo_inspection_btn_1_1" class="apps_to_fo_inspection_btn_1 apps_to_fo_inspection_btns btn btn-outline-warning" onclick="addInspection(1)">+</button>
                           </div>
                         </div>
                       </div>
@@ -2143,6 +2157,7 @@
                               <option>Реестр почтовых отправлений</option>
                               <option>Почтовый идентификатор</option>
                               <option>Сведения с сайта АО «Почта России»</option>
+                              <option>Подтверждающих документов не имеется</option>
                             </select>
                           </div>
                         </div>
@@ -2697,17 +2712,29 @@
                         <div class="form-group col-md-3">
                           <input id = "fu_last_day_for_pay_date_1" class = "fu_last_day_for_pay_dates datepicker-here" aria-describedby="fu_last_day_for_pay_date_help_block_1" placeholder="Дата" type="text" size="10" required>
                           <small id="fu_last_day_for_pay_date_help_block_1" class="form-text">
-                            Дата окончания срока исполнения
+                            Дата окончания срока исполнения / обжалования
                           </small>
                         </div>
-                        <div class="form-group col-md-3">
+                        <div class="form-group col-md-3" style="display:none">
                           <input id = "fu_pay_date_1" class = "fu_pay_dates datepicker-here" aria-describedby="fu_pay_date_help_block_1" placeholder="Дата" type="text" size="10" required>
                           <small id="fu_pay_date_help_block_1" class="form-text">
                             Дата исполнения
                           </small>
                         </div>
+                        <div class="form-group col-md-3">
+                          <input id = "fu_app_date_1" class = "fu_app_dates datepicker-here" aria-describedby="fu_app_date_help_block_1" placeholder="Дата" type="text" size="10" required>
+                          <small id="fu_app_date_help_block_1" class="form-text">
+                            Дата обращения
+                          </small>
+                        </div>
+                        <div class="form-group col-md-3" style="display:none">
+                          <input id = "fu_order_1" class="fu_orders" aria-describedby="fu_order_help_block_1" placeholder="№ ПП" type="text" size="8" required>
+                          <small id="fu_order_help_block_1" class="form-text">
+                            № ПП об исполнении решения ФУ
+                          </small>
+                        </div>
                       </div>
-                      <div class="form-row">
+                      <!-- <div class="form-row">
                         <div class="form-group col-md-3">
                           <input id = "fu_app_date_1" class = "fu_app_dates datepicker-here" aria-describedby="fu_app_date_help_block_1" placeholder="Дата" type="text" size="10" required>
                           <small id="fu_app_date_help_block_1" class="form-text">
@@ -2720,7 +2747,7 @@
                             № ПП об исполнении решения ФУ
                           </small>
                         </div>
-                      </div>
+                      </div> -->
                     </div>
                     <div class="form-row">
                       <div class="form-group col-md-6">
@@ -2740,6 +2767,7 @@
                             <option>Хранение</option>
                             <option>Неустойка</option>
                             <option>Финансовая санкция</option>
+                            <option>Организация ремонта</option>
                             <option>Экспертиза</option>
                             <option>Юрист</option>
                             <option>Составление претензии</option>
@@ -3045,6 +3073,7 @@
                             <option>Хранение</option>
                             <option>Неустойка</option>
                             <option>Финансовая санкция</option>
+                            <option>Организация ремонта</option>
                             <option>Экспертиза</option>
                             <option>Юрист</option>
                             <option>Составление претензии</option>
@@ -3240,7 +3269,11 @@
                         <select id="fu_expertise_typical_question_1" class="fu_expertise_typical_questions custom-select col-md-12" required>
                           <option value="">Вопросы для эксперта</option>
                           <option>Комплексная экспертиза</option>
+                          <option>Комплексная экспертиза с ГО и РС</option>
                           <option>Трасологическая экспертиза</option>
+                          <option>УТС</option>
+                          <option>МинЮст</option>
+                          <option>Качество ремонта</option>
                           <option>Иное</option>
                         </select>
                       </div>

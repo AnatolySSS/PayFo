@@ -42,6 +42,7 @@ function addClaimsContract() {
                         <option>Хранение</option>
                         <option>Неустойка</option>
                         <option>Финансовая санкция</option>
+                        <option>Организация ремонта</option>
                         <option>Экспертиза</option>
                         <option>Юрист</option>
                         <option>Составление претензии</option>
@@ -57,6 +58,13 @@ function addClaimsContract() {
                         <option>Здоровье</option>
                         <option>Жизнь</option>
                         <option>Иные расходы</option>
+                      </select>
+                    </div>
+                    <div class="form-group col-md-3" style="display:none">
+                      <select id="main_claim_subtype_${ContractId}_1" class="main_claim_subtype_${ContractId} main_claim_subtypes custom-select col-md-12" required>
+                          <option value="">Тип требования</option>
+                          <option>Выплата</option>
+                          <option>Доплата</option>
                       </select>
                     </div>
                     <div class="form-group col-md-3">
@@ -336,6 +344,7 @@ function addFuMainClaim(id) {
                   <option>Хранение</option>
                   <option>Неустойка</option>
                   <option>Финансовая санкция</option>
+                  <option>Организация ремонта</option>
                   <option>Экспертиза</option>
                   <option>Юрист</option>
                   <option>Составление претензии</option>
@@ -351,6 +360,13 @@ function addFuMainClaim(id) {
                   <option>Здоровье</option>
                   <option>Жизнь</option>
                   <option>Иные расходы</option>
+                </select>
+              </div>
+              <div class="form-group col-md-3" style="display:none">
+                <select id="main_claim_subtype_${ContractId}_${claimContractId}" class="main_claim_subtype_${ContractId} main_claim_subtypes custom-select col-md-12" required>
+                  <option value="">Тип требования</option>
+                  <option>Выплата</option>
+                  <option>Доплата</option>
                 </select>
               </div>
               <div class="form-group col-md-3">
@@ -631,6 +647,25 @@ $(document).on("change", ".main_claim_types", function (event) {
     $(this).parent().parent().next().next().next().find('.add_main_claim_info_storage_froms').removeClass('form-control')
     $(this).parent().parent().next().next().next().find('.add_main_claim_info_storage_tos').removeClass('form-control')
 	}
+});
+
+//Добавляет дополнительные сведения по требованию о взыскании страхового возмещения
+$(document).on("change", ".main_claim_types", function (event) {
+	if ($(this).find(':selected').text() == "Страховое возмещение" || $(this).find(':selected').text() == "УТС") {
+		$(this).parent().next().show('fast');
+    $(this).parent().next().find('.main_claim_subtypes').addClass('form-control')
+	} else {
+    $(this).parent().next().hide('fast');
+    $(this).parent().next().find('.main_claim_subtypes').removeClass('form-control') }
+});
+
+$(document).on("change", ".main_claim_types", function (event) {
+	if ($(this).find(':selected').text() == "Организация ремонта") {
+		$(this).parent().next().next().hide('fast');
+    $(this).parent().next().next().find('.main_claim_summs').removeClass('form-control')
+	} else {
+    $(this).parent().next().next().show('fast');
+    $(this).parent().next().next().find('.main_claim_summs').addClass('form-control')	}
 });
 
 //Блокировать даты судебной неустойки при проставленной галочке "Период не указан"

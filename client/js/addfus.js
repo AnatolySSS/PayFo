@@ -63,30 +63,28 @@ function addFu() {
 							<div class="form-group col-md-3">
 								<input id = "fu_last_day_for_pay_date_${fuId}" class = "fu_last_day_for_pay_dates datepicker-here form-control" aria-describedby="fu_last_day_for_pay_date_help_block_${fuId}" placeholder="Дата" type="text" size="10" required>
 								<small id="fu_last_day_for_pay_date_help_block_${fuId}" class="form-text">
-									Дата окончания срока исполнения
+									Дата окончания срока исполнения / обжалования
 								</small>
 							</div>
-							<div class="form-group col-md-3">
+							<div class="form-group col-md-3" style="display:none">
 								<input id = "fu_pay_date_${fuId}" class = "fu_pay_dates datepicker-here form-control" aria-describedby="fu_pay_date_help_block_${fuId}" placeholder="Дата" type="text" size="10" required>
 								<small id="fu_pay_date_help_block_${fuId}" class="form-text">
 									Дата исполнения
 								</small>
 							</div>
-						</div>
-						<div class="form-row">
 							<div class="form-group col-md-3">
 								<input id = "fu_app_date_${fuId}" class = "fu_app_dates datepicker-here form-control" aria-describedby="fu_app_date_help_block_${fuId}" placeholder="Дата" type="text" size="10" required>
 								<small id="fu_app_date_help_block_${fuId}" class="form-text">
 									Дата обращения
 								</small>
 							</div>
-							<div class="form-group col-md-3">
+							<div class="form-group col-md-3" style="display:none">
 								<input id = "fu_order_${fuId}" class="fu_orders form-control" aria-describedby="fu_order_help_block_${fuId}" placeholder="№ ПП" type="text" size="8" required>
 								<small id="fu_order_help_block_${fuId}" class="form-text">
 									№ ПП об исполнении решения ФУ
 								</small>
 							</div>
-                      </div>
+						</div>
 					</div>
 					<div class="form-row">
 						<div class="form-group col-md-6">
@@ -106,6 +104,7 @@ function addFu() {
 									<option>Хранение</option>
 									<option>Неустойка</option>
 									<option>Финансовая санкция</option>
+									<option>Организация ремонта</option>
 									<option>Экспертиза</option>
 									<option>Юрист</option>
 									<option>Составление претензии</option>
@@ -284,6 +283,11 @@ function addFu() {
   });
 }
 
+function removeFu() {
+	$('#fu_' + fuId).remove();
+	fuId--
+}
+
 function addFuClaim(id) {
 	if ($(`#fu_type_${id}`).find(':selected').text() == "Об удовлетворении" ||
 		$(`#fu_type_${id}`).find(':selected').text() == "Тип решения") {
@@ -307,6 +311,7 @@ function addFuClaim(id) {
 						<option>Хранение</option>
 						<option>Неустойка</option>
 						<option>Финансовая санкция</option>
+						<option>Организация ремонта</option>
 						<option>Экспертиза</option>
 						<option>Юрист</option>
 						<option>Составление претензии</option>
@@ -388,11 +393,6 @@ function addFuClaim(id) {
   });
 }
 
-function removeFu() {
-	$('#fu_' + fuId).remove();
-	fuId--
-}
-
 function removeFuClaim(id, claimFuId) {
 	$('#add_fu_info_row_' + id + '_' + claimFuId).remove();
 	$('#add_fu_claim_info_' + id + '_' + claimFuId).remove();
@@ -436,6 +436,23 @@ $(document).on("click", ".add_fu_info_btns", function (event) {
 		$(this).parent().parent().next().hide('fast'); //Скрывает .add_fu_info
 		$(this).find(".toggle").removeClass("rotate");
   	}
+});
+
+//Добавляет даты fu_pay_dates и fu_orders
+$(document).on("change", ".fu_types", function (event) {
+	if ($(this).find(':selected').text() == "Об удовлетворении") {
+		$(this).parent().parent().next().find('.fu_pay_dates').parent().show('fast')
+		$(this).parent().parent().next().find('.fu_orders').parent().show('fast')
+		$(this).parent().parent().next().find('.fu_pay_dates').addClass('form-control')
+		$(this).parent().parent().next().find('.fu_orders').addClass('form-control')
+	} else {
+		$(this).parent().parent().next().find('.fu_pay_dates').parent().hide('fast')
+		$(this).parent().parent().next().find('.fu_orders').parent().hide('fast')
+		setTimeout(() => {
+			$(this).parent().parent().next().find('.fu_pay_dates').removeClass('form-control')
+			$(this).parent().parent().next().find('.fu_orders').removeClass('form-control')
+        }, 200)
+	}
 });
 
 //Добавляет период взыскания неустойки ФУ

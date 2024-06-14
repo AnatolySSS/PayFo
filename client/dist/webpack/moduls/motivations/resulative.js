@@ -3,6 +3,7 @@ import { allClaims } from "../objects/allClaims.js";
 import { DATE_FZ_123_START } from "../variables";
 import { changeDateType } from '../changeDateType.js';
 import { evacuation_route_helper } from '../objects/helpers.js';
+import { osagoPenaltyParagraph } from './osago/osagoPenalty.js';
 
 export function make_resulative_paragraph(total_penalty_summ_accrued,
                                           total_penalty_summ_paid,
@@ -13,13 +14,20 @@ export function make_resulative_paragraph(total_penalty_summ_accrued,
                                           all_found_claims,
                                           total_penalty_summ,
                                           app_name,
-                                          main_claims_all_paragraph) {
+                                          main_claims_all_paragraph,
+                                          paymentVoluntary,
+                                          paymentFu,
+                                          paymentCourt,
+                                          fuExpertise,
+                                          total_summ,) {
 
     let resulative_part = ""
     let partly = ""
     let partly_boolean = false
     let all_not_found_claims = []
     let found_claims_boolean
+    let paragraph_number = 1
+    let osago_penalty_paragraph = {}
 
     //Перебор всех договоров, по которым заявлены требования к ФУ
     for (let i = 0; i < totalData.claimsToFuData.claimsContractAll.length; i++) {
@@ -133,6 +141,16 @@ export function make_resulative_paragraph(total_penalty_summ_accrued,
     }
 
     if (result == "УДОВЛЕТВОРИТЬ") {
+
+        osago_penalty_paragraph = osagoPenaltyParagraph(paymentVoluntary,
+                                                        paymentFu,
+                                                        paymentCourt,
+                                                        total_penalty_summ_accrued,
+                                                        total_penalty_summ_paid,
+                                                        max_summ,
+                                                        fuExpertise,
+                                                        total_summ,)
+
         if (claims_refuse_boolean || partly_boolean || claims_order_boolean) {
             partly = " частично"
         }
@@ -144,73 +162,182 @@ export function make_resulative_paragraph(total_penalty_summ_accrued,
         ${main_claims_all_paragraph} удовлетворить${partly}.</p>`
 
         let claims_satisfied_helper = ""
-        //Добавление фразы про взыскание страхового возмещения
-        for (let i = 0; i < all_found_claims.length; i++) {
-            if (all_found_claims[i].name == "Страховое возмещение" && all_found_claims[i].result == "УДОВЛЕТВОРИТЬ") {
-                claims_satisfied_helper = `страховое возмещение по Договору ОСАГО в размере 
-                ${makeRubText_genitive(all_found_claims[i].summ)}, `
+        //Если условная неустойка
+        if (osago_penalty_paragraph.conditional_penalty_boolean) {
+
+            //Добавление фразы про взыскание страхового возмещения
+            for (let i = 0; i < all_found_claims.length; i++) {
+                if (all_found_claims[i].name == "Страховое возмещение" && all_found_claims[i].result == "УДОВЛЕТВОРИТЬ") {
+                    resulative_part = resulative_part + `<p>${paragraph_number}. Взыскать с ${totalData.preambulaData.fo_name} 
+                    в пользу ${app_name} страховое возмещение по Договору ОСАГО в размере 
+                    ${makeRubText_genitive(all_found_claims[i].summ, "string")}.</p>`
+                    paragraph_number++
+                }
             }
-        }
-        //Добавление фразы про взыскание неустойки
-        if (total_penalty_summ > 0) {
-            claims_satisfied_helper = claims_satisfied_helper + `неустойку за несоблюдение срока выплаты страхового возмещения 
-            по Договору ОСАГО в размере ${makeRubText_genitive(total_penalty_summ)}, `
-        }
-        
-        let ev_route_text = "";
-        let ev_route
-         //Добавление фразы про взыскание остальных удовлетворенных требований
-        for (let i = 0; i < all_found_claims.length; i++) {
-            if (all_found_claims[i].name != "Страховое возмещение" && 
-                all_found_claims[i].name != "Неустойка" && 
-                all_found_claims[i].result == "УДОВЛЕТВОРИТЬ") {
-                allClaims.claims.forEach(element => {
-                    if (all_found_claims[i].name == element.claim) {
-                        //Добавление маршрута эвакуации ТС
-                        if (all_found_claims[i].name == "Эвакуатор") {
-                            for (let j = 0; j < totalData.claimsToFuData.claimsContractAll.length; j++) {
-                                if (totalData.claimsToFuData.claimsContractAll[j].type == "ОСАГО") {
-                                    for (let k = 0; k < totalData.claimsToFuData.claimsContractAll[j].claim.length; k++) {
-                                        if (totalData.claimsToFuData.claimsContractAll[j].claim[k].type == "Эвакуатор") {
-                                            ev_route = totalData.claimsToFuData.claimsContractAll[j].claim[k].ev_route
+
+             //Добавление фразы про взыскание неустойки
+             if (total_penalty_summ > 0) {
+                claims_satisfied_helper = claims_satisfied_helper + `неустойку за несоблюдение срока выплаты страхового возмещения 
+                по Договору ОСАГО в размере ${makeRubText_genitive(total_penalty_summ, "string")}, `
+                resulative_part = resulative_part + `<p>${paragraph_number}. Взыскать с ${totalData.preambulaData.fo_name} 
+                в пользу ${app_name} неустойку за несоблюдение срока выплаты страхового возмещения по Договору ОСАГО в размере 
+                ${makeRubText_genitive(total_penalty_summ, "string")}.</p>`
+                paragraph_number++
+            }
+
+            let ev_route_text = "";
+            let ev_route
+
+            //Добавление фразы про взыскание остальных удовлетворенных требований
+            for (let i = 0; i < all_found_claims.length; i++) {
+                if (all_found_claims[i].name != "Страховое возмещение" && 
+                    all_found_claims[i].name != "Неустойка" && 
+                    all_found_claims[i].result == "УДОВЛЕТВОРИТЬ") {
+                    allClaims.claims.forEach(element => {
+                        if (all_found_claims[i].name == element.claim) {
+                            //Добавление маршрута эвакуации ТС
+                            if (all_found_claims[i].name == "Эвакуатор") {
+                                for (let j = 0; j < totalData.claimsToFuData.claimsContractAll.length; j++) {
+                                    if (totalData.claimsToFuData.claimsContractAll[j].type == "ОСАГО") {
+                                        for (let k = 0; k < totalData.claimsToFuData.claimsContractAll[j].claim.length; k++) {
+                                            if (totalData.claimsToFuData.claimsContractAll[j].claim[k].type == "Эвакуатор") {
+                                                ev_route = totalData.claimsToFuData.claimsContractAll[j].claim[k].ev_route
+                                            }
                                         }
                                     }
                                 }
+                                evacuation_route_helper.evacuation_route_helper.forEach((element) => {
+                                    if (ev_route == element.evacuation_route) {
+                                    ev_route_text = " " + element.evacuation_route_genitive;
+                                    }
+                                });
+                            } else {
+                                ev_route_text = ""
                             }
-                            evacuation_route_helper.evacuation_route_helper.forEach((element) => {
-                                if (ev_route == element.evacuation_route) {
-                                ev_route_text = " " + element.evacuation_route_genitive;
-                                }
-                            });
-                        } else {
-                            ev_route_text = ""
+                            resulative_part = resulative_part + `<p>${paragraph_number}. Взыскать с 
+                            ${totalData.preambulaData.fo_name} в пользу ${app_name} ${element.res}${ev_route_text} в размере 
+                            ${makeRubText_genitive(all_found_claims[i].summ, "string")}.</p>`
+                            paragraph_number++
                         }
-                        claims_satisfied_helper = claims_satisfied_helper + `${element.res}${ev_route_text} в размере 
-                        ${makeRubText_genitive(all_found_claims[i].summ)}, `
-                    }
-                })
+                    })
+                }
             }
+
+            resulative_part = resulative_part + `<p>${paragraph_number}. Решение вступает в силу по истечении десяти рабочих 
+            дней после даты его подписания.</p>`
+            paragraph_number++
+            resulative_part = resulative_part + `<p>${paragraph_number}. Решение подлежит исполнению 
+            ${totalData.preambulaData.fo_name} в течение десяти рабочих дней после дня вступления в силу.</p>`
+            let execution_deadline_paragraph_number = paragraph_number
+            paragraph_number++
+
+            let jointly_helper = ""
+            if (total_penalty_summ_accrued > 0) {
+                jointly_helper = ` совокупно с суммой 
+            неустойки взысканной Финансовым уполномоченным в пункте 2 резолютивной части настоящего решения`
+            }
+
+            resulative_part = resulative_part + `<p>${paragraph_number}. В случае неисполнения 
+            ${totalData.preambulaData.fo_name} пункта 1 резолютивной части настоящего решения в срок, 
+            установленный в пункте ${execution_deadline_paragraph_number} резолютивной части настоящего решения, взыскать с 
+            ${totalData.preambulaData.fo_name} в пользу ${app_name} неустойку за период, начиная с 
+            ${paymentVoluntary[0].date_sv.getPenaltyDayFormatted()} по дату фактического исполнения 
+            ${totalData.preambulaData.fo_name} обязательства по выплате страхового возмещения, указанного в пункте 1 
+            резолютивной части настоящего решения, исходя из ставки 1% (один процент) за каждый день просрочки, 
+            начисляя на сумму, указанную в пункте 1 резолютивной части настоящего решения, но не более 
+            ${makeRubText_genitive(max_summ, "string")}${jointly_helper}.</p>`
+            paragraph_number++
+
+            //Формирование абзаца про оставление требований без рассмотрений
+            if (claims_order_boolean) {
+                claims_order_helper = claims_order_helper.slice(0, -2)
+                claims_order_helper = `<p>${paragraph_number}. Требование ${app_name} о взыскании с 
+                ${totalData.preambulaData.fo_name} ${claims_order_helper} оставить без рассмотрения.</p>`
+                resulative_part = resulative_part + claims_order_helper
+                paragraph_number++
+            }
+
+            //Формирование абзаца про отказ в удовлетворении требований
+            if (claims_refuse_boolean) {
+                claims_refuse_helper = claims_refuse_helper.slice(0, -2)
+                claims_refuse_helper = `<p>${paragraph_number}. В удовлетворении требования ${app_name} о взыскании с ${totalData.preambulaData.fo_name} 
+                ${claims_refuse_helper} отказать.</p>`
+                paragraph_number++
+            } else if (partly) {
+                claims_refuse_helper = `<p>${paragraph_number}. В удовлетворении остальных требований ${app_name} отказать.</p>`
+                paragraph_number++
+            }
+        //Если условной неустойки нет
+        } else {
+            //Добавление фразы про взыскание страхового возмещения
+            for (let i = 0; i < all_found_claims.length; i++) {
+                if (all_found_claims[i].name == "Страховое возмещение" && all_found_claims[i].result == "УДОВЛЕТВОРИТЬ") {
+                    claims_satisfied_helper = `страховое возмещение по Договору ОСАГО в размере 
+                    ${makeRubText_genitive(all_found_claims[i].summ, "string")}, `
+                }
+            }
+            //Добавление фразы про взыскание неустойки
+            if (total_penalty_summ > 0) {
+                claims_satisfied_helper = claims_satisfied_helper + `неустойку за несоблюдение срока выплаты страхового возмещения 
+                по Договору ОСАГО в размере ${makeRubText_genitive(total_penalty_summ, "string")}, `
+            }
+
+            let ev_route_text = "";
+            let ev_route
+            //Добавление фразы про взыскание остальных удовлетворенных требований
+            for (let i = 0; i < all_found_claims.length; i++) {
+                if (all_found_claims[i].name != "Страховое возмещение" && 
+                    all_found_claims[i].name != "Неустойка" && 
+                    all_found_claims[i].result == "УДОВЛЕТВОРИТЬ") {
+                    allClaims.claims.forEach(element => {
+                        if (all_found_claims[i].name == element.claim) {
+                            //Добавление маршрута эвакуации ТС
+                            if (all_found_claims[i].name == "Эвакуатор") {
+                                for (let j = 0; j < totalData.claimsToFuData.claimsContractAll.length; j++) {
+                                    if (totalData.claimsToFuData.claimsContractAll[j].type == "ОСАГО") {
+                                        for (let k = 0; k < totalData.claimsToFuData.claimsContractAll[j].claim.length; k++) {
+                                            if (totalData.claimsToFuData.claimsContractAll[j].claim[k].type == "Эвакуатор") {
+                                                ev_route = totalData.claimsToFuData.claimsContractAll[j].claim[k].ev_route
+                                            }
+                                        }
+                                    }
+                                }
+                                evacuation_route_helper.evacuation_route_helper.forEach((element) => {
+                                    if (ev_route == element.evacuation_route) {
+                                    ev_route_text = " " + element.evacuation_route_genitive;
+                                    }
+                                });
+                            } else {
+                                ev_route_text = ""
+                            }
+                            claims_satisfied_helper = claims_satisfied_helper + `${element.res}${ev_route_text} в размере 
+                            ${makeRubText_genitive(all_found_claims[i].summ, "string")}, `
+                        }
+                    })
+                }
+            }
+
+            //Формирование абзаца про оставление требований без рассмотрений
+            if (claims_order_boolean) {
+                claims_order_helper = claims_order_helper.slice(0, -2)
+                claims_order_helper = `<p>Требование ${app_name} о взыскании с ${totalData.preambulaData.fo_name} 
+                ${claims_order_helper} оставить без рассмотрения.</p>`
+            }
+    
+            //Формирование абзаца про отказ в удовлетворении требований
+            if (claims_refuse_boolean) {
+                claims_refuse_helper = claims_refuse_helper.slice(0, -2)
+                claims_refuse_helper = `<p>В удовлетворении требования ${app_name} о взыскании с ${totalData.preambulaData.fo_name} 
+                ${claims_refuse_helper} отказать.</p>`
+            } else if (partly) {
+                claims_refuse_helper = `<p>В удовлетворении остальных требований ${app_name} отказать.</p>`
+            }
+    
+            claims_satisfied_helper = claims_satisfied_helper.slice(0, -2)
+    
+            resulative_part = resulative_part + `<p>Взыскать с ${totalData.preambulaData.fo_name} в пользу ${app_name} 
+            ${claims_satisfied_helper}.</p>${claims_order_helper}${claims_refuse_helper}`
         }
-
-        if (claims_order_boolean) {
-            claims_order_helper = claims_order_helper.slice(0, -2)
-            claims_order_helper = `<p>Требование ${app_name} о взыскании с ${totalData.preambulaData.fo_name} 
-            ${claims_order_helper} оставить без рассмотрения.</p>`
-        }
-
-        //Формирование абзаца про отказ в удовлетворении требований
-        if (claims_refuse_boolean) {
-            claims_refuse_helper = claims_refuse_helper.slice(0, -2)
-            claims_refuse_helper = `<p>В удовлетворении требования ${app_name} о взыскании с ${totalData.preambulaData.fo_name} 
-            ${claims_refuse_helper} отказать.</p>`
-        } else if (partly) {
-            claims_refuse_helper = `<p>В удовлетворении остальных требований ${app_name} отказать.</p>`
-        }
-
-        claims_satisfied_helper = claims_satisfied_helper.slice(0, -2)
-
-        resulative_part = resulative_part + `<p>Взыскать с ${totalData.preambulaData.fo_name} в пользу ${app_name} 
-        ${claims_satisfied_helper}.</p>${claims_order_helper}${claims_refuse_helper}`
     } else if (result == "ОТКАЗАТЬ") {
 
         if (claims_order_boolean) {
@@ -226,10 +353,13 @@ export function make_resulative_paragraph(total_penalty_summ_accrued,
         статьи 27 Закона № 123-ФЗ.</p>`
     }
 
-    resulative_part = resulative_part + `<p>Решение вступает в силу по истечении десяти рабочих дней после даты его подписания.</p>`
+    if (osago_penalty_paragraph.conditional_penalty_boolean) {
+    } else {
+        resulative_part = resulative_part + `<p>Решение вступает в силу по истечении десяти рабочих дней после даты его подписания.</p>`
 
-    if (result == "УДОВЛЕТВОРИТЬ") {
-        resulative_part = resulative_part + `<p>Решение подлежит исполнению ${totalData.preambulaData.fo_name} в течение десяти рабочих дней после дня вступления в силу.</p>`
+        if (result == "УДОВЛЕТВОРИТЬ") {
+            resulative_part = resulative_part + `<p>Решение подлежит исполнению ${totalData.preambulaData.fo_name} в течение десяти рабочих дней после дня вступления в силу.</p>`
+        }
     }
 
     resulative_part = resulative_part + `<p>В случае несогласия с решением Финансового уполномоченного в соответствии с частью 1 

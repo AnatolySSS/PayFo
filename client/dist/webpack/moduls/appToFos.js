@@ -904,25 +904,37 @@ export class AppToFo {
 
                     //Формирование параграфа о проведении осмотра ТС
                     if (this.inspectionInfo.options.selectedIndex == 1) {
-                        var inspections_data_helper_1 = ""
-                        if (this.inspections[0].date.value != "") {
-                            inspections_data_helper_1 = `${this.inspections[0].getInspectionDateFormatted()}`
+
+                        var inspections_paragraph_one = ""
+                        var additional_inspection_helper = ""
+                        for (let i = 0; i < this.inspections.length; i++) {
+
+                            if (i > 0) {
+                                additional_inspection_helper = "дополнительный "
+                            }
+
+                            var inspections_data_helper_1 = ""
+                            if (this.inspections[i].date.value != "") {
+                                inspections_data_helper_1 = `${this.inspections[i].getInspectionDateFormatted()}`
+                            }
+                            var inspections_data_helper_2 = ""
+                            if (this.inspections[i].date.value != "") {
+                                inspections_data_helper_2 = ` от ${this.inspections[i].getInspectionDateFormatted()}`
+                            }
+                            var inspections_organization_helper = ""
+                            if (this.inspections[i].organization.value != "") {
+                                inspections_organization_helper = ` с привлечением независимой экспертной организации ${this.inspections[i].organization.value}`
+                            }
+                            var inspections_number_helper = ""
+                            if (this.inspections[i].number.value != "") {
+                                inspections_number_helper = `, о чем составлен акт осмотра${inspections_data_helper_2} № ${this.inspections[i].number.value}`
+                            }
+                            inspections_paragraph_one = `<p>${inspections_data_helper_1} 
+                            ${fo_name_instrumental} проведен ${additional_inspection_helper}осмотр принадлежащего Заявителю 
+                            Транспортного средства${inspections_organization_helper}${inspections_number_helper}.</p>`
+                            
+                            this.inspections_paragraph = this.inspections_paragraph + inspections_paragraph_one
                         }
-                        var inspections_data_helper_2 = ""
-                        if (this.inspections[0].date.value != "") {
-                            inspections_data_helper_2 = ` от ${this.inspections[0].getInspectionDateFormatted()}`
-                        }
-                        var inspections_organization_helper = ""
-                        if (this.inspections[0].organization.value != "") {
-                            inspections_organization_helper = ` с привлечением независимой экспертной организации ${this.inspections[0].organization.value}`
-                        }
-                        var inspections_number_helper = ""
-                        if (this.inspections[0].number.value != "") {
-                            inspections_number_helper = `, о чем составлен акт осмотра${inspections_data_helper_2} № ${this.inspections[0].number.value}`
-                        }
-                        this.inspections_paragraph = `<p>${inspections_data_helper_1} 
-                        ${fo_name_instrumental} проведен осмотр принадлежащего Заявителю 
-                        Транспортного средства${inspections_organization_helper}${inspections_number_helper}.</p>`
                     }
 
                     //Формирование параграфа о проведении экспертиз ТС ФО
@@ -1039,6 +1051,7 @@ export class AppToFo {
 
                         } else if (this.answerFo.options.selectedIndex == 4) {
 
+                            let confirmation_fact = ""
                             let confirmation_type = ""
                             let confirmation_date_helper = ""
                             let confirmation_number_helper = ""
@@ -1067,6 +1080,16 @@ export class AppToFo {
                                 confirmation_post_number_helper = `. Номер почтового идентификатора ${this.refusal[0].confirmation_post_number.value}`
                             }
 
+                            switch (this.refusal[0].confirmation_type.value) {
+                                case "Подтверждающих документов не имеется":
+                                    confirmation_fact = `Доказательства направления Заявителю письма в материалах обращения отсутствуют`
+                                    break;
+                                default:
+                                    confirmation_fact = `Направление письма подтверждается 
+                                    ${confirmation_type}${confirmation_date_helper}${confirmation_number_helper}${confirmation_post_number_helper}`
+                                    break;
+                            }
+
                             if (this.refusal[0].type.options.selectedIndex == 1) {
                                 if (text_helper == "") {
                                     text_helper = `согласно выводам проведенной экспертизы, все повреждения Транспортного средства Заявителя 
@@ -1075,22 +1098,19 @@ export class AppToFo {
                                 }
                                 this.answerFo_paragraph = `<p>${fo_name_nominative} ${send} Заявителю письмо от 
                                 ${this.refusal[0].getRefusalDateFormatted()} № ${this.refusal[0].number.value}, в котором сообщалось 
-                                что ${text_helper} Направление письма подтверждается 
-                                ${confirmation_type}${confirmation_date_helper}${confirmation_number_helper}${confirmation_post_number_helper}.</p>`
+                                что ${text_helper} ${confirmation_fact}.</p>`
                             } else if (this.refusal[0].type.options.selectedIndex == 2) {
                                 
                             } else if (this.refusal[0].type.options.selectedIndex == 3) {
                                 this.answerFo_paragraph = `<p>${this.refusal[0].getRefusalDateFormatted()} ${fo_name_nominative} 
                                 в ответ на заявление от ${this.getAppDateFormatted()} письмом № ${this.refusal[0].number.value} 
-                                ${deny} Заявителю в удовлетворении заявленных требований. Направление письма подтверждается 
-                                ${confirmation_type}${confirmation_date_helper}${confirmation_number_helper}${confirmation_post_number_helper}.</p>`
+                                ${deny} Заявителю в удовлетворении заявленных требований. ${confirmation_fact}.</p>`
                             } else if (this.refusal[0].type.options.selectedIndex == 4) {
                                 
                             } else if (this.refusal[0].type.options.selectedIndex == 5) {
                                 this.answerFo_paragraph = `<p>${fo_name_nominative} ${send} Заявителю письмо от 
                                 ${this.refusal[0].getRefusalDateFormatted()} № ${this.refusal[0].number.value}, в котором сообщалось 
-                                что ${text_helper} Направление письма подтверждается 
-                                ${confirmation_type}${confirmation_date_helper}${confirmation_number_helper}${confirmation_post_number_helper}.</p>`
+                                что ${text_helper} ${confirmation_fact}.</p>`
                             }
                         }
                     } else if (this.answerFoInfo.options.selectedIndex == 2) {
@@ -1175,6 +1195,7 @@ export class AppToFo {
                             this.expertise_apps_paragraph = this.expertise_apps_paragraph + expertiseApps_paragraph_one
                         }
                     }
+
                     //Формирование параграфа со сроком ответа на претензию
                     if (this.method.options.selectedIndex == 3) {
                         this.claim_answer_time_count_days = 15
@@ -1184,6 +1205,84 @@ export class AppToFo {
                     if (this.getAppDate() >= DATE_FZ_123_START) {
                         this.app_claim_answer_time_paragraph = `<p>В соответствии со статьей 16 Закона № 123-ФЗ ${fo_name_nominative} 
                         ${must} рассмотреть заявление (претензию) и направить Заявителю ответ не позднее ${this.getLastClaimFoDayFormatted()}.</p>`
+                    }
+
+                    //Формирование параграфа о проведении осмотра ТС
+                    if (this.inspectionInfo.options.selectedIndex == 1) {
+
+                        var inspections_paragraph_one = ""
+                        var additional_inspection_helper = ""
+                        for (let i = 0; i < this.inspections.length; i++) {
+
+                            if (i > 0) {
+                                additional_inspection_helper = "дополнительный "
+                            }
+
+                            var inspections_data_helper_1 = ""
+                            if (this.inspections[i].date.value != "") {
+                                inspections_data_helper_1 = `${this.inspections[i].getInspectionDateFormatted()}`
+                            }
+                            var inspections_data_helper_2 = ""
+                            if (this.inspections[i].date.value != "") {
+                                inspections_data_helper_2 = ` от ${this.inspections[i].getInspectionDateFormatted()}`
+                            }
+                            var inspections_organization_helper = ""
+                            if (this.inspections[i].organization.value != "") {
+                                inspections_organization_helper = ` с привлечением независимой экспертной организации ${this.inspections[i].organization.value}`
+                            }
+                            var inspections_number_helper = ""
+                            if (this.inspections[i].number.value != "") {
+                                inspections_number_helper = `, о чем составлен акт осмотра${inspections_data_helper_2} № ${this.inspections[i].number.value}`
+                            }
+                            inspections_paragraph_one = `<p>${inspections_data_helper_1} 
+                            ${fo_name_instrumental} проведен ${additional_inspection_helper}осмотр принадлежащего Заявителю 
+                            Транспортного средства${inspections_organization_helper}${inspections_number_helper}.</p>`
+                            
+                            this.inspections_paragraph = this.inspections_paragraph + inspections_paragraph_one
+                        }
+                    }
+
+                    //Формирование параграфа о проведении экспертиз ТС ФО
+                    if (this.expertiseInfo.options.selectedIndex == 1) {
+                        var expertises_paragraph_one = ""
+                        var expertises_paragraph_helper = ""
+                        var expertises_summ_paragraph
+                        if (this.inspectionInfo.options.selectedIndex == 1) {
+                            expertises_paragraph_helper = `На основании результатов осмотра от ${this.inspections[0].getInspectionDateFormatted()}`
+                        } else {
+                            expertises_paragraph_helper = `По инициативе ${fo_name_genitive}`
+                        }
+                        for (let i = 0; i < this.expertises.length; i++) {
+                            expertises_summ_paragraph = ""
+                            if (this.expertises[i].trasa.value != "") {
+                                expertises_summ_paragraph = expertises_summ_paragraph + `${this.expertises[i].trasa.value}, `
+                            }
+                            if (this.expertises[i].summ_without != 0) {
+                                expertises_summ_paragraph = expertises_summ_paragraph + `стоимость восстановительного ремонта 
+                                Транспортного средства без учета износа составила ${this.expertises[i].summ_without_text}, `
+                            }
+                            if (this.expertises[i].summ_with != 0) {
+                                expertises_summ_paragraph = expertises_summ_paragraph + `стоимость восстановительного ремонта 
+                                Транспортного средства с учетом износа составила ${this.expertises[i].summ_with_text}, `
+                            }
+                            if (this.expertises[i].summ_market != 0) {
+                                expertises_summ_paragraph = expertises_summ_paragraph + `средняя рыночная стоимость 
+                                Транспортного средства до повреждения по состоянию на дату ДТП составляла ${this.expertises[i].summ_market_text}, `
+                            }
+                            if (this.expertises[i].summ_leftovers != 0) {
+                                expertises_summ_paragraph = expertises_summ_paragraph + `стоимость годных остатков поврежденного 
+                                Транспортного средства составила ${this.expertises[i].summ_leftovers_text}, `
+                            }
+                            if (this.expertises[i].summ_uts != 0) {
+                                expertises_summ_paragraph = expertises_summ_paragraph + `сумма УТС составила ${this.expertises[i].summ_uts_text}, `
+                            }
+                            expertises_summ_paragraph = expertises_summ_paragraph.slice(0, -2)
+                            expertises_paragraph_one = `<p>${expertises_paragraph_helper} независимой экспертной организацией 
+                            ${this.expertises[i].organization.value} подготовлено экспертное заключение от ${this.expertises[i].getExpertiseDateFormatted()} 
+                            № ${this.expertises[i].number.value}, согласно которому ${expertises_summ_paragraph}.</p>`
+
+                            this.expertises_paragraph = this.expertises_paragraph + expertises_paragraph_one
+                        }
                     }
 
                     //Формирование абзаца с ответом ФО на Заявление

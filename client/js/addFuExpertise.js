@@ -109,7 +109,11 @@ function addFuExpertise() {
 		  <select id="fu_expertise_typical_question_${fuExpertiseId}" class="fu_expertise_typical_questions custom-select form-control col-md-12" required>
 			<option value="">Вопросы для эксперта</option>
 			<option>Комплексная экспертиза</option>
+			<option>Комплексная экспертиза с ГО и РС</option>
 			<option>Трасологическая экспертиза</option>
+			<option>УТС</option>
+			<option>МинЮст</option>
+			<option>Качество ремонта</option>
 			<option>Иное</option>
 		  </select>
 		</div>

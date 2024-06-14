@@ -85,6 +85,7 @@ export function makeTextDecision(dtpData,
       }
       
       app_passport = document.querySelector("#app_passport").value;
+      app_passport = `серии ${app_passport.split(' ')[0]} № ${app_passport.split(' ')[1]}`
       app_registration_address = document.querySelector("#app_registration_address").value;
       app_post_address = document.querySelector("#app_post_address").value;
       app_helper = `${app_name} (паспорт ${app_passport}; 
@@ -203,11 +204,20 @@ export function makeTextDecision(dtpData,
   //Обрезание последней запятой
   main_claims_all_paragraph = main_claims_all_paragraph.slice(0, -1)
 
+  //Получение количества заявленных требований
+  let claim_helper = ""
+  let number_of_claims = $('.main_claims').length
+  if (number_of_claims > 1) {
+    claim_helper = "требованиями"
+  } else {
+    claim_helper = "требованием"
+  }
+
   var main_claims_paragraf = ""
   //В случае заполнения всех необходимых полей формируется абзац с требованиями к ФУ
   if ($('#main-claims-all .fa-2x').css('color') == 'rgb(40, 167, 69)') {
-    main_claims_paragraf = `<p>Финансовому уполномоченному на рассмотрение поступило Обращение в отношении ${fo_name_genitive} 
-    с требованием о взыскании${main_claims_all_paragraph}.</p>`
+    main_claims_paragraf = `<p>Финансовому уполномоченному на рассмотрение поступило Обращение в отношении ${fo_name_genitive} 
+    с ${claim_helper} ${main_claims_all_paragraph}.</p>`
   }
 
   main_claims_paragraf = main_claims_paragraf.replaceAll("\r\n", "")
@@ -470,14 +480,7 @@ export function makeTextDecision(dtpData,
   payment_court_paragraph_all = payment_court_paragraph_all.replaceAll("\r", "")
   payment_court_paragraph_all = payment_court_paragraph_all.replaceAll("\n", "")
   
-  //Получение количества заявленных требований
-  // let number_of_claims = 0
-  // for (let i = 0; i < claimsContract.length; i++) {
-  //   // Перебор всех требований, заявленных в рамках договора ОСАГО
-  //   for (let j = 0; j < claimsContract[i].claim.length; j++) {
-  //     number_of_claims++
-  //   }
-  // }
+
 
   //Вызов функции формирования мотивировочной части решения ФУ
   motivation_part = make_motivation_paragraph(dtpData,
@@ -567,7 +570,12 @@ export function makeTextDecision(dtpData,
                                                 motivation_part.all_found_claims,
                                                 motivation_part.osago_penalty_paragraph.total_penalty_summ,
                                                 app_name,
-                                                main_claims_all_paragraph)
+                                                main_claims_all_paragraph,
+                                                paymentVoluntary,
+                                                paymentFu,
+                                                paymentCourt,
+                                                fuExpertise,
+                                                motivation_part.total_summ,)
   }
   
   let table_signing = ""

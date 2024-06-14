@@ -438,6 +438,41 @@ export function make_motivation_paragraph(dtpData,
     let wrong_sign_array = []
     //Индекс строки, подходящей под максимальное количество совпадающих признаков
     let right_sign_max_index = 0
+
+    //Определение общей суммы выплаты ФО
+    let total_summ_payment = 0
+    for (let i = 0; i < paymentVoluntary.length; i++) {
+        if (paymentVoluntary[i].type.options.selectedIndex == 1) {
+            total_summ_payment = total_summ_payment + paymentVoluntary[i].summ
+        }
+    }
+
+    //Определение суммы страхового возмещения на основании НТЭ ФУ
+    let satisfaction_summ = 0
+    for (let i = 0; i < fuExpertise.length; i++) {
+        if (fuExpertise[i].summ_without != "") {
+            //Если полной гибели не было
+            satisfaction_summ = fuExpertise[i].summ_with
+            //Если произошла тотальная гибель ТС
+            if (fuExpertise[i].summ_without > fuExpertise[i].summ_market && 
+                fuExpertise[i].summ_market != 0) {
+                    satisfaction_summ = fuExpertise[i].summ_market - fuExpertise[i].summ_leftovers
+            }
+        }
+    }
+
+     //Если размер ущерба превышает страховую сумму
+     if (satisfaction_summ > max_summ) {
+        satisfaction_summ = max_summ
+    }
+
+    //Определение суммы, подлежащей ко взысканию
+    let total_summ = satisfaction_summ - total_summ_payment
+
+    if (total_summ < 0) {
+        total_summ = 0
+    }
+
     //Перебор договоров
     for (let contract_number = 0; contract_number < claimsContract.length; contract_number++) {
         //Перебор требований к ФУ
@@ -647,10 +682,12 @@ export function make_motivation_paragraph(dtpData,
                                                                         paymentCourt,
                                                                         total_penalty_summ_accrued,
                                                                         total_penalty_summ_paid,
-                                                                        max_summ)
+                                                                        max_summ,
+                                                                        fuExpertise,
+                                                                        total_summ,)
 
                         
-                        if (osago_penalty_paragraph.total_penalty_summ > 0) {
+                        if (osago_penalty_paragraph.total_penalty_summ > 0 || osago_penalty_paragraph.conditional_penalty_boolean) {
                             osago_penalty_result = "УДОВЛЕТВОРИТЬ"
                         } else {
                             osago_penalty_result = "ОТКАЗАТЬ"
@@ -685,33 +722,6 @@ export function make_motivation_paragraph(dtpData,
     motivation_part = motivation_part.replaceAll("\r", "")
     motivation_part = motivation_part.replaceAll("\n", "")
     motivation_part = motivation_part.replaceAll("  ", " ")
-    
-    //Определение общей суммы выплаты ФО
-    let total_summ_payment = 0
-    for (let i = 0; i < paymentVoluntary.length; i++) {
-        if (paymentVoluntary[i].type.options.selectedIndex == 1) {
-            total_summ_payment = total_summ_payment + paymentVoluntary[i].summ
-        }
-    }
-
-    //Определение суммы страхового возмещения на основании НТЭ ФУ
-    let satisfaction_summ = 0
-    for (let i = 0; i < fuExpertise.length; i++) {
-        if (fuExpertise[i].summ_without != "") {
-            //Если полной гибели не было
-            satisfaction_summ = fuExpertise[i].summ_with
-            //Если произошла тотальная гибель ТС
-            if (fuExpertise[i].summ_without > fuExpertise[i].summ_market && 
-                fuExpertise[i].summ_market != 0) {
-                    satisfaction_summ = fuExpertise[i].summ_market - fuExpertise[i].summ_leftovers
-            }
-        }
-    }
-
-     //Если размер ущерба превышает страховую сумму
-     if (satisfaction_summ > max_summ) {
-        satisfaction_summ = max_summ
-    }
 
     //Определение суммы расходов на эвакуацию и/или хранение ТС
     let satisfaction_ev_summ, satisfaction_store_summ, storage_pay_summ, storage_date_from, storage_date_to, inspection_date, count_days, count_days_right
@@ -781,7 +791,8 @@ export function make_motivation_paragraph(dtpData,
         result : total_result,
         all_found_claims : all_found_claims,
         all_not_found_claims : all_not_found_claims,
-        osago_penalty_paragraph : osago_penalty_paragraph
+        osago_penalty_paragraph : osago_penalty_paragraph,
+        total_summ: total_summ,
     }
     console.log(out_data);
     return out_data

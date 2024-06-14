@@ -96,6 +96,7 @@ function addCourt() {
 										<option>Хранение</option>
 										<option>Неустойка</option>
 										<option>Финансовая санкция</option>
+										<option>Организация ремонта</option>
 										<option>Экспертиза</option>
 										<option>Юрист</option>
 										<option>Составление претензии</option>
@@ -202,6 +203,7 @@ function addClaim(id) {
 							<option>Хранение</option>
 							<option>Неустойка</option>
 							<option>Финансовая санкция</option>
+							<option>Организация ремонта</option>
 							<option>Экспертиза</option>
 							<option>Юрист</option>
 							<option>Составление претензии</option>

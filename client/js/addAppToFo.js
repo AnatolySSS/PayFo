@@ -1,6 +1,7 @@
 var appsToFoId = 1
 var appsToFoContractId = 1
 var appsToFoClaimsContractId = 1
+var appsToFoInspection = 1
 var appsToFoExpertise = 1
 var paymentId = 1
 var inspectionNotice = 1
@@ -124,6 +125,7 @@ function addAppToFo() {
                                     <option>Хранение</option>
                                     <option>Неустойка</option>
                                     <option>Финансовая санкция</option>
+                                    <option>Организация ремонта</option>
                                     <option>Экспертиза</option>
                                     <option>Юрист</option>
                                     <option>Составление претензии</option>
@@ -353,7 +355,7 @@ function addAppToFo() {
                     <div id="apps_to_fo_inspection_${appsToFoId}_1" class="apps_to_fo_inspections_${appsToFoId}">
                         <div class="form-row">
                             <div class="form-group col-md-3">
-                                <input id = "apps_to_fo_inspection_date_${appsToFoId}" class = "apps_to_fo_inspection_date_${appsToFoId} apps_to_fo_inspection_dates datepicker-here deactivation" aria-describedby="apps_to_fo_inspection_date_help_block_${appsToFoId}_1" placeholder="Дата" type="text" size="10" required>
+                                <input id = "apps_to_fo_inspection_date_${appsToFoId}_1" class = "apps_to_fo_inspection_date_${appsToFoId} apps_to_fo_inspection_dates datepicker-here deactivation" aria-describedby="apps_to_fo_inspection_date_help_block_${appsToFoId}_1" placeholder="Дата" type="text" size="10" required>
                                 <small id="apps_to_fo_inspection_date_help_block_${appsToFoId}_1" class="form-text">
                                     <div class="form-inline">
                                         <input id="apps_to_fo_inspection_date_deactivate_${appsToFoId}_1" class="deactivator" type="checkbox">
@@ -362,7 +364,7 @@ function addAppToFo() {
                                 </small>
                             </div>
                             <div class="form-group col-md-3">
-                                <input id = "apps_to_fo_inspection_number_${appsToFoId}" class="apps_to_fo_inspection_number_${appsToFoId} apps_to_fo_inspection_numbers deactivation" aria-describedby="apps_to_fo_inspection_number_help_block_${appsToFoId}_1" placeholder="№ акта" type="text" size="8" required>
+                                <input id = "apps_to_fo_inspection_number_${appsToFoId}_1" class="apps_to_fo_inspection_number_${appsToFoId} apps_to_fo_inspection_numbers deactivation" aria-describedby="apps_to_fo_inspection_number_help_block_${appsToFoId}_1" placeholder="№ акта" type="text" size="8" required>
                                 <small id="apps_to_fo_inspection_number_help_block_${appsToFoId}_1" class="form-text">
                                     <div class="form-inline">
                                         <input id="apps_to_fo_inspection_number_deactivate_${appsToFoId}_1" class="deactivator" type="checkbox">
@@ -370,14 +372,17 @@ function addAppToFo() {
                                     </div>
                                 </small>
                             </div>
-                            <div class="form-group col-md-6">
-                                <input id = "apps_to_fo_inspection_organization_${appsToFoId}" class="apps_to_fo_inspection_organization_${appsToFoId} apps_to_fo_inspection_organizations deactivation li-quotes" aria-describedby="apps_to_fo_inspection_organization_help_block_${appsToFoId}_1" placeholder="Наименование экспертной организации" type="text" size="8" required>
+                            <div class="form-group col-md-5">
+                                <input id = "apps_to_fo_inspection_organization_${appsToFoId}_1" class="apps_to_fo_inspection_organization_${appsToFoId} apps_to_fo_inspection_organizations deactivation li-quotes" aria-describedby="apps_to_fo_inspection_organization_help_block_${appsToFoId}_1" placeholder="Наименование экспертной организации" type="text" size="8" required>
                                 <small id="apps_to_fo_inspection_organization_help_block_${appsToFoId}_1" class="form-text">
                                     <div class="form-inline">
                                         <input id="apps_to_fo_inspection_organization_deactivate_${appsToFoId}_1" class="deactivator" type="checkbox">
                                         <label for="apps_to_fo_inspection_organization_deactivate_${appsToFoId}_1" class="ml-2 form-check-label">Сведений не имеется</label>
                                     </div>
                                 </small>
+                            </div>
+                            <div class="form-group col-ms-1">
+                                <button id="apps_to_fo_inspection_app_btn_${appsToFoId}_1" class="apps_to_fo_inspection_app_btn_${appsToFoId} apps_to_fo_inspection_app_btns btn btn-outline-warning" onclick="addInspection(${appsToFoId})">+</button>
                             </div>
                         </div>
                     </div>
@@ -911,6 +916,7 @@ function addAppToFo() {
                                     <option>Реестр почтовых отправлений</option>
                                     <option>Почтовый идентификатор</option>
                                     <option>Сведения с сайта АО «Почта России»</option>
+                                    <option>Подтверждающих документов не имеется</option>
                                 </select>
                             </div>
                         </div>
@@ -958,7 +964,7 @@ function addAppToFo() {
                 </div>
                 <div class="form-row">
                     <div class="form-group col-md-6">
-                        <select id="apps_to_fo_additional_circumstances_1" class="apps_to_fo_additional_circumstances custom-select form-control col-md-12" required>
+                        <select id="apps_to_fo_additional_circumstances_${appsToFoId}" class="apps_to_fo_additional_circumstances custom-select form-control col-md-12" required>
                             <option value="">Наличие дополнительных обстоятельств</option>
                             <option>Есть</option>
                             <option>Нет</option>
@@ -1246,8 +1252,8 @@ function addAppToFo() {
                                             <input id = "apps_to_fo_inspection_notice_letter_post_date1_${appsToFoId}_1" class = "apps_to_fo_inspection_notice_letter_post_date1_${appsToFoId} apps_to_fo_inspection_notice_letter_post_date1 datepicker-here deactivation" aria-describedby="apps_to_fo_inspection_notice_letter_post_date1_help_block_${appsToFoId}_1" placeholder="Дата" type="text" size="10" required>
                                             <small id="apps_to_fo_inspection_notice_letter_post_date1_help_block_${appsToFoId}_1" class="form-text">
                                                 <div class="form-inline">
-                                                    <input id="apps_to_fo_inspection_notice_letter_post_date1_${appsToFoId}_1" class="deactivator" type="checkbox">
-                                                    <label for="apps_to_fo_inspection_notice_letter_post_date1_${appsToFoId}_1" class="ml-2 form-check-label">Дата передачи в отделение связи</label>
+                                                    <input id="apps_to_fo_inspection_notice_letter_post_date1_deactivate_${appsToFoId}_1" class="deactivator" type="checkbox">
+                                                    <label for="apps_to_fo_inspection_notice_letter_post_date1_deactivate_${appsToFoId}_1" class="ml-2 form-check-label">Дата передачи в отделение связи</label>
                                                     <i class="fa fa-question-circle ml-2" aria-hidden="true" tabindex="0" data-trigger="focus" data-toggle="popover"></i>
                                                 </div>
                                             </small>
@@ -1256,8 +1262,8 @@ function addAppToFo() {
                                             <input id = "apps_to_fo_inspection_notice_letter_post_date2_${appsToFoId}_1" class = "apps_to_fo_inspection_notice_letter_post_date2_${appsToFoId} apps_to_fo_inspection_notice_letter_post_date2 datepicker-here deactivation" aria-describedby="apps_to_fo_inspection_notice_letter_post_date2_help_block_${appsToFoId}_1" placeholder="Дата" type="text" size="10" required>
                                             <small id="apps_to_fo_inspection_notice_letter_post_date2_help_block_${appsToFoId}_1" class="form-text">
                                                 <div class="form-inline">
-                                                    <input id="apps_to_fo_inspection_notice_letter_post_date2_${appsToFoId}_1" class="deactivator" type="checkbox">
-                                                    <label for="apps_to_fo_inspection_notice_letter_post_date2_${appsToFoId}_1" class="ml-2 form-check-label">Дата доставки в место вручения</label>
+                                                    <input id="apps_to_fo_inspection_notice_letter_post_date2_deactivate_${appsToFoId}_1" class="deactivator" type="checkbox">
+                                                    <label for="apps_to_fo_inspection_notice_letter_post_date2_deactivate_${appsToFoId}_1" class="ml-2 form-check-label">Дата доставки в место вручения</label>
                                                     <i class="fa fa-question-circle ml-2" aria-hidden="true" tabindex="0" data-trigger="focus" data-toggle="popover"></i>
                                                 </div>
                                             </small>
@@ -1266,8 +1272,8 @@ function addAppToFo() {
                                             <input id = "apps_to_fo_inspection_notice_letter_post_date3_${appsToFoId}_1" class = "apps_to_fo_inspection_notice_letter_post_date3_${appsToFoId} apps_to_fo_inspection_notice_letter_post_date3 datepicker-here deactivation" aria-describedby="apps_to_fo_inspection_notice_letter_post_date3_help_block_${appsToFoId}_1" placeholder="Дата" type="text" size="10" required>
                                             <small id="apps_to_fo_inspection_notice_letter_post_date3_help_block_${appsToFoId}_1" class="form-text">
                                                 <div class="form-inline">
-                                                    <input id="apps_to_fo_inspection_notice_letter_post_date3_${appsToFoId}_1" class="deactivator" type="checkbox">
-                                                    <label for="apps_to_fo_inspection_notice_letter_post_date3_${appsToFoId}_1" class="ml-2 form-check-label">Дата вручения адресату</label>
+                                                    <input id="apps_to_fo_inspection_notice_letter_post_date3_deactivate_${appsToFoId}_1" class="deactivator" type="checkbox">
+                                                    <label for="apps_to_fo_inspection_notice_letter_post_date3_deactivate_${appsToFoId}_1" class="ml-2 form-check-label">Дата вручения адресату</label>
                                                     <i class="fa fa-question-circle ml-2" aria-hidden="true" tabindex="0" data-trigger="focus" data-toggle="popover"></i>
                                                 </div>
                                             </small>
@@ -1415,6 +1421,19 @@ $(document).on("change", ".apps_to_fo_refusal_types", function (event) {
 	}
 });
 
+//Добавляет поля даты, № и почтового идентификатора для сведений о подтверждении направления отказа
+$(document).on("change", ".apps_to_fo_refusal_confirmations", function (event) {
+	if ($(this).find(':selected').text() != "Подтверждающих документов не имеется") {
+        $(this).parent().parent().next().show('fast')
+        $(this).parent().parent().next().find('input[type=text]').addClass('form-control')
+	} else {
+        $(this).parent().parent().next().hide('fast')
+        setTimeout(() => {
+            $(this).parent().parent().next().find('input[type=text]').removeClass('form-control')
+        }, 200)
+	}
+});
+
 //Добавляет информацию о способе уведомления о ходе рассмотрения заявления (если заявитель обращается с заявлением, а не с претензией)
 $(document).on("change", ".apps_to_fo_types", function (event) {
 	if ($(this).find(':selected').text() == "Заявление о страховом случае") {
@@ -1481,6 +1500,7 @@ function addAppsToFoContract(id) {
                                 <option>Хранение</option>
                                 <option>Неустойка</option>
                                 <option>Финансовая санкция</option>
+                                <option>Организация ремонта</option>
                                 <option>Экспертиза</option>
                                 <option>Юрист</option>
                                 <option>Составление претензии</option>
@@ -1653,6 +1673,7 @@ function addAppsToFoClaim(id, conrtactId) {
             <option>Хранение</option>
             <option>Неустойка</option>
             <option>Финансовая санкция</option>
+            <option>Организация ремонта</option>
             <option>Экспертиза</option>
             <option>Юрист</option>
             <option>Составление претензии</option>
@@ -2235,8 +2256,8 @@ function addInspectionNotice(appsToFoId) {
                     <input id = "apps_to_fo_inspection_notice_letter_post_date1_${appsToFoId}_${inspectionNotice}" class = "apps_to_fo_inspection_notice_letter_post_date1_${appsToFoId} apps_to_fo_inspection_notice_letter_post_date1 datepicker-here form-control deactivation" aria-describedby="apps_to_fo_inspection_notice_letter_post_date1_help_block_${appsToFoId}_${inspectionNotice}" placeholder="Дата" type="text" size="10" required>
                     <small id="apps_to_fo_inspection_notice_letter_post_date1_help_block_${appsToFoId}_${inspectionNotice}" class="form-text">
                         <div class="form-inline">
-                            <input id="apps_to_fo_inspection_notice_letter_post_date1_${appsToFoId}_${inspectionNotice}" class="deactivator" type="checkbox">
-                            <label for="apps_to_fo_inspection_notice_letter_post_date1_${appsToFoId}_${inspectionNotice}" class="ml-2 form-check-label">Дата передачи в отделение связи</label>
+                            <input id="apps_to_fo_inspection_notice_letter_post_date1_deactivate_${appsToFoId}_${inspectionNotice}" class="deactivator" type="checkbox">
+                            <label for="apps_to_fo_inspection_notice_letter_post_date1_deactivate_${appsToFoId}_${inspectionNotice}" class="ml-2 form-check-label">Дата передачи в отделение связи</label>
                             <i class="fa fa-question-circle ml-2" aria-hidden="true" tabindex="0" data-trigger="focus" data-toggle="popover"></i>
                         </div>
                     </small>
@@ -2245,8 +2266,8 @@ function addInspectionNotice(appsToFoId) {
                     <input id = "apps_to_fo_inspection_notice_letter_post_date2_${appsToFoId}_${inspectionNotice}" class = "apps_to_fo_inspection_notice_letter_post_date2_${appsToFoId} apps_to_fo_inspection_notice_letter_post_date2 datepicker-here form-control deactivation" aria-describedby="apps_to_fo_inspection_notice_letter_post_date2_help_block_${appsToFoId}_${inspectionNotice}" placeholder="Дата" type="text" size="10" required>
                     <small id="apps_to_fo_inspection_notice_letter_post_date2_help_block_${appsToFoId}_${inspectionNotice}" class="form-text">
                         <div class="form-inline">
-                            <input id="apps_to_fo_inspection_notice_letter_post_date2_${appsToFoId}_${inspectionNotice}" class="deactivator" type="checkbox">
-                            <label for="apps_to_fo_inspection_notice_letter_post_date2_${appsToFoId}_${inspectionNotice}" class="ml-2 form-check-label">Дата доставки в место вручения</label>
+                            <input id="apps_to_fo_inspection_notice_letter_post_date2_deactivate_${appsToFoId}_${inspectionNotice}" class="deactivator" type="checkbox">
+                            <label for="apps_to_fo_inspection_notice_letter_post_date2_deactivate_${appsToFoId}_${inspectionNotice}" class="ml-2 form-check-label">Дата доставки в место вручения</label>
                             <i class="fa fa-question-circle ml-2" aria-hidden="true" tabindex="0" data-trigger="focus" data-toggle="popover"></i>
                         </div>
                     </small>
@@ -2255,8 +2276,8 @@ function addInspectionNotice(appsToFoId) {
                     <input id = "apps_to_fo_inspection_notice_letter_post_date3_${appsToFoId}_${inspectionNotice}" class = "apps_to_fo_inspection_notice_letter_post_date3_${appsToFoId} apps_to_fo_inspection_notice_letter_post_date3 datepicker-here form-control deactivation" aria-describedby="apps_to_fo_inspection_notice_letter_post_date3_help_block_${appsToFoId}_${inspectionNotice}" placeholder="Дата" type="text" size="10" required>
                     <small id="apps_to_fo_inspection_notice_letter_post_date3_help_block_${appsToFoId}_${inspectionNotice}" class="form-text">
                         <div class="form-inline">
-                            <input id="apps_to_fo_inspection_notice_letter_post_date3_${appsToFoId}_${inspectionNotice}" class="deactivator" type="checkbox">
-                            <label for="apps_to_fo_inspection_notice_letter_post_date3_${appsToFoId}_${inspectionNotice}" class="ml-2 form-check-label">Дата вручения адресату</label>
+                            <input id="apps_to_fo_inspection_notice_letter_post_date3_deactivate_${appsToFoId}_${inspectionNotice}" class="deactivator" type="checkbox">
+                            <label for="apps_to_fo_inspection_notice_letter_post_date3_deactivate_${appsToFoId}_${inspectionNotice}" class="ml-2 form-check-label">Дата вручения адресату</label>
                             <i class="fa fa-question-circle ml-2" aria-hidden="true" tabindex="0" data-trigger="focus" data-toggle="popover"></i>
                         </div>
                     </small>
@@ -2434,6 +2455,72 @@ $(document).on("change", ".apps_to_fo_inspection_infos", function (event) {
     // validationCheck('apps-to-fo')
 });
 
+function addInspection(appsToFoId) {
+    appsToFoInspection++
+    var str =`
+        <div id="apps_to_fo_inspection_${appsToFoId}_${appsToFoInspection}" class="apps_to_fo_inspections_${appsToFoId}">
+        <div class="form-row">
+            <div class="form-group col-md-3">
+                <input id = "apps_to_fo_inspection_date_${appsToFoId}_${appsToFoInspection}" class = "apps_to_fo_inspection_date_${appsToFoId} apps_to_fo_inspection_dates datepicker-here deactivation form-control" aria-describedby="apps_to_fo_inspection_date_help_block_${appsToFoId}_${appsToFoInspection}" placeholder="Дата" type="text" size="10" required>
+                <small id="apps_to_fo_inspection_date_help_block_${appsToFoId}_${appsToFoInspection}" class="form-text">
+                    <div class="form-inline">
+                        <input id="apps_to_fo_inspection_date_deactivate_${appsToFoId}_${appsToFoInspection}" class="deactivator" type="checkbox">
+                        <label for="apps_to_fo_inspection_date_deactivate_${appsToFoId}_${appsToFoInspection}" class="ml-2 form-check-label">Сведений не имеется</label>
+                    </div>
+                </small>
+            </div>
+            <div class="form-group col-md-3">
+                <input id = "apps_to_fo_inspection_number_${appsToFoId}_${appsToFoInspection}" class="apps_to_fo_inspection_number_${appsToFoId} apps_to_fo_inspection_numbers deactivation form-control" aria-describedby="apps_to_fo_inspection_number_help_block_${appsToFoId}_${appsToFoInspection}" placeholder="№ акта" type="text" size="8" required>
+                <small id="apps_to_fo_inspection_number_help_block_${appsToFoId}_${appsToFoInspection}" class="form-text">
+                    <div class="form-inline">
+                        <input id="apps_to_fo_inspection_number_deactivate_${appsToFoId}_${appsToFoInspection}" class="deactivator" type="checkbox">
+                        <label for="apps_to_fo_inspection_number_deactivate_${appsToFoId}_${appsToFoInspection}" class="ml-2 form-check-label">Сведений не имеется</label>
+                    </div>
+                </small>
+            </div>
+            <div class="form-group col-md-5">
+                <input id = "apps_to_fo_inspection_organization_${appsToFoId}_${appsToFoInspection}" class="apps_to_fo_inspection_organization_${appsToFoId} apps_to_fo_inspection_organizations deactivation form-control li-quotes" aria-describedby="apps_to_fo_inspection_organization_help_block_${appsToFoId}_${appsToFoInspection}" placeholder="Наименование экспертной организации" type="text" size="8" required>
+                <small id="apps_to_fo_inspection_organization_help_block_${appsToFoId}_${appsToFoInspection}" class="form-text">
+                    <div class="form-inline">
+                        <input id="apps_to_fo_inspection_organization_deactivate_${appsToFoId}_${appsToFoInspection}" class="deactivator" type="checkbox">
+                        <label for="apps_to_fo_inspection_organization_deactivate_${appsToFoId}_${appsToFoInspection}" class="ml-2 form-check-label">Сведений не имеется</label>
+                    </div>
+                </small>
+            </div>
+            <div class="form-group col-ms-1">
+                <button id="apps_to_fo_inspection_btn_${appsToFoId}_${appsToFoInspection}" class="apps_to_fo_inspection_btn_${appsToFoId} apps_to_fo_inspection_btns btn btn-outline-danger" onclick="removeInspection(${appsToFoId}, ${appsToFoInspection})">×</button>
+            </div>
+        </div>
+    </div>
+    `
+
+    $(`#apps_to_fo_inspection_${appsToFoId}`).append(str);
+	$(`#apps_to_fo_inspection_${appsToFoId}_${appsToFoInspection} .datepicker-here`).datepicker()
+
+  $('.datepicker-here').toArray().forEach(function(field){
+    new Cleave(field, {
+      date: true,
+      delimiter: '.',
+      datePattern: ['d', 'm', 'Y']
+    })
+  });
+
+  //Форматирование суммы
+  $('.input-numeral').toArray().forEach(function(field){
+    new Cleave(field, {
+        numeral: true,
+        delimiter: ' ',
+        //numeralThousandsGroupStyle: 'none',
+        numeralPositiveOnly: true,
+        numeralIntegerScale: 8
+    })
+  });
+}
+
+function removeInspection(appsToFoId, appsToFoInspection) {
+    $(`#apps_to_fo_inspection_${appsToFoId}_${appsToFoInspection}`).remove();
+}
+
 function addExpertize(appsToFoId) {
     appsToFoExpertise++
     var str =`
@@ -2568,11 +2655,6 @@ function addExpertize(appsToFoId) {
         numeralIntegerScale: 8
     })
   });
-
-  //Вызывает функцию, изменяющую общую картинку валидации
-//   validationCheck('apps-to-fo')
-//   validationCheckUpdate('apps-to-fo')
-
 }
 
 function removeExpertize(appsToFoId, appsToFoExpertise) {
@@ -2613,81 +2695,73 @@ $(document).on("click", ".add_apps_to_fo_expertise_info_btns", function (event) 
 $(document).on("change", ".apps_to_fo_answer_fo_infos", function (event) {
 	if ($(this).find(':selected').text() == "Сведения имеются") {
         $(this).parent().parent().next().show('fast')
-
-        //Добавление класса form-control для всех input кроме суммы НДФЛ (т.к. для него данный класс добавляется при клике на checkbox)
-        $(this).parent().parent().next().find('input[type=text]').each(function(index){
-            if (!$(this).hasClass('penalty_ndfl_summs')) {
-                $(this).addClass('form-control')
-            }
-        })
-        $(this).parent().parent().next().find('select').each(function(index){
-            if (!$(this).hasClass('apps_to_fo_stor_garanthy_letter_sources')) {
-                $(this).addClass('form-control')
-            }
-        })
-        // $(this).parent().parent().next().find('select').addClass('form-control')
+        $(this).parent().parent().next().children().first().find('select').addClass('form-control')
 	} else {
         $(this).parent().parent().next().hide('fast')
         setTimeout(() => {
             $(this).parent().parent().next().find('input[type=text]').removeClass('form-control')
             $(this).parent().parent().next().find('select').removeClass('form-control')
+            $(this).parent().parent().next().find('textarea').removeClass('form-control')
         }, 200)
 	}
-    // validationCheckUpdate('apps-to-fo')
-    // validationCheck('apps-to-fo')
 });
 
 //Добавляет информацию об ответе ФО на заявление или претензию
 $(document).on("change", ".apps_to_fo_answer_fos", function (event) {
 	if ($(this).find(':selected').text() == "Осуществление выплаты") {
         $(this).parent().parent().next().show('fast')
-        //Добавление класса form-control для всех input кроме суммы НДФЛ (т.к. для него данный класс добавляется при клике на checkbox)
-        $(this).parent().parent().next().find('input[type=text]').each(function(index){
-            if (!$(this).hasClass('penalty_ndfl_summs')) {
-                $(this).addClass('form-control')
-            }
-        })
-
-        $(this).parent().parent().next().find('select').addClass('form-control')
+        $(this).parent().parent().next().find('.payments').children().first().find('input[type=text]').addClass('form-control')
+        $(this).parent().parent().next().find('.payments').children().first().find('select').addClass('form-control')
+        $(this).parent().parent().next().find('.payments').children().first().find('textarea').addClass('form-control')
         
 	} else {
         $(this).parent().parent().next().hide('fast')
         setTimeout(() => {
             $(this).parent().parent().next().find('input[type=text]').removeClass('form-control')
             $(this).parent().parent().next().find('select').removeClass('form-control')
+            $(this).parent().parent().next().find('textarea').removeClass('form-control')
         }, 200)
 	}
-    if ($(this).find(':selected').text() == "Выдача направления на ремонт") {
-        $(this).parent().parent().next().next().show('fast')
 
-        $(this).parent().parent().next().next().find('input[type=text]').addClass('form-control')
-        $(this).parent().parent().next().next().find('select').each(function(index){
+    if ($(this).find(':selected').text() == "Выдача направления на ремонт") {
+        $(this).parent().parent().parent().find('.apps_to_fo_stors').show('fast')
+
+        $(this).parent().parent().parent().find('.apps_to_fo_stors').find('input[type=text]').addClass('form-control')
+        $(this).parent().parent().parent().find('.apps_to_fo_stors').find('select').each(function(index){
             if (!$(this).hasClass('apps_to_fo_stor_garanthy_letter_sources')) {
                 $(this).addClass('form-control')
             }
         })
-        // $(this).parent().parent().next().next().find('select').addClass('form-control')
-        
 	} else {
-        $(this).parent().parent().next().next().hide('fast')
+        $(this).parent().parent().parent().find('.apps_to_fo_stors').hide('fast')
         setTimeout(() => {
-            $(this).parent().parent().next().next().find('input[type=text]').removeClass('form-control')
-            $(this).parent().parent().next().next().find('select').removeClass('form-control')
+            $(this).parent().parent().parent().find('.apps_to_fo_stors').find('input[type=text]').removeClass('form-control')
+            $(this).parent().parent().parent().find('.apps_to_fo_stors').find('select').removeClass('form-control')
+            $(this).parent().parent().parent().find('.apps_to_fo_stors').find('textarea').removeClass('form-control')
         }, 200)
 	}
+
     if ($(this).find(':selected').text() == "Отказ в выплате") {
         $(this).parent().parent().parent().find('.apps_to_fo_refusals').show('fast')
-
+        
         $(this).parent().parent().parent().find('.apps_to_fo_refusals').find('input[type=text]').addClass('form-control')
-        $(this).parent().parent().parent().find('.apps_to_fo_refusals').find('select').addClass('form-control')
-        // $(this).parent().parent().parent().find('.apps_to_fo_refusals').find('textarea').addClass('form-control')
+        $(this).parent().parent().parent().find('.apps_to_fo_refusals').find('select').each(function(index){
+            if (!$(this).hasClass('apps_to_fo_refusal_type_trasa_stor_posibilities')) {
+                $(this).addClass('form-control')
+            }
+        })
+        $(this).parent().parent().parent().find('.apps_to_fo_refusals').find('textarea').each(function(index){
+            if (!$(this).hasClass('apps_to_fo_refusal_type_trasa_texts')) {
+                $(this).addClass('form-control')
+            }
+        })
         
 	} else {
         $(this).parent().parent().parent().find('.apps_to_fo_refusals').hide('fast')
         setTimeout(() => {
             $(this).parent().parent().parent().find('.apps_to_fo_refusals').find('input[type=text]').removeClass('form-control')
             $(this).parent().parent().parent().find('.apps_to_fo_refusals').find('select').removeClass('form-control')
-            // $(this).parent().parent().parent().find('.apps_to_fo_refusals').find('textarea').removeClass('form-control')
+            $(this).parent().parent().parent().find('.apps_to_fo_refusals').find('textarea').removeClass('form-control')
         }, 200)
 	}
 });
@@ -2813,24 +2887,29 @@ function addPayment(appsToFoId) {
             numeralIntegerScale: 8
         })
     });
-
-    //Вызывает функцию, изменяющую общую картинку валидации
-    // validationCheck('apps-to-fo')
-    // validationCheckUpdate('apps-to-fo')
-
 }
 
 function removePayment(appsToFoId, paymentId) {
     $(`#payment_${appsToFoId}_${paymentId}`).remove();
-    // validationCheckUpdate('apps-to-fo')
 }
 
-//Добавляет галочку НДФЛ
+//Обработка выбора вида выплаты
 $(document).on("change", ".payments_names", function (event) {
+
+    //Добавляет галочку НДФЛ
 	if ($(this).find(':selected').text() == "Неустойка") {
 		$(this).parent().parent().next().show('fast');
 	} else {
         $(this).parent().parent().next().hide('fast');
+	}
+
+    //Добавляет маршрут эвакуации ТС
+    if ($(this).find(':selected').text() == "Эвакуатор") {
+		$(this).parent().parent().next().next().show('fast');
+        $(this).parent().parent().next().next().find('.payment_ev_routes').addClass('form-control')
+	} else {
+        $(this).parent().parent().next().next().hide('fast');
+        $(this).parent().parent().next().next().find('.payment_ev_routes').removeClass('form-control')
 	}
 });
 
@@ -2844,17 +2923,6 @@ $(document).on("change", ".penalty_ndfls", function (event) {
         setTimeout(() => {
             $(this).parent().parent().next().find('input[type=text]').removeClass('form-control')
         }, 200)
-	}
-});
-
-//Добавляет маршрут эвакуации ТС
-$(document).on("change", ".payments_names", function (event) {
-	if ($(this).find(':selected').text() == "Эвакуатор") {
-		$(this).parent().parent().next().next().show('fast');
-        $(this).parent().parent().next().next().find('.payment_ev_routes').addClass('form-control')
-	} else {
-        $(this).parent().parent().next().next().hide('fast');
-        $(this).parent().parent().next().next().find('.payment_ev_routes').removeClass('form-control')
 	}
 });
 

@@ -11,6 +11,7 @@ export class MainClaim {
     type
     type_text
     type_text_full
+    subtype
     summ
     summ_text
     from
@@ -33,7 +34,8 @@ export class MainClaim {
     storage_without
 
     constructor (id, 
-                type, 
+                type,
+                subtype, 
                 summ, 
                 from, 
                 to, 
@@ -52,6 +54,7 @@ export class MainClaim {
                 storage_without){
         this.id = id
         this.type = type
+        this.subtype = subtype
         this.summ = Number(summ.value.replace(/\s+/g, ''))
         this.summ_text = makeRubText_genitive(this.summ)
         this.from = from
@@ -141,6 +144,7 @@ export class ClaimsContract {
 
         var number_of_claims = $('.main_claim_' + id).length;
         var types = $('.main_claim_type_' + id); //Получение массива требований
+        var subtypes = $('.main_claim_subtype_' + id); //Получение массива требований
         var summs = $('.main_claim_summ_' + id); //Получение массива дат решений
         var froms = $('.date_main_claim_from_' + id); //Получение массива дат начала периода судебных неустоек
         var tos = $('.date_main_claim_to_' + id); //Получение массива дат конца периода судебных неустоек
@@ -161,6 +165,7 @@ export class ClaimsContract {
         for (let i = 0; i < number_of_claims; i++) {
             this.claim[i] = new MainClaim(i + 1,
                                           types[i],
+                                          subtypes[i],
                                           summs[i],
                                           froms[i],
                                           tos[i],
@@ -186,34 +191,42 @@ export class ClaimsContract {
                 current_claim_summ = ""
             }
 
+            var subtype_text = ""
+            if (this.claim[i].subtype.value == "Доплата") {
+                subtype_text = "доплаты "
+            }
+
             switch (this.claim[i].type.options.selectedIndex) {
                 case 2:
-                    this.claim[i].type_text_full = "страхового возмещения" + " по договору " + this.type.value + " " + this.claim[i].type_text + current_claim_summ
+                    this.claim[i].type_text_full = "о взыскании " + subtype_text + "страхового возмещения" + " по договору " + this.type.value + " " + this.claim[i].type_text + current_claim_summ
                     break;
                 case 1:
-                    this.claim[i].type_text_full = this.claim[i].type_text + " по договору " + this.type.value + current_claim_summ
+                    this.claim[i].type_text_full = "о взыскании " + subtype_text + this.claim[i].type_text + " по договору " + this.type.value + current_claim_summ
                     break;
                 case 5:
                     if (this.claim[i].without.checked) {
-                        this.claim[i].type_text_full = this.claim[i].type_text + " по договору " + this.type.value + current_claim_summ
+                        this.claim[i].type_text_full = "о взыскании " + this.claim[i].type_text + " по договору " + this.type.value + current_claim_summ
                     } else if (this.claim[i].pdf.checked) {
-                        this.claim[i].type_text_full = this.claim[i].type_text + " по договору " + this.type.value + " за период с " + this.claim[i].getFromDateFormatted() + " по день фактического исполнения обязательств" + current_claim_summ
+                        this.claim[i].type_text_full = "о взыскании " + this.claim[i].type_text + " по договору " + this.type.value + " за период с " + this.claim[i].getFromDateFormatted() + " по день фактического исполнения обязательств" + current_claim_summ
                     } else {
-                        this.claim[i].type_text_full = this.claim[i].type_text + " по договору " + this.type.value + " за период с " + this.claim[i].getFromDateFormatted() + " по " + this.claim[i].getToDateFormatted() + current_claim_summ
+                        this.claim[i].type_text_full = "о взыскании " + this.claim[i].type_text + " по договору " + this.type.value + " за период с " + this.claim[i].getFromDateFormatted() + " по " + this.claim[i].getToDateFormatted() + current_claim_summ
                     }
                     break;
                 case 3:
-                    this.claim[i].type_text_full = this.claim[i].type_text + this.claim[i].ev_route_text + " по договору " + this.type.value + current_claim_summ
+                    this.claim[i].type_text_full = "о взыскании " + this.claim[i].type_text + this.claim[i].ev_route_text + " по договору " + this.type.value + current_claim_summ
                     break;
                 case 4:
                     if (this.claim[i].storage_without.checked) {
-                        this.claim[i].type_text_full = this.claim[i].type_text + " по договору " + this.type.value + current_claim_summ
+                        this.claim[i].type_text_full = "о взыскании " + this.claim[i].type_text + " по договору " + this.type.value + current_claim_summ
                     } else {
-                        this.claim[i].type_text_full = this.claim[i].type_text + " по договору " + this.type.value + " за период с " + this.claim[i].getStorageFromDateFormatted() + " по " + this.claim[i].getStorageToDateFormatted() + current_claim_summ
+                        this.claim[i].type_text_full = "о взыскании " + this.claim[i].type_text + " по договору " + this.type.value + " за период с " + this.claim[i].getStorageFromDateFormatted() + " по " + this.claim[i].getStorageToDateFormatted() + current_claim_summ
                     }
                     break;
+                case 7:
+                    this.claim[i].type_text_full = "об организации и оплате " + this.claim[i].type_text + " по договору " + this.type.value + " на СТОА"
+                    break;
                 default:
-                    this.claim[i].type_text_full = this.claim[i].type_text + current_claim_summ
+                    this.claim[i].type_text_full = "о взыскании " + this.claim[i].type_text + current_claim_summ
                     break;
             }
             this.claims_all = this.claims_all + " " + this.claim[i].type_text_full + ","

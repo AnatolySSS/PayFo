@@ -233,6 +233,10 @@ export class DtpParticipant {
             if (this.car_year.value != "") {
                 year = `, год выпуска ${this.car_year.value}`
             }
+            var weight = ""
+            if (this.car_weight.value != "") {
+                weight = `, масса ${this.car_weight.value} кг`
+            }
             var car_type_helper = ""
             if (this.car_type.options.selectedIndex == 5) {
                 car_type_helper = "мотоцикл "
@@ -240,7 +244,7 @@ export class DtpParticipant {
                 car_type_helper = "велосипед "
             }
             this.full_car_name = `${car_type_helper}${this.car_brand.value}${car_model_helper}, государственный регистрационный номер 
-            ${this.car_reg_number.value}${vin}${year} (далее – Транспортное средство)`
+            ${this.car_reg_number.value}${vin}${year}${weight} (далее – Транспортное средство)`
         }
 
         this.contract_paragraph_all = ""
