@@ -42,7 +42,7 @@ currentIP = currentIP.toString()
 let connection
 //В зависимости от IP адреса необходимо подключаться к различным портам и с разными настройками базы данных
 switch (currentIP) {
-  case "192.168.0.19":
+  case "192.168.0.21":
     console.log("Это localhost");
     PORT = 80;
     //Подключение к базе данных timeweb 

@@ -1,3 +1,4 @@
+//все выходные (красные дни), для переноса последнего дня на первый рабочий день по 193 ГК РФ
 export let holidays = [
     Date.parse(new Date(2015, 0, 1, 0)),
     Date.parse(new Date(2015, 0, 2, 0)),
@@ -194,18 +195,43 @@ export let holidays = [
     Date.parse(new Date(2023, 4, 8, 0)),
     Date.parse(new Date(2023, 4, 9, 0)),
     Date.parse(new Date(2023, 5, 12, 0)),
-    Date.parse(new Date(2023, 10, 6, 0))
+    Date.parse(new Date(2023, 10, 6, 0)),
+
+    Date.parse(new Date(2024, 0, 1, 0)),
+    Date.parse(new Date(2024, 0, 2, 0)),
+    Date.parse(new Date(2024, 0, 3, 0)),
+    Date.parse(new Date(2024, 0, 4, 0)),
+    Date.parse(new Date(2024, 0, 5, 0)),
+    Date.parse(new Date(2024, 0, 6, 0)),
+    Date.parse(new Date(2024, 0, 7, 0)),
+    Date.parse(new Date(2024, 0, 8, 0)),
+    Date.parse(new Date(2024, 1, 23, 0)),
+    Date.parse(new Date(2024, 2, 8, 0)),
+    Date.parse(new Date(2024, 3, 29, 0)),
+    Date.parse(new Date(2024, 3, 30, 0)),
+    Date.parse(new Date(2024, 4, 1, 0)),
+    Date.parse(new Date(2024, 4, 9, 0)),
+    Date.parse(new Date(2024, 4, 10, 0)),
+    Date.parse(new Date(2024, 5, 12, 0)),
+    Date.parse(new Date(2024, 10, 4, 0)),
+    Date.parse(new Date(2024, 11, 30, 0)),
+    Date.parse(new Date(2024, 11, 31, 0)),
 ]
 
+//Рабочие субботы
 export let working_saturdays = [
     Date.parse(new Date(2016, 1, 20, 0)),
     Date.parse(new Date(2018, 3, 28, 0)),
     Date.parse(new Date(2018, 5, 9, 0)),
     Date.parse(new Date(2018, 11, 29, 0)),
     Date.parse(new Date(2021, 1, 20, 0)),
-    Date.parse(new Date(2022, 2, 5, 0))
+    Date.parse(new Date(2022, 2, 5, 0)),
+    Date.parse(new Date(2024, 3, 27, 0)),
+    Date.parse(new Date(2024, 10, 2, 0)),
+    Date.parse(new Date(2024, 11, 28, 0)),
 ]
 
+//только нерабочие праздничные дни для расчета 20-дневного срока
 export let holidays_for_20 = [
     Date.parse(new Date(2015, 0, 1, 0)),
     Date.parse(new Date(2015, 0, 2, 0)),
@@ -332,5 +358,19 @@ export let holidays_for_20 = [
     Date.parse(new Date(2023, 4, 1, 0)),
     Date.parse(new Date(2023, 4, 9, 0)),
     Date.parse(new Date(2023, 5, 12, 0)),
-    Date.parse(new Date(2023, 10, 4, 0))
+    Date.parse(new Date(2023, 10, 4, 0)),
+    Date.parse(new Date(2024, 0, 1, 0)),
+    Date.parse(new Date(2024, 0, 2, 0)),
+    Date.parse(new Date(2024, 0, 3, 0)),
+    Date.parse(new Date(2024, 0, 4, 0)),
+    Date.parse(new Date(2024, 0, 5, 0)),
+    Date.parse(new Date(2024, 0, 6, 0)),
+    Date.parse(new Date(2024, 0, 7, 0)),
+    Date.parse(new Date(2024, 0, 8, 0)),
+    Date.parse(new Date(2024, 1, 23, 0)),
+    Date.parse(new Date(2024, 2, 8, 0)),
+    Date.parse(new Date(2024, 4, 1, 0)),
+    Date.parse(new Date(2024, 4, 9, 0)),
+    Date.parse(new Date(2024, 5, 12, 0)),
+    Date.parse(new Date(2024, 10, 4, 0)),
 ]
