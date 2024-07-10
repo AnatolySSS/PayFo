@@ -36,7 +36,7 @@ import axios from "axios";
 
 export function getMotivations (totalData) {
     let data_from_db_main = {}
-    return axios.post('/total_data', totalData)
+    return axios.get('/total_data')
       .then(response => {
         let result = response.data
         let signs = {}
@@ -56,8 +56,8 @@ export function getMotivations (totalData) {
       });
 }
 
-export function getData (totalData) {
-    return axios.post('/download_data', totalData)
+export function getData () {
+    return axios.get('/download_data')
       .then(response => response.data)
       .catch(function (error) {
         console.log(error);

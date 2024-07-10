@@ -844,7 +844,7 @@ $('#btn_desicion').click(function() {
   motivationsPromise.then(result => {
     data_from_db = result
     //Получение данных из таблицы data
-    let dataPromise = getData(totalData)
+    let dataPromise = getData()
     dataPromise.then(result => {
       data_from_db.data = result
       decision = makeTextDecision(

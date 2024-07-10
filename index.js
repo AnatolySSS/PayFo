@@ -285,8 +285,8 @@ app.get("/check_ip", function (request, response) {
 });
 
 //Получает данные из таблицы с мотивировками и формирует объект, с полями (все признаки)
-app.post("/total_data", jsonParser, function (request, response) {
-    if(!request.body) return response.sendStatus(400)
+app.get("/total_data", function (request, response) {
+    // if(!request.body) return response.sendStatus(400)
 
     const querySelectFromMotivation = "SELECT * from motivations"
     connection.query(querySelectFromMotivation, (error, result) => {
@@ -295,8 +295,8 @@ app.post("/total_data", jsonParser, function (request, response) {
     })
 });
 
-app.post("/download_data", jsonParser, function (request, response) {
-    if(!request.body) return response.sendStatus(400)
+app.get("/download_data", function (request, response) {
+    // if(!request.body) return response.sendStatus(400)
 
     const querySelectFromMotivation = "SELECT * from data"
     connection.query(querySelectFromMotivation, (error, result) => {
